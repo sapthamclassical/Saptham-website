@@ -25,7 +25,7 @@ const Hero = () => {
           <button className="px-6 py-3 bg-white text-[#763C91] hover:bg-gray-100 rounded-md font-medium transition-all duration-300 transform hover:scale-105 hover:shadow-lg">
             Explore Events
           </button>
-          <button className="px-6 py-3 bg-white text-[#ec6517] hover:bg-black rounded-md font-medium transition-all duration-300 transform hover:scale-105 hover:shadow-lg">
+          <button className="px-6 py-3 bg-white text-[#ec6517] hover:bg-gray-100 rounded-md font-medium transition-all duration-300 transform hover:scale-105 hover:shadow-lg">
             Join Us
           </button>
         </div>
