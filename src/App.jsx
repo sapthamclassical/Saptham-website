@@ -14,7 +14,7 @@ const Contact = () => <div className="p-10 text-center text-2xl">Contact Us Page
 
 function App() {
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white overflow-x-hidden">
       <Navbar />
 
       <main className="pt-20">
