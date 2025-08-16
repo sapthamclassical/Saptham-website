@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
+import ahalya from "../assets/ahalya.webp";
+import soumya from "../assets/soumya.webp";
 
 const OfficeBearers = () => {
   const officers = [
-    { name: "Ahalya V S", dept: "CSE", position: "President", image: "/api/placeholder/200/200" },
-    { name: "Soumya R", dept: "IT", position: "Vice President", image: "/api/placeholder/200/200" },
+    { name: "Ahalya V S", dept: "CSE", position: "President", image: "src/assets/ahalya.webp" },
+    { name: "Soumya R", dept: "IT", position: "Vice President", image: "src/assets/soumya.webp" },
     { name: "Dhanya A", dept: "IBT", position: "Head of Dance", image: "/api/placeholder/200/200" },
     { name: "Mahalakshmi S", dept: "IT", position: "Head of Dance", image: "/api/placeholder/200/200" },
     { name: "Anujan K", dept: "Chemical", position: "Head of Music", image: "/api/placeholder/200/200" },
