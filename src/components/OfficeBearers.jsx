@@ -1,22 +1,21 @@
 import React, { useState, useEffect } from "react";
-import ahalya from "../assets/ahalya.webp";
-import soumya from "../assets/soumya.webp";
+
 
 const OfficeBearers = () => {
   const officers = [
     { name: "Ahalya V S", dept: "CSE", position: "President", image: "src/assets/ahalya.webp" },
     { name: "Soumya R", dept: "IT", position: "Vice President", image: "src/assets/soumya.webp" },
-    { name: "Dhanya A", dept: "IBT", position: "Head of Dance", image: "/api/placeholder/200/200" },
-    { name: "Mahalakshmi S", dept: "IT", position: "Head of Dance", image: "/api/placeholder/200/200" },
-    { name: "Anujan K", dept: "Chemical", position: "Head of Music", image: "/api/placeholder/200/200" },
-    { name: "Dhanya V", dept: "BME", position: "Head of Music", image: "/api/placeholder/200/200" },
-    { name: "Keshavkrishna N R", dept: "CSE", position: "Head of Instruments", image: "/api/placeholder/200/200" },
-    { name: "Abinaya V", dept: "IBT", position: "Head of Social Media & Content", image: "/api/placeholder/200/200" },
-    { name: "Harini", dept: "Chemical", position: "Head of Social Media & Content", image: "/api/placeholder/200/200" },
-    { name: "Tanmaya M S", dept: "ECE", position: "Head of Design", image: "/api/placeholder/200/200" },
-    { name: "Vishruthi", dept: "CSE", position: "Head of Design", image: "/api/placeholder/200/200" },
-    { name: "Ashwin S", dept: "Mechanical", position: "Head of Logistics", image: "/api/placeholder/200/200" },
-    { name: "Ritika S", dept: "Geo Informatics", position: "Head of Logistics", image: "/api/placeholder/200/200" },
+    { name: "Dhanya A", dept: "IBT", position: "Head of Dance", image: "src/assets/dhanyaa.jpg" },
+    { name: "Mahalakshmi S", dept: "IT", position: "Head of Dance", image: "src/assets/maha.jpg" },
+    { name: "Anujan K", dept: "Chemical", position: "Head of Music", image: "src/assets/Anujan.jpeg" },
+    { name: "Dhanya V", dept: "BME", position: "Head of Music", image: "src/assets/Dhanya Vikram.jpg" },
+    { name: "Keshavkrishna N R", dept: "CSE", position: "Head of Instruments", image: "src/assets/keshav.png" },
+    { name: "Abinaya V", dept: "IBT", position: "Head of Social Media & Content", image: "src/assets/abinaya.jpg" },
+    { name: "Harini", dept: "Chemical", position: "Head of Social Media & Content", image: "src/assets/harini.jpg" },
+    { name: "Tanmaya M S", dept: "ECE", position: "Head of Design", image: "src/assets/tanmaya.jpg" },
+    { name: "Vishruthi", dept: "CSE", position: "Head of Design", image: "src/assets/vishruthi.jpg" },
+    { name: "Ashwin S", dept: "Mechanical", position: "Head of Logistics", image: "src/assets/Ashwin.jpg" },
+    { name: "Ritika S", dept: "Geo Informatics", position: "Head of Logistics", image: "src/assets/ritika.jpg" },
   ];
 
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -55,7 +54,7 @@ const OfficeBearers = () => {
         {/* Section Heading */}
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold text-navy-800">
-            Meet Our <span className="text-orange-500">Office Bearers</span>
+            Meet Our <span className="text-orange-500">Office Bearers 2025-2026</span>
           </h2>
           <div className="mt-2 h-1 w-20 bg-orange-500 mx-auto"></div>
         </div>

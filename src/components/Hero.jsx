@@ -1,14 +1,18 @@
 import React from 'react';
+import logo from "../assets/logo.png";
 
 const Hero = () => {
   return (
     <div className="relative h-screen flex items-center justify-center bg-gradient-to-r from-[#763C91] to-[#F26B1D] text-white overflow-hidden">
       <div className="relative z-10 text-center px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
         
-        {/* Club Name */}
-        <h1 className="text-6xl md:text-7xl font-extrabold mb-6 text-white drop-shadow-lg">
-          Saptham
-        </h1>
+        {/* Club Name Logo */}
+        <img
+          src={logo}
+          alt="Saptham Logo"
+          className="mx-auto mb-6 drop-shadow-lg"
+          style={{ maxWidth: "320px", height: "auto" }}
+        />
 
         {/* Description */}
         <p className="text-lg md:text-xl mb-4 text-gray-200">
@@ -34,4 +38,4 @@ const Hero = () => {
   );
 };
 
-export default Hero;
+export default Hero
