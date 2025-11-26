@@ -4,11 +4,9 @@ import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import Vision from "./components/Vision";
 import OfficeBearers from "./components/OfficeBearers";
-import Testimonials from "./components/Testimonials";
+import Events from "./components/Events";
 import Footer from "./components/Footer";
 
-// Dummy pages
-const Events = () => <div className="p-10 text-center text-2xl">Events Page</div>;
 const Gallery = () => <div className="p-10 text-center text-2xl">Gallery Page</div>;
 const Contact = () => <div className="p-10 text-center text-2xl">Contact Us Page</div>;
 
@@ -31,7 +29,6 @@ function App() {
                 <section id="office-bearers">
                   <OfficeBearers />
                 </section>
-                <Testimonials />
               </>
             }
           />
