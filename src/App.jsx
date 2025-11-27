@@ -4,10 +4,11 @@ import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import Vision from "./components/Vision";
 import OfficeBearers from "./components/OfficeBearers";
+import Testimonials from "./components/Testimonials";
+import ContactUs from "./components/ContactUs";
 import Events from "./components/Events";
 import Gallery from "./components/Gallery";
 import Footer from "./components/Footer";
-const Contact = () => <div className="p-10 text-center text-2xl">Contact Us Page</div>;
 
 function App() {
   return (
@@ -28,6 +29,9 @@ function App() {
                 <section id="office-bearers">
                   <OfficeBearers />
                 </section>
+                <section id="testimonials">
+                  <Testimonials />
+                </section>
               </>
             }
           />
@@ -35,7 +39,7 @@ function App() {
           {/* Other dedicated pages */}
           <Route path="/events" element={<Events />} />
           <Route path="/gallery" element={<Gallery />} />
-          <Route path="/contact" element={<Contact />} />
+          <Route path="/contact" element={<ContactUs />} />
         </Routes>
       </main>
 
