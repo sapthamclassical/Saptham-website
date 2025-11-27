@@ -5,9 +5,8 @@ import Hero from "./components/Hero";
 import Vision from "./components/Vision";
 import OfficeBearers from "./components/OfficeBearers";
 import Events from "./components/Events";
+import Gallery from "./components/Gallery";
 import Footer from "./components/Footer";
-
-const Gallery = () => <div className="p-10 text-center text-2xl">Gallery Page</div>;
 const Contact = () => <div className="p-10 text-center text-2xl">Contact Us Page</div>;
 
 function App() {

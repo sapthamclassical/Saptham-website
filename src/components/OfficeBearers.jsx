@@ -41,7 +41,7 @@ const OfficeBearers = () => {
           <div className="mt-2 h-1 w-20 bg-orange-500 mx-auto"></div>
         </div>
 
-        <div className="carousel w-80 w-full rounded-box">
+        <div className="carousel w-full rounded-box">
   {officers.map((officer, index) => (
     <div
       key={index}
