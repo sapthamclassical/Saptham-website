@@ -1,8 +1,8 @@
 import React from "react";
 
-const EventCard = ({ title, date, location, description,hideMeta }) => {
+const EventCard = ({ title, date, location, description, hideMeta, images }) => {
   return (
-    <div className="group relative overflow-hidden rounded-xl shadow-lg border border-gray-100 bg-white transition-transform duration-300 hover:scale-105 hover:shadow-2xl">
+    <div className="group relative overflow-hidden rounded-xl shadow-lg border border-gray-100 bg-white transition-transform duration-300 hover:scale-105 hover:shadow-2xl min-h-[400px]">
       
       {/* Hover overlay gradient */}
       <div className="absolute inset-0 pointer-events-none before:content-[''] before:absolute before:inset-0 before:bg-gradient-to-r before:from-orange-400 before:via-amber-300 before:to-transparent before:opacity-0 before:transition-all before:duration-500 group-hover:before:opacity-30"></div>
@@ -11,6 +11,11 @@ const EventCard = ({ title, date, location, description,hideMeta }) => {
       <div className="relative card-body p-6 flex flex-col justify-between h-full">
         {/* Event Title */}
         <h3 className="text-xl font-bold text-gray-900 mb-2">{title}</h3>
+
+        {/* Event Images */}
+        <div className="flex mb-4 h-64">
+          {images && images.length >= 1 && <img src={images[0]} alt="Event Image" className="w-full h-full object-contain rounded" />}
+        </div>
 
         {/* Hide this for other events */}
         {!hideMeta && (

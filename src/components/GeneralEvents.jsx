@@ -5,31 +5,37 @@ import EventCard from "./EventCard";
             title: "Techofes",
             description:
                 "Saptham proudly performed during the inauguration of Techofes, the flagship inter-college cultural festival of CEG, bringing music, dance, and expression to kick off the grand celebrations.",
+            images: ["/src/assets/Gallery/General/1.webp", "/src/assets/Gallery/General/2.webp"],
         },
         {
             title: "Agni",
             description:
                 "Saptham performed at the inaugural ceremony of Agni, CEG’s vibrant intra-college cultural fest, adding an artistic touch to the celebrations.",
+            images: ["/src/assets/Gallery/General/14.webp", "/src/assets/Gallery/General/14.webp"],
         },
         {
             title: "Vizha",
             description:
                 "Saptham contributed to the inauguration of Vizha — the freshers day of CEG — celebrating creativity, tradition, and talent through music and dance.",
+            images: ["/src/assets/Gallery/General/12.webp", "/src/assets/Gallery/General/12.webp"],
         },
         {
             title: "Sampradha",
             description:
                 "Saptham performed at the opening of Sampradha, a intra-college cultural fest of ACT that showcases heritage and artistry through expressive dance and music.",
+            images: ["/src/assets/Gallery/General/7.webp", "/src/assets/Gallery/General/8.webp"],
         },
         {
             title: "Kalakrithi",
             description:
                 "Saptham was part of the inaugural performances of Kalakrithi, the renowned inter-college festival of ACT, adding vibrant music and dance.",
+            images: ["/src/assets/Gallery/General/6.webp", "/src/assets/Gallery/General/10.webp"],
         },
         {
             title: "Symposium Performances",
             description:
                 "Saptham has performed during symposium events at both CEG & ACT, enriching academic gatherings with cultural performances.",
+            images: ["/src/assets/Gallery/General/5.webp", "/src/assets/Gallery/General/12.webp"],
         },
     ];
 const GeneralEvents = () => {
@@ -53,6 +59,7 @@ const GeneralEvents = () => {
               title={event.title}
               description={event.description}
               hideMeta={true}   // <— tells card to hide date & location
+              images={event.images}
             />
           ))}
         </div>

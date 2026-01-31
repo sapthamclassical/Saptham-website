@@ -9,6 +9,7 @@ const ProductionEvents = () => {
       location: "Vivekananda Auditorium",
       description:
         "Payanam celebrated the rich heritage and history of Tamil Nadu through Bharatanatyam, a classical dance form renowned for its finesse and grace. Set to the melodious ragams of Carnatic music, the performance beautifully brought to life stories from the golden ages of Tamil culture.",
+      images: ["/src/assets/Gallery/Payanam/3.webp", "/src/assets/Gallery/Payanam/2.webp"],
     },
     {
       title: "Vishwam – The Divine Incarnations of Lord Narayana",
@@ -16,6 +17,7 @@ const ProductionEvents = () => {
       location: "Vivekananda Auditorium",
       description:
         "Vishwam presented the timeless stories of Lord Vishnu’s ten avatars in a grand musical play. Combining drama, music, and devotion, the production offered an immersive journey into the divine tales of Lord Narayana.",
+      images: ["/src/assets/Gallery/Vishwam/1.jpeg", "/src/assets/Gallery/Vishwam/2.jpeg"],
     },
     {
       title: "RasaLeela – A Complete Spectrum of Emotions",
@@ -23,6 +25,7 @@ const ProductionEvents = () => {
       location: "Vivekananda Auditorium",
       description:
         "RasaLeela explored the full spectrum of human emotions through expressive music and dance. This annual production captured joy, love, longing, and devotion, leaving the audience enchanted by its artistry and storytelling.",
+      images: ["/src/assets/Gallery/Rasaleela/1.webp", "/src/assets/Gallery/Rasaleela/2.webp"],
     },
     {
       title: "Yaathra – Love, Life & Legacy",
@@ -30,6 +33,7 @@ const ProductionEvents = () => {
       location: "Vivekananda Auditorium",
       description:
         "Yaathra wove together themes of love, longing, and devotion, presenting a journey of emotions and timeless stories. With music, movement, and expressive performances, the production offered a reflective and captivating experience for all.",
+      images: ["/src/assets/Gallery/Yaathra/8.webp", "/src/assets/Gallery/Yaathra/8.webp"],
     },
   ];
 
@@ -53,6 +57,7 @@ const ProductionEvents = () => {
               date={event.date}
               location={event.location}
               description={event.description}
+              images={event.images}
             />
           ))}
         </div>
