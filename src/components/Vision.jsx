@@ -7,7 +7,7 @@ const Vision = () => {
         
         {/* Section Title */}
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-van-teal-dark font-heading">
+          <h2 className="text-3xl md:text-4xl font-bold text-van-teal-dark" style={{ fontFamily: 'Cinzel, serif' }}>
             Our <span className="text-manjari-mustard">Vision</span>
           </h2>
           <div className="mt-2 h-1 w-20 bg-van-teal mx-auto"></div>
@@ -18,7 +18,7 @@ const Vision = () => {
           {/* Vision */}
           <div className="group p-6 flex flex-col justify-between bg-white rounded-lg shadow-md hover:shadow-xl transition-all duration-300 border-l-4 border-van-teal hover:-translate-y-1">
             <div>
-              <h3 className="text-xl font-semibold text-van-teal-dark mb-3 group-hover:text-manjari-mustard transition-colors duration-300 font-heading">
+              <h3 className="text-xl font-semibold text-van-teal-dark mb-3 group-hover:text-manjari-mustard transition-colors duration-300" style={{ fontFamily: 'Cinzel, serif' }}>
                 Vision
               </h3>
               <p className="text-gray-700 leading-relaxed">
@@ -33,7 +33,7 @@ const Vision = () => {
           {/* Objectives */}
           <div className="group p-6 flex flex-col justify-between bg-white rounded-lg shadow-md hover:shadow-xl transition-all duration-300 border-l-4 border-van-teal hover:-translate-y-1">
             <div>
-              <h3 className="text-xl font-semibold text-van-teal-dark mb-3 group-hover:text-manjari-mustard transition-colors duration-300 font-heading">
+              <h3 className="text-xl font-semibold text-van-teal-dark mb-3 group-hover:text-manjari-mustard transition-colors duration-300" style={{ fontFamily: 'Cinzel, serif' }}>
                 Objectives
               </h3>
               <ul className="text-gray-700 leading-relaxed space-y-2">

@@ -42,7 +42,7 @@ const ProductionEvents = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-van-teal-dark font-heading">
+          <h2 className="text-3xl md:text-4xl font-bold text-van-teal-dark" style={{ fontFamily: 'Cinzel, serif' }}>
             Saptham's <span className="text-manjari-mustard">Annual Production</span>
           </h2>
           <div className="mt-2 h-1 w-24 bg-van-teal mx-auto"></div>

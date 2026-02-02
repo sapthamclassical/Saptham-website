@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800;900&family=Raleway:wght@300;400;500;600;700;800&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -5,14 +7,19 @@
 @layer base {
   body {
     background-color: #e8ecee;
+    font-family: 'Raleway', sans-serif;
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  *, p, span, a, button, div {
+    font-family: 'Raleway', sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6, p.font-heading {
     font-family: 'Cinzel', serif !important;
   }
 }
 
-.heading-font {
+.font-heading {
   font-family: 'Cinzel', serif !important;
 }
 

@@ -62,12 +62,12 @@ const Hero = () => {
         />
 
         {/* Description */}
-        <p className="text-lg md:text-xl mb-4 text-gray-200 font-heading">
+        <p className="text-lg md:text-xl mb-4 text-gray-200" style={{ fontFamily: 'Cinzel, serif' }}>
           The Official Classical Dance and Music Club of Anna University
         </p>
 
         {/* Tagline */}
-        <p className="text-lg md:text-xl text-manjari-gold mb-8 italic tracking-wide font-heading">
+        <p className="text-lg md:text-xl text-manjari-gold mb-8 italic tracking-wide" style={{ fontFamily: 'Cinzel, serif' }}>
           "Where Tradition Meets Talent"
         </p>
 

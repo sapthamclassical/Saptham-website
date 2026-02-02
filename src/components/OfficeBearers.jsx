@@ -35,7 +35,7 @@ const OfficeBearers = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-van-teal-dark font-heading">
+          <h2 className="text-3xl md:text-4xl font-bold text-van-teal-dark" style={{ fontFamily: 'Cinzel, serif' }}>
             Meet Our <span className="text-manjari-mustard">Office Bearers 2025–2026</span>
           </h2>
           <div className="mt-2 h-1 w-20 bg-van-teal mx-auto"></div>
@@ -69,7 +69,7 @@ const OfficeBearers = () => {
           </div>
 
           {/* Text */}
-          <h4 className="text-lg font-semibold text-gray-900 font-heading">{officer.name}</h4>
+          <h4 className="text-lg font-semibold text-gray-900" style={{ fontFamily: 'Cinzel, serif' }}>{officer.name}</h4>
           <p className="text-sm text-gray-500">{officer.dept}</p>
           <p className="text-manjari-mustard font-medium text-sm">{officer.position}</p>
 

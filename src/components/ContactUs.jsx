@@ -49,7 +49,7 @@ const ContactUs = () => {
     <div className="pt-28 pb-20 px-6 max-w-6xl mx-auto">
       {/* TITLE */}
       <div className="text-center mb-12">
-        <h2 className="text-3xl md:text-4xl font-bold font-heading">
+        <h2 className="text-3xl md:text-4xl font-bold" style={{ fontFamily: 'Cinzel, serif' }}>
           Contact <span className="text-manjari-mustard">Us</span>
         </h2>
         <div className="mt-2 h-1 w-20 bg-van-teal mx-auto"></div>
@@ -59,7 +59,7 @@ const ContactUs = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
         {/* LEFT SIDE — DETAILS */}
         <div className="space-y-6">
-          <h3 className="text-2xl font-semibold text-van-teal font-heading">Reach Out to Us</h3>
+          <h3 className="text-2xl font-semibold text-van-teal" style={{ fontFamily: 'Cinzel, serif' }}>Reach Out to Us</h3>
 
           <p className="text-gray-700">
             The Official Classical Arts Club of Anna University
@@ -114,7 +114,7 @@ const ContactUs = () => {
 
             {/* Social Media */}
             <div>
-              <h4 className="text-xl font-semibold mt-6 mb-3 text-van-teal font-heading">
+              <h4 className="text-xl font-semibold mt-6 mb-3 text-van-teal" style={{ fontFamily: 'Cinzel, serif' }}>
                 Follow Us
               </h4>
 

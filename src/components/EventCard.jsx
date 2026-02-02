@@ -10,7 +10,7 @@ const EventCard = ({ title, date, location, description, hideMeta, images }) => 
       {/* Card content */}
       <div className="relative card-body p-6 flex flex-col justify-between h-full">
         {/* Event Title */}
-        <h3 className="text-xl font-bold text-gray-900 mb-2 font-heading">{title}</h3>
+        <h3 className="text-xl font-bold text-gray-900 mb-2" style={{ fontFamily: 'Cinzel, serif' }}>{title}</h3>
 
         {/* Event Images */}
         <div className="flex mb-4 h-64">

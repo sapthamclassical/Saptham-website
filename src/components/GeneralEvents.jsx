@@ -45,7 +45,7 @@ const GeneralEvents = () => {
 
         {/* Section Header */}
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-van-teal-dark font-heading">
+          <h2 className="text-3xl md:text-4xl font-bold text-van-teal-dark" style={{ fontFamily: 'Cinzel, serif' }}>
             Other <span className="text-manjari-mustard">Events & Performances</span>
           </h2>
           <div className="mt-2 h-1 w-24 bg-van-teal mx-auto"></div>

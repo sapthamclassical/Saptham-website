@@ -93,7 +93,7 @@ const Gallery = () => {
     <div className="py-20 px-6 max-w-7xl mx-auto">
       {/* Title */}
       <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-van-teal-dark font-heading">
+          <h2 className="text-3xl md:text-4xl font-bold text-van-teal-dark" style={{ fontFamily: 'Cinzel, serif' }}>
             Our <span className="text-manjari-mustard">Gallery</span>
           </h2>
           <div className="mt-2 h-1 w-20 bg-van-teal mx-auto"></div>

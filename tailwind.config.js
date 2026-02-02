@@ -9,6 +9,8 @@ module.exports = {
       fontFamily: {
         'cinzel': ['Cinzel', 'serif'],
         'heading': ['Cinzel', 'serif'],
+        'raleway': ['Raleway', 'sans-serif'],
+        'sans': ['Raleway', 'sans-serif'],
       },
       colors: {
         'van-teal': '#407584',
