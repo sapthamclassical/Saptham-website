@@ -1,0 +1,38 @@
+import React from "react";
+
+const EventCard = ({ title, date, location, description, hideMeta, images }) => {
+  return (
+    <div className="group relative overflow-hidden rounded-xl shadow-lg border border-gray-100 bg-white transition-transform duration-300 hover:scale-105 hover:shadow-2xl min-h-[400px]">
+      
+      {/* Hover overlay gradient */}
+      <div className="absolute inset-0 pointer-events-none before:content-[''] before:absolute before:inset-0 before:bg-gradient-to-r before:from-van-teal before:via-manjari-light before:to-transparent before:opacity-0 before:transition-all before:duration-500 group-hover:before:opacity-30"></div>
+
+      {/* Card content */}
+      <div className="relative card-body p-6 flex flex-col justify-between h-full">
+        {/* Event Title */}
+        <h3 className="text-xl font-bold text-gray-900 mb-2 font-heading">{title}</h3>
+
+        {/* Event Images */}
+        <div className="flex mb-4 h-64">
+          {images && images.length >= 1 && <img src={images[0]} alt="Event Image" className="w-full h-full object-contain rounded" />}
+        </div>
+
+        {/* Hide this for other events */}
+        {!hideMeta && (
+          <p className="text-sm text-gray-500 mb-3">
+            <span className="font-semibold">Date:</span> {date} <br />
+            <span className="font-semibold">Location:</span> {location}
+          </p>
+        )}
+
+        {/* Description */}
+        <p className="text-gray-700 mb-4 flex-grow">{description}</p>
+
+        {/* Optional Button */}
+        {/* <button className="btn btn-primary mt-2">Learn More</button> */}
+      </div>
+    </div>
+  );
+};
+
+export default EventCard;
