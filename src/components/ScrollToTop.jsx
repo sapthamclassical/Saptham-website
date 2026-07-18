@@ -1,6 +1,6 @@
 import { useEffect, useLayoutEffect } from "react";
 import { useLocation, useNavigationType } from "react-router-dom";
-import { scrollToTop } from "../lib/scroll";
+import { scrollToTop, scrollToEl } from "../lib/scroll";
 
 /**
  * Guarantees every route opens at the top.
@@ -43,7 +43,7 @@ const ScrollToTop = () => {
     if (hash) {
       const target = document.querySelector(hash);
       if (target) {
-        target.scrollIntoView({ behavior: "smooth", block: "start" });
+        scrollToEl(target);
         return;
       }
     }

@@ -93,7 +93,7 @@ const Testimonials = () => {
                 <footer className="mt-8">
                   <div className="gold-hairline mb-5 w-24" />
                   <p className="font-display text-lg text-gold">{active.name}</p>
-                  <p className="eyebrow mt-1 !text-[0.62rem]" style={{ color: "#B989AC" }}>
+                  <p className="eyebrow mt-1 !text-[0.62rem]" style={{ color: "var(--color-kumkum)" }}>
                     {active.role} {active.year}
                   </p>
                 </footer>

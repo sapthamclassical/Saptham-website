@@ -3,20 +3,18 @@ import { Reveal, TextReveal } from "../motion/Motion";
 import { VIEWPORT, EASE } from "../../lib/motion";
 
 /**
- * The typographic rhythm (Bible §10): tracked mono-caps eyebrow above a huge
- * high-contrast serif — one soloist per view.
+ * The typographic rhythm: tracked eyebrow in arakku above enormous ink
+ * Fraunces — one soloist per view. Words rise out of clipped line boxes one
+ * beat apart; the rule beneath weaves itself open like a thread pulled taut.
  *
- * The title's words rise out of clipped line boxes one beat apart, so a heading
- * arrives with a tempo rather than simply appearing. The eyebrow leads, the
- * rule draws itself, the subtitle follows — an entrance in four counts.
- *
- * `.gold-text` is applied to the inner word spans, never to a transformed
- * parent: `background-clip: text` on an element whose children are transformed
- * renders the fill invisible.
+ * On MS Blue fields wrap the section in `.on-blue` — the eyebrow flips to
+ * zari and `tone="light"` sets the display in silk.
  */
-const SectionHeading = ({ eyebrow, title, sub, align = "center" }) => {
+const SectionHeading = ({ eyebrow, title, sub, align = "center", tone = "ink" }) => {
   const still = useReducedMotion();
   const centered = align === "center";
+  const display = tone === "light" ? "text-sanctum" : "text-ivory";
+  const subColor = tone === "light" ? "text-sanctum/75" : "text-ash";
 
   return (
     <div className={centered ? "text-center" : "text-left"}>
@@ -31,15 +29,14 @@ const SectionHeading = ({ eyebrow, title, sub, align = "center" }) => {
         text={title}
         delay={0.08}
         beat={0.06}
-        className="font-display text-4xl leading-[1.05] font-medium md:text-6xl"
-        wordClassName="gold-text"
+        className={`font-display text-4xl leading-[1.04] font-medium tracking-tight md:text-6xl ${display}`}
       />
 
-      {/* the rule draws itself open — scaleX is transform-only, so it composites */}
+      {/* the thread pulls taut — scaleX is transform-only, so it composites */}
       <Motion.div
-        className={`gold-hairline mt-6 h-px w-24 ${centered ? "mx-auto" : ""}`}
-        initial={still ? false : { scaleX: 0, opacity: 0 }}
-        whileInView={{ scaleX: 1, opacity: 0.7 }}
+        className={`mt-6 h-[3px] w-24 bg-kumkum ${centered ? "mx-auto" : ""}`}
+        initial={still ? false : { scaleX: 0 }}
+        whileInView={{ scaleX: 1 }}
         viewport={VIEWPORT}
         transition={{ duration: 0.9, delay: 0.25, ease: EASE }}
         style={{ transformOrigin: centered ? "center" : "left" }}
@@ -47,7 +44,7 @@ const SectionHeading = ({ eyebrow, title, sub, align = "center" }) => {
 
       {sub && (
         <Reveal delay={0.18}>
-          <p className={`mt-5 max-w-2xl leading-relaxed text-ash ${centered ? "mx-auto" : ""}`}>
+          <p className={`mt-5 max-w-2xl leading-relaxed ${subColor} ${centered ? "mx-auto" : ""}`}>
             {sub}
           </p>
         </Reveal>

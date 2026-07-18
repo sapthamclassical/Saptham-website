@@ -40,18 +40,18 @@ const Overture = () => {
     <AnimatePresence>
       {playing && (
         <Motion.div
-          className="fixed inset-0 z-[100] flex items-center justify-center bg-sanctum"
+          className="on-blue fixed inset-0 z-[100] flex items-center justify-center bg-msdeep"
           aria-hidden="true"
           exit={{ opacity: 0, transition: { duration: 0.01 } }}
         >
           {/* the two curtain panels — they part left/right at the end */}
           <Motion.div
-            className="absolute inset-y-0 left-0 w-1/2 bg-sanctum"
+            className="absolute inset-y-0 left-0 w-1/2 bg-msblue"
             initial={{ x: 0 }}
             exit={{ x: "-100%", transition: { duration: 0.9, ease: EASE } }}
           />
           <Motion.div
-            className="absolute inset-y-0 right-0 w-1/2 bg-sanctum"
+            className="absolute inset-y-0 right-0 w-1/2 bg-msblue"
             initial={{ x: 0 }}
             exit={{ x: "100%", transition: { duration: 0.9, ease: EASE } }}
           />
@@ -86,7 +86,7 @@ const Overture = () => {
               ))}
             </div>
             <Motion.p
-              className="font-display gold-text text-lg font-medium tracking-[0.5em]"
+              className="font-display text-lg font-medium tracking-[0.5em] text-goldhi"
               initial={{ opacity: 0, letterSpacing: "0.8em" }}
               animate={{ opacity: 1, letterSpacing: "0.5em" }}
               transition={{ duration: 1.1, delay: 1.15, ease: EASE }}

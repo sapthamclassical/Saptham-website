@@ -1,27 +1,40 @@
-/* ── Saptham Design System · from docs/DESIGN_BIBLE.md ─────────────────────── */
+/* ── Saptham Design System · "Kanchipuram" ─────────────────────────────────
+   A daylit sabha hall: unbleached silk, MS Blue, lac red, zari thread.
+
+   Token names are kept from the previous (dark) system so every component
+   flips wholesale — but their MEANINGS are remapped:
+
+     sanctum   silk page ground        ivory   primary INK text
+     charcoal  raised card silk        ash     secondary text
+     granite   silk borders            gold    zari thread (dark, readable)
+     basalt    tertiary text           goldhi  zari highlight
+     kumkum    arakku lac red          goldlo  zari shadow
+     plum/teal/emerald/ochre/alta      swara accents, unchanged roles
+   ───────────────────────────────────────────────────────────────────────── */
 /* Fonts are <link>-ed from index.html — a CSS @import would serialise an
    extra round trip onto the critical path. */
 @import "tailwindcss";
 @plugin "daisyui";
 
 @theme {
-  /* Core palette — material-named (Design Bible §7) */
-  --color-sanctum: #0e0b08; /* Garbhagriha Black */
-  --color-charcoal: #171310; /* Sabha Charcoal */
-  --color-granite: #2a241d; /* Temple Granite */
-  --color-basalt: #4a4236;
-  --color-gold: #c9a24b; /* Saptham Gold */
-  --color-goldhi: #ebd08a; /* Deepam Gold (highlight) */
-  --color-goldlo: #8a6a25; /* Brass Umber (shadow) */
-  --color-ivory: #f4ede0; /* Vibhuti Ivory */
-  --color-ash: #8c826e; /* Stone 300 */
-  --color-sand: #e5d6b8; /* Chandana Sand */
-  --color-kumkum: #9b1c2e; /* Pa — crimson */
-  --color-plum: #5e2e52; /* Da — Amethyst Plum */
-  --color-teal-swara: #0e5a63; /* Ma — Peacock Teal */
-  --color-emerald-swara: #14604e; /* Ga */
-  --color-ochre: #c57b26; /* Ri */
-  --color-alta: #d64027; /* Alta Vermillion — sparks only */
+  --color-sanctum: #f7f2e6; /* unbleached silk */
+  --color-charcoal: #fdfbf3; /* raised silk (cards) */
+  --color-granite: #ddd3b9; /* woven border */
+  --color-basalt: #a79c82;
+  --color-gold: #a47e22; /* zari thread */
+  --color-goldhi: #c9a24b; /* zari catching light */
+  --color-goldlo: #77621c; /* zari in shadow */
+  --color-ivory: #241f15; /* INK — primary text */
+  --color-ash: #6f6650; /* secondary text */
+  --color-sand: #efe7d0; /* deep silk panels */
+  --color-kumkum: #8e1b1e; /* arakku — lac red */
+  --color-msblue: #1d2e63; /* MS Blue — the sabha's own colour */
+  --color-msdeep: #16244e; /* MS Blue in shadow */
+  --color-plum: #5e2e52;
+  --color-teal-swara: #0e5a63;
+  --color-emerald-swara: #14604e;
+  --color-ochre: #c57b26;
+  --color-alta: #d64027;
 
   --font-display: "Fraunces", "Georgia", serif;
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
@@ -39,7 +52,7 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 ::selection {
-  background: color-mix(in srgb, var(--color-gold) 35%, transparent);
+  background: color-mix(in srgb, var(--color-msblue) 22%, transparent);
   color: var(--color-ivory);
 }
 ::-webkit-scrollbar {
@@ -53,22 +66,26 @@ body {
   border-radius: 5px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-goldlo);
+  background: var(--color-gold);
 }
 
 /* ── Utilities ─────────────────────────────────────────────────────────────── */
 
-/* Museum-placard eyebrow (Bible §10.3) */
+/* Museum-placard eyebrow */
 .eyebrow {
   font-family: var(--font-sans);
   font-size: 0.72rem;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: var(--color-gold);
-  font-weight: 500;
+  color: var(--color-kumkum);
+  font-weight: 600;
+}
+/* on blue fields the eyebrow turns to zari */
+.on-blue .eyebrow {
+  color: var(--color-goldhi);
 }
 
-/* Gold behaving as lit metal — 3-stop gradient text (Bible §5.2) */
+/* Zari behaving as woven thread — 3-stop gradient text, dark enough for silk */
 .gold-text {
   background: linear-gradient(
     170deg,
@@ -81,7 +98,13 @@ body {
   color: transparent;
 }
 
-/* Thin gold hairline (BOR-05) */
+/* Italic accent word inside ink display type — the lac-red thread */
+.accent-ital {
+  font-style: italic;
+  color: var(--color-kumkum);
+}
+
+/* Thin zari hairline */
 .gold-hairline {
   height: 1px;
   background: linear-gradient(
@@ -94,16 +117,43 @@ body {
   );
 }
 
-/* Kolam pulli dot-grid background (KOL-01) — felt, not seen */
+/* ── THE SIGNATURE · korvai temple-tooth border ────────────────────────────
+   The contrast border of a Kanchipuram silk: a strip of arakku red carrying
+   a row of zari triangles ("temple teeth"), edged by MS Blue selvages.
+   Drawn entirely with gradients — no images, scales to any width.          */
+.korvai {
+  height: 26px;
+  background-color: var(--color-kumkum);
+  background-image: conic-gradient(
+    from 240deg at 50% 78%,
+    transparent 0deg 60deg,
+    var(--color-goldhi) 60deg 120deg,
+    transparent 120deg 360deg
+  );
+  background-size: 26px 100%;
+  background-repeat: repeat-x;
+  border-top: 3px solid var(--color-msblue);
+  border-bottom: 3px solid var(--color-msblue);
+}
+.korvai--flip {
+  transform: scaleY(-1);
+}
+
+/* Temple-niche arch — portraits sit in it like icons in a sabha wall */
+.arch {
+  border-radius: 999px 999px 0 0;
+}
+
+/* Kolam pulli dot-grid — kept, recoloured to thread on silk */
 .kolam-dots {
   background-image: radial-gradient(
-    color-mix(in srgb, var(--color-gold) 14%, transparent) 1px,
+    color-mix(in srgb, var(--color-gold) 22%, transparent) 1px,
     transparent 1px
   );
   background-size: 26px 26px;
 }
 
-/* Primary CTA — brass border, gold light "ignites" L→R on hover (Bible §13) */
+/* Primary CTA — arakku field, zari border, silk text; presses like a stamp */
 .btn-brass {
   position: relative;
   display: inline-flex;
@@ -114,66 +164,67 @@ body {
   font-size: 0.78rem;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--color-goldhi);
-  border: 1px solid color-mix(in srgb, var(--color-gold) 55%, transparent);
-  background: linear-gradient(
-      120deg,
-      color-mix(in srgb, var(--color-gold) 22%, transparent),
-      color-mix(in srgb, var(--color-gold) 8%, transparent)
-    )
-    no-repeat;
-  background-size: 0% 100%;
-  cursor: pointer;
+  font-weight: 600;
+  color: #f7f2e6;
+  background: var(--color-kumkum);
+  border: 1px solid color-mix(in srgb, var(--color-goldhi) 65%, transparent);
+  box-shadow: 0 2px 0 var(--color-msdeep);
   transition:
-    background-size 0.5s cubic-bezier(0.22, 1, 0.36, 1),
-    border-color 0.3s,
-    color 0.3s,
-    box-shadow 0.5s;
+    transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+    background-color 0.35s;
 }
 .btn-brass:hover {
-  background-size: 100% 100%;
-  border-color: var(--color-gold);
-  color: var(--color-ivory);
-  box-shadow: 0 0 32px color-mix(in srgb, var(--color-gold) 25%, transparent);
+  background: #a02226;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 0 var(--color-msdeep);
+}
+.btn-brass:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 0 var(--color-msdeep);
 }
 .btn-brass--ghost {
-  border-color: color-mix(in srgb, var(--color-ivory) 25%, transparent);
-  color: var(--color-ivory);
+  background: transparent;
+  color: var(--color-msblue);
+  border: 1px solid color-mix(in srgb, var(--color-msblue) 55%, transparent);
+  box-shadow: 0 2px 0 color-mix(in srgb, var(--color-msblue) 35%, transparent);
+}
+.btn-brass--ghost:hover {
+  background: color-mix(in srgb, var(--color-msblue) 8%, transparent);
+  color: var(--color-msdeep);
 }
 
-/* Link underline draws itself like a kolam stroke */
+/* Underline that draws itself on hover / active */
 .draw-link {
   position: relative;
-  padding-bottom: 3px;
 }
 .draw-link::after {
   content: "";
   position: absolute;
   left: 0;
-  bottom: 0;
+  bottom: -4px;
   height: 1px;
   width: 100%;
-  background: var(--color-gold);
+  background: currentColor;
   transform: scaleX(0);
   transform-origin: left;
-  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .draw-link:hover::after,
 .draw-link.active::after {
   transform: scaleX(1);
 }
 
-/* Global film grain (Bible §14 — "shot on film" cohesion) */
+/* Film grain — much quieter on silk than it was on black */
 .grain-overlay {
   position: fixed;
   inset: 0;
-  z-index: 60;
+  z-index: 90;
   pointer-events: none;
   opacity: 0.05;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
-/* Tala-pulse — slow 7s ambient breathing (Bible §13) */
 @keyframes tala-pulse {
   0%,
   100% {
@@ -182,24 +233,24 @@ body {
   }
   50% {
     opacity: 1;
-    transform: scale(1.04);
+    transform: scale(1.12);
   }
 }
 .tala-pulse {
-  animation: tala-pulse 7s ease-in-out infinite;
+  animation: tala-pulse 2.6s ease-in-out infinite;
 }
 
-/* Drifting gold-dust motes (PAR-01) */
+/* drifting motes — pollen in daylight rather than gold dust in the dark */
 @keyframes mote-drift {
   0% {
-    transform: translateY(8vh) translateX(0);
+    transform: translateY(15vh) translateX(0);
     opacity: 0;
   }
   12% {
-    opacity: var(--mote-o, 0.7);
+    opacity: var(--mote-o, 0.4);
   }
   88% {
-    opacity: var(--mote-o, 0.7);
+    opacity: var(--mote-o, 0.4);
   }
   100% {
     transform: translateY(-92vh) translateX(var(--mote-x, 20px));
@@ -210,64 +261,15 @@ body {
   position: absolute;
   bottom: 0;
   border-radius: 9999px;
-  background: radial-gradient(circle, #ebd08a 0%, rgba(201, 162, 75, 0.35) 55%, transparent 75%);
+  background: var(--color-gold);
+  filter: blur(0.5px);
   animation: mote-drift linear infinite;
-  pointer-events: none;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .tala-pulse,
-  .mote {
-    animation: none;
-  }
-  html {
-    scroll-behavior: auto;
-  }
-}
-
-/* ── Reduced motion ────────────────────────────────────────────────────────
-   Motion components already branch on useReducedMotion(), but CSS-driven
-   animation (the gold motes, the tala pulse, the grain drift) lives outside
-   React and needs its own answer. Near-zero rather than `none` so anything
-   that waits on animationend/transitionend still fires and does not hang.   */
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
-  html {
-    scroll-behavior: auto;
-  }
-}
-
-/* Keyboard users must be able to see where they are. */
-:focus-visible {
-  outline: 2px solid var(--color-gold);
-  outline-offset: 3px;
-  border-radius: 2px;
-}
-
-/* Images must never be the reason the page reflows. */
-img,
-video {
-  max-width: 100%;
-  height: auto;
-}
-
-/* ── The seven swaras (Vision) ─────────────────────────────────────────────
-   Gold columns breathing like a held chord. scaleY only — compositor-safe.  */
+/* ── The seven swaras (Vision) — zari columns on MS Blue ─────────────────── */
 .swara-bar {
-  background: linear-gradient(
-    to top,
-    var(--color-goldlo),
-    var(--color-gold) 55%,
-    var(--color-goldhi)
-  );
-  box-shadow: 0 0 18px rgba(201, 162, 75, 0.25);
+  background: linear-gradient(to top, var(--color-gold), var(--color-goldhi) 55%, #e7c568);
+  box-shadow: 0 0 18px rgba(201, 162, 75, 0.35);
   animation: swara-breathe 3.6s ease-in-out infinite;
 }
 @keyframes swara-breathe {
@@ -277,11 +279,6 @@ video {
   }
   50% {
     transform: scaleY(0.82);
-  }
-}
-@media (prefers-reduced-motion: reduce) {
-  .swara-bar {
-    animation: none;
   }
 }
 
@@ -300,9 +297,9 @@ html.lenis body {
   overflow: hidden;
 }
 
-/* ── The ember cursor ──────────────────────────────────────────────────────
-   Native cursor hides ONLY while the ember component is mounted; text fields
-   keep the I-beam — losing it there is disorienting, not premium.           */
+/* ── The kumkum cursor ─────────────────────────────────────────────────────
+   Native cursor hides ONLY while the component is mounted; text fields keep
+   the I-beam — losing it there is disorienting, not premium.               */
 html.has-ember,
 html.has-ember a,
 html.has-ember button {
@@ -314,12 +311,10 @@ html.has-ember select {
   cursor: auto;
 }
 
-/* ── The processional (marquee) ────────────────────────────────────────────
-   Stroke-only type so it reads as relief carving, not as a headline.
-   transform loop; duplicated track makes -50% seamless.                     */
+/* ── The processional (marquee) — stroke-only MS Blue on silk ──────────────── */
 .marquee-word {
   color: transparent;
-  -webkit-text-stroke: 1px color-mix(in srgb, var(--color-goldlo) 75%, transparent);
+  -webkit-text-stroke: 1px color-mix(in srgb, var(--color-msblue) 55%, transparent);
   letter-spacing: 0.04em;
 }
 .marquee-track {
@@ -337,8 +332,40 @@ html.has-ember select {
     transform: translateX(-50%);
   }
 }
+
+/* ── Reduced motion ────────────────────────────────────────────────────────
+   Motion components already branch on useReducedMotion(), but CSS-driven
+   animation lives outside React and needs its own answer. Near-zero rather
+   than `none` so animationend/transitionend listeners still fire.          */
 @media (prefers-reduced-motion: reduce) {
-  .marquee-track {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+  .swara-bar,
+  .marquee-track,
+  .mote {
     animation: none;
   }
+}
+
+/* Keyboard users must be able to see where they are. */
+:focus-visible {
+  outline: 2px solid var(--color-msblue);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* Images must never be the reason the page reflows. */
+img,
+video {
+  max-width: 100%;
+  height: auto;
 }

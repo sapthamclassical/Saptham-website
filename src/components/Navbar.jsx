@@ -55,7 +55,7 @@ const Navbar = () => {
           >
             <SapthamMark size={34} title="" />
           </Motion.span>
-          <span className="font-display gold-text text-xl font-medium tracking-[0.14em] sm:text-2xl">
+          <span className="font-display text-xl font-medium tracking-[0.14em] text-ivory sm:text-2xl">
             SAPTHAM
           </span>
         </Link>
@@ -69,7 +69,7 @@ const Navbar = () => {
               end={l.to === "/"}
               className={({ isActive }) =>
                 `draw-link text-[0.68rem] font-medium tracking-[0.18em] whitespace-nowrap uppercase transition-colors duration-300 ${
-                  isActive ? "active text-gold" : "text-ivory/70 hover:text-ivory"
+                  isActive ? "active text-kumkum" : "text-ivory/70 hover:text-ivory"
                 }`
               }
             >
@@ -86,10 +86,10 @@ const Navbar = () => {
           aria-expanded={open}
         >
           <span
-            className={`block h-px w-6 bg-gold transition-transform duration-300 ${open ? "translate-y-[3.5px] rotate-45" : ""}`}
+            className={`block h-px w-6 bg-kumkum transition-transform duration-300 ${open ? "translate-y-[3.5px] rotate-45" : ""}`}
           />
           <span
-            className={`block h-px w-6 bg-gold transition-transform duration-300 ${open ? "-translate-y-[3.5px] -rotate-45" : ""}`}
+            className={`block h-px w-6 bg-kumkum transition-transform duration-300 ${open ? "-translate-y-[3.5px] -rotate-45" : ""}`}
           />
         </button>
       </nav>
@@ -119,7 +119,7 @@ const Navbar = () => {
                     to={l.to}
                     end={l.to === "/"}
                     className={({ isActive }) =>
-                      `block py-3 font-display text-2xl ${isActive ? "gold-text" : "text-ivory/80"}`
+                      `block py-3 font-display text-2xl ${isActive ? "text-kumkum italic" : "text-ivory/80"}`
                     }
                   >
                     {l.label}

@@ -91,7 +91,7 @@ const Gallery = () => {
       <AnimatePresence>
         {lightbox !== null && (
           <Motion.div
-            className="fixed inset-0 z-[70] flex items-center justify-center bg-sanctum/95 p-4 backdrop-blur-sm"
+            className="fixed inset-0 z-[70] flex items-center justify-center bg-msdeep/95 p-4 backdrop-blur-sm"
             role="dialog"
             aria-modal="true"
             initial={{ opacity: 0 }}
@@ -126,14 +126,14 @@ const Gallery = () => {
 
               <button
                 onClick={() => setLightbox((i) => (i - 1 + images.length) % images.length)}
-                className="absolute top-1/2 -left-2 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-granite bg-sanctum/70 text-gold transition-all hover:border-gold md:-left-16"
+                className="absolute top-1/2 -left-2 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-goldhi/40 bg-msdeep/70 text-goldhi transition-all hover:border-goldhi md:-left-16"
                 aria-label="Previous image"
               >
                 ←
               </button>
               <button
                 onClick={() => setLightbox((i) => (i + 1) % images.length)}
-                className="absolute top-1/2 -right-2 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-granite bg-sanctum/70 text-gold transition-all hover:border-gold md:-right-16"
+                className="absolute top-1/2 -right-2 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-goldhi/40 bg-msdeep/70 text-goldhi transition-all hover:border-goldhi md:-right-16"
                 aria-label="Next image"
               >
                 →

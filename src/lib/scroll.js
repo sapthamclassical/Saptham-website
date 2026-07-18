@@ -34,6 +34,16 @@ export function scrollToTop() {
   else window.scrollTo({ top: 0, left: 0, behavior: "instant" });
 }
 
+/**
+ * Scroll to an element (hash anchors). MUST go through Lenis when it is
+ * active: a native scrollIntoView only sets scrollTop, and Lenis lerps right
+ * back to its own target on the next frame — the page visibly snaps back.
+ */
+export function scrollToEl(el) {
+  if (lenis) lenis.scrollTo(el, { offset: -84 });
+  else el.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
 /** Pause/resume user scrolling (used while the Overture holds the stage). */
 export function lockScroll(locked) {
   if (lenis) {

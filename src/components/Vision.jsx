@@ -42,7 +42,7 @@ const SwaraBar = ({ swara, index }) => {
   const still = useReducedMotion();
   return (
     <div className="flex flex-1 flex-col items-center gap-3">
-      <span className="font-tamil text-sm text-gold/60">{swara.tamil}</span>
+      <span className="font-tamil text-sm text-goldhi/70">{swara.tamil}</span>
       <div className="relative flex h-44 w-full items-end justify-center md:h-56">
         <Motion.div
           className="swara-bar w-2.5 rounded-full md:w-3"
@@ -57,7 +57,7 @@ const SwaraBar = ({ swara, index }) => {
           transition={{ duration: 1.1, delay: 0.15 + index * 0.09, ease: EASE }}
         />
       </div>
-      <span className="text-[0.7rem] tracking-[0.24em] text-gold/70 uppercase">{swara.latin}</span>
+      <span className="text-[0.7rem] tracking-[0.24em] text-goldhi/80 uppercase">{swara.latin}</span>
     </div>
   );
 };
@@ -71,18 +71,18 @@ const Vision = () => (
           <div className="relative mx-auto max-w-md">
             {/* the mark, vast and faint behind the instrument */}
             <Parallax depth={28} className="pointer-events-none absolute inset-0 flex items-center justify-center">
-              <SapthamMark size={380} variant="mono" title="" className="text-gold opacity-[0.05]" />
+              <SapthamMark size={380} variant="mono" title="" className="text-msblue opacity-[0.06]" />
             </Parallax>
 
-            <div className="relative border border-granite/60 bg-charcoal/40 px-6 py-10 backdrop-blur-[2px] md:px-10">
-              <div className="pointer-events-none absolute inset-0 kolam-dots opacity-40" />
+            <div className="on-blue relative bg-msblue px-6 py-10 shadow-[0_24px_60px_rgba(22,36,78,0.3)] md:px-10">
+              
               <div className="relative flex items-end gap-2 md:gap-3">
                 {SWARAS.map((s, i) => (
                   <SwaraBar key={s.latin} swara={s} index={i} />
                 ))}
               </div>
               <div className="gold-hairline mt-8" />
-              <p className="eyebrow mt-4 text-center !text-[0.6rem] !text-basalt">
+              <p className="mt-4 text-center text-[0.6rem] tracking-[0.3em] text-goldhi/80 uppercase">
                 Sapta Swara · the seven notes
               </p>
             </div>

@@ -66,14 +66,14 @@ const Cursor = () => {
     <div className="pointer-events-none fixed inset-0 z-[110]" aria-hidden="true">
       {/* the point */}
       <Motion.div
-        className="absolute h-1.5 w-1.5 rounded-full bg-goldhi shadow-[0_0_10px_2px_rgba(235,208,138,0.55)]"
+        className="absolute h-1.5 w-1.5 rounded-full bg-kumkum shadow-[0_0_10px_2px_rgba(142,27,30,0.45)]"
         style={{ x, y, translateX: "-50%", translateY: "-50%" }}
         animate={{ scale: hot ? 0.4 : down ? 0.7 : 1 }}
         transition={{ type: "spring", stiffness: 400, damping: 26 }}
       />
       {/* the afterglow ring */}
       <Motion.div
-        className="absolute h-8 w-8 rounded-full border border-gold/50"
+        className="absolute h-8 w-8 rounded-full border border-msblue/50"
         style={{ x: rx, y: ry, translateX: "-50%", translateY: "-50%" }}
         animate={{ scale: hot ? 1.9 : down ? 0.8 : 1, opacity: hot ? 0.9 : 0.55 }}
         transition={{ type: "spring", stiffness: 260, damping: 24 }}
