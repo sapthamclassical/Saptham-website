@@ -1,0 +1,18 @@
+{
+  "run_id": "run-1784169244496",
+  "ts": "2026-07-16T02:34:04.761Z",
+  "target": "store:external STYLE-00",
+  "resolved_jobs": [
+    "STYLE-00"
+  ],
+  "policy": {
+    "provider": "openart"
+  },
+  "totals": {
+    "cost": 0,
+    "count": 0,
+    "retries": 0,
+    "duration": 0
+  },
+  "dlq_count": 0
+}

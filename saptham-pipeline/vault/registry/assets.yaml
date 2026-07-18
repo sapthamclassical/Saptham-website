@@ -1,0 +1,3429 @@
+assets:
+  - id: BRD-01
+    name: Primary Monogram
+    category: brand
+    sections_raw:
+      - GLOBAL
+    priority: C
+    static_animated: S
+    modality: vector-source
+    transparent_bg: true
+    resolution: vector
+    reuse: Global
+    can_3d: "~"
+    derives_from: null
+    batch: b01-brand-marks-icons
+    family: A
+    scenes:
+      - "00"
+  - id: BRD-02
+    name: Wordmark (Latin)
+    category: brand
+    sections_raw:
+      - GLOBAL
+    priority: C
+    static_animated: S
+    modality: vector-source
+    transparent_bg: true
+    resolution: vector
+    reuse: Global
+    can_3d: "~"
+    derives_from: null
+    batch: b01-brand-marks-icons
+    family: A
+    scenes:
+      - "01"
+  - id: BRD-03
+    name: Wordmark (Tamil)
+    category: brand
+    sections_raw:
+      - GLOBAL
+    priority: C
+    static_animated: S
+    modality: vector-source
+    transparent_bg: true
+    resolution: vector
+    reuse: Global
+    can_3d: "~"
+    derives_from: null
+    batch: b01-brand-marks-icons
+    family: A
+    scenes:
+      - "01"
+      - "14"
+  - id: BRD-04
+    name: Bilingual Lockup
+    category: brand
+    sections_raw:
+      - HERO
+      - FOOTER
+    priority: H
+    static_animated: S
+    modality: vector-source
+    transparent_bg: true
+    resolution: vector
+    reuse: Global
+    can_3d: "~"
+    derives_from: null
+    batch: b01-brand-marks-icons
+    family: A
+    scenes:
+      - "14"
+  - id: BRD-05
+    name: Reversed / Mono Set
+    category: brand
+    sections_raw:
+      - GLOBAL
+    priority: C
+    static_animated: S
+    modality: vector-source
+    transparent_bg: variant
+    resolution: vector
+    reuse: Global
+    can_3d: "~"
+    derives_from: null
+    batch: b01-brand-marks-icons
+    family: A
+    scenes: []
+  - id: BRD-06
+    name: Logo on Brass (lit)
+    category: brand
+    sections_raw:
+      - HERO
+      - FOOTER
+    priority: H
+    static_animated: S
+    modality: image
+    transparent_bg: true
+    resolution: 2K
+    reuse: Global
+    can_3d: Y
+    derives_from: null
+    batch: b07-lit-metal-hero
+    family: B
+    scenes: []
+  - id: BRD-07
+    name: Logo Bloom
+    category: brand
+    sections_raw:
+      - GLOBAL
+    priority: H
+    static_animated: A
+    modality: vector-source
+    transparent_bg: true
+    resolution: vector
+    reuse: Global
+    can_3d: "~"
+    derives_from: null
+    batch: b14-motion-audio
+    family: assembly
+    scenes: []
+  - id: BRD-08
+    name: Favicon / Touch Set
+    category: brand
+    sections_raw:
+      - GLOBAL
+    priority: C
+    static_animated: S
+    modality: image
+    transparent_bg: true
+    resolution: vector
+    reuse: Global
+    can_3d: "~"
+    derives_from: null
+    batch: b01-brand-marks-icons
+    family: A
+    scenes: []
+  - id: BRD-09
+    name: OG / Share Card Template
+    category: brand
+    sections_raw:
+      - GLOBAL
+    priority: C
+    static_animated: S
+    modality: image
+    transparent_bg: false
+    resolution: 1200×630
+    reuse: Multi
+    can_3d: "~"
+    derives_from: null
+    batch: b11-social-marketing-templates
+    family: assembly
+    scenes: []
+  - id: HERO-01
+    name: Hero Master Composition (Desktop)
+    category: hero
+    sections_raw:
+      - HERO
+    priority: C
+    static_animated: S+A
+    modality: image
+    transparent_bg: variant
+    resolution: 3840×2160
+    reuse: Single
+    can_3d: Y
+    derives_from: null
+    batch: b09-hero-composite-scenes
+    family: B
+    scenes:
+      - "01"
+  - id: HERO-02
+    name: Hero Master Composition (Mobile)
+    category: hero
+    sections_raw:
+      - HERO
+    priority: C
+    static_animated: S+A
+    modality: image
+    transparent_bg: variant
+    resolution: 2160×3840
+    reuse: Single
+    can_3d: Y
+    derives_from: null
+    batch: b09-hero-composite-scenes
+    family: B
+    scenes:
+      - "01"
+  - id: HERO-03
+    name: Hero Silk/Light Field
+    category: hero
+    sections_raw:
+      - HERO
+    priority: C
+    static_animated: S+A
+    modality: image
+    transparent_bg: variant
+    resolution: 3840×2160
+    reuse: Multi
+    can_3d: Y
+    derives_from: null
+    batch: b08-cinematic-atmosphere-backgrounds
+    family: B
+    scenes:
+      - "01"
+  - id: HERO-04
+    name: Hero Foreground Plate
+    category: hero
+    sections_raw:
+      - HERO
+    priority: H
+    static_animated: S
+    modality: image
+    transparent_bg: true
+    resolution: 3840×2160
+    reuse: Single
+    can_3d: Y
+    derives_from: null
+    batch: b09-hero-composite-scenes
+    family: B
+    scenes: []
+  - id: HERO-05
+    name: Hero 3D Stage Scene
+    category: hero
+    sections_raw:
+      - HERO
+    priority: L
+    static_animated: S+A
+    modality: 3d-ref
+    transparent_bg: variant
+    resolution: 3840×2160
+    reuse: Single
+    can_3d: Y
+    derives_from: null
+    batch: null
+    family: null
+    scenes: []
+  - id: HERO-06
+    name: Hero Wordmark Reveal
+    category: hero
+    sections_raw:
+      - HERO
+    priority: C
+    static_animated: A
+    modality: vector-source
+    transparent_bg: variant
+    resolution: 3840×2160
+    reuse: Single
+    can_3d: Y
+    derives_from: null
+    batch: b14-motion-audio
+    family: assembly
+    scenes:
+      - "01"
+  - id: HERO-07
+    name: Hero Scroll Cue
+    category: hero
+    sections_raw:
+      - HERO
+    priority: C
+    static_animated: A
+    modality: vector-source
+    transparent_bg: variant
+    resolution: 3840×2160
+    reuse: Global
+    can_3d: Y
+    derives_from: null
+    batch: b01-brand-marks-icons
+    family: A
+    scenes: []
+  - id: HERO-08
+    name: Hero Particle Layer
+    category: hero
+    sections_raw:
+      - HERO
+    priority: H
+    static_animated: A
+    modality: image
+    transparent_bg: true
+    resolution: 3840×2160
+    reuse: Single
+    can_3d: Y
+    derives_from: null
+    batch: b08-cinematic-atmosphere-backgrounds
+    family: B
+    scenes: []
+  - id: HERO-09
+    name: Hero God-Ray Overlay
+    category: hero
+    sections_raw:
+      - HERO
+    priority: H
+    static_animated: S+A
+    modality: image
+    transparent_bg: true
+    resolution: 3840×2160
+    reuse: Multi
+    can_3d: Y
+    derives_from: null
+    batch: b08-cinematic-atmosphere-backgrounds
+    family: B
+    scenes: []
+  - id: HERO-10
+    name: Hero Vignette
+    category: hero
+    sections_raw:
+      - HERO
+    priority: H
+    static_animated: S
+    modality: image
+    transparent_bg: true
+    resolution: 3840×2160
+    reuse: Global
+    can_3d: Y
+    derives_from: null
+    batch: b08-cinematic-atmosphere-backgrounds
+    family: B
+    scenes: []
+  - id: HERO-11
+    name: Hero Film Loop
+    category: hero
+    sections_raw:
+      - HERO
+    priority: H
+    static_animated: A
+    modality: video
+    transparent_bg: variant
+    resolution: 3840×2160
+    reuse: Single
+    can_3d: Y
+    derives_from: null
+    batch: b10-art-directed-photography
+    family: photo
+    scenes: []
+  - id: HERO-12
+    name: Hero Parallax Layer Set
+    category: hero
+    sections_raw:
+      - HERO
+    priority: H
+    static_animated: S
+    modality: image
+    transparent_bg: true
+    resolution: 3840×2160
+    reuse: Single
+    can_3d: Y
+    derives_from: null
+    batch: b08-cinematic-atmosphere-backgrounds
+    family: B
+    scenes: []
+  - id: INS-01
+    name: Instrument Icon Set (7)
+    category: ins
+    sections_raw:
+      - GLOBAL
+      - VISION
+      - EVENTS
+    priority: C
+    static_animated: S
+    modality: vector-source
+    transparent_bg: true
+    resolution: vector
+    reuse: Global
+    can_3d: Y
+    derives_from: null
+    batch: b01-brand-marks-icons
+    family: A
+    scenes:
+      - "02"
+  - id: INS-02
+    name: Veena Hero Line Illustration
+    category: ins
+    sections_raw:
+      - HERO
+      - VISION
+    priority: H
+    static_animated: S+A
+    modality: vector-source
+    transparent_bg: true
+    resolution: vector
+    reuse: Multi
+    can_3d: Y
+    derives_from: null
+    batch: b02-kolam-borders-geometry
+    family: A
+    scenes: []
+  - id: INS-03
+    name: Veena Yali-Head Ornament
+    category: ins
+    sections_raw:
+      - GLOBAL
+    priority: H
+    static_animated: S
+    modality: vector-source
+    transparent_bg: true
+    resolution: vector
+    reuse: Multi
+    can_3d: Y
+    derives_from: null
+    batch: b02-kolam-borders-geometry
+    family: A
+    scenes: []
+  - id: INS-04
+    name: Veena Brass Render
+    category: ins
+    sections_raw:
+      - HERO
+      - EVENTS
+    priority: H
+    static_animated: S
+    modality: image
+    transparent_bg: true
+    resolution: 4K
+    reuse: Multi
+    can_3d: Y
+    derives_from: null
+    batch: b07-lit-metal-hero
+    family: B
+    scenes:
+      - "01"
+  - id: INS-05
+    name: Mridangam Render
+    category: ins
+    sections_raw:
+      - EVENTS
+    priority: H
+    static_animated: S
+    modality: image
+    transparent_bg: true
+    resolution: 4K
+    reuse: Multi
+    can_3d: Y
+    derives_from: null
+    batch: b07-lit-metal-hero
+    family: B
+    scenes: []
+  - id: INS-06
+    name: Ghatam Render
+    category: ins
+    sections_raw:
+      - EVENTS
+    priority: M
+    static_animated: S
+    modality: image
+    transparent_bg: true
+    resolution: 4K
+    reuse: Multi
+    can_3d: Y
+    derives_from: null
+    batch: b07-lit-metal-hero
+    family: B
+    scenes: []
+  - id: INS-07
+    name: Temple Jewelry Renders (4)
+    category: ins
+    sections_raw:
+      - OB
+      - ALUMNI
+    priority: M
+    static_animated: S
+    modality: image
+    transparent_bg: true
+    resolution: 4K
+    reuse: Multi
+    can_3d: Y
+    derives_from: null
+    batch: b07-lit-metal-hero
+    family: B
+    scenes: []
+  - id: INS-08
+    name: Veena Silhouette
+    category: ins
+    sections_raw:
+      - EVENTS
+      - GALLERY
+    priority: M
+    static_animated: S
+    modality: image
+    transparent_bg: true
+    resolution: 4K
+    reuse: Multi
+    can_3d: Y
+    derives_from: null
+    batch: b06-silhouettes-figurative-shapes
+    family: B
+    scenes: []
+  - id: INS-09
+    name: Tambura Silhouette
+    category: ins
+    sections_raw:
+      - LEGACY
+      - FOOTER
+    priority: M
+    static_animated: S
+    modality: image
+    transparent_bg: true
+    resolution: 4K
+    reuse: Multi
+    can_3d: Y
+    derives_from: null
+    batch: b06-silhouettes-figurative-shapes
+    family: B
+    scenes: []
+  - id: INS-10
+    name: Ensemble Silhouette
+    category: ins
+    sections_raw:
+      - EVENTS
+      - GALLERY
+    priority: M
+    static_animated: S
+    modality: image
+    transparent_bg: false
+    resolution: 4K
+    reuse: Multi
+    can_3d: Y
+    derives_from: null
+    batch: b06-silhouettes-figurative-shapes
+    family: B
+    scenes: []
+  - id: INS-11
+    name: Tambura Drone Waveform
+    category: ins
+    sections_raw:
+      - GLOBAL
+    priority: H
+    static_animated: A
+    modality: vector-source
+    transparent_bg: true
+    resolution: vector
+    reuse: Multi
+    can_3d: N
+    derives_from: null
+    batch: b14-motion-audio
+    family: assembly
+    scenes: []
+  - id: INS-12
+    name: Mridangam Pulse-Rings
+    category: ins
+    sections_raw:
+      - GLOBAL
+    priority: H
+    static_animated: A
+    modality: vector-source
+    transparent_bg: true
+    resolution: vector
+    reuse: Multi
+    can_3d: N
+    derives_from: null
+    batch: b14-motion-audio
+    family: assembly
+    scenes:
+      - "02"
+  - id: INS-13
+    name: Instrument Sound-Forms (2)
+    category: ins
+    sections_raw:
+      - HERO
+      - EVENTS
+    priority: L
+    static_animated: A
+    modality: vector-source
+    transparent_bg: true
+    resolution: vector
+    reuse: Multi
+    can_3d: N
+    derives_from: null
+    batch: b14-motion-audio
+    family: assembly
+    scenes: []
+  - id: BN-01
+    name: Mudra Icon Set (9)
+    category: bn
+    sections_raw:
+      - GLOBAL
+    priority: C
+    static_animated: S
+    modality: vector-source
+    transparent_bg: true
+    resolution: vector
+    reuse: Global
+    can_3d: "~"
+    derives_from: null
+    batch: b01-brand-marks-icons
+    family: A
+    scenes:
+      - "02"
+      - "07"
+  - id: BN-02
+    name: Alapadma Bloom Reveal
+    category: bn
+    sections_raw:
+      - GLOBAL
+      - HERO
+    priority: H
+    static_animated: A
+    modality: vector-source
+    transparent_bg: true
+    resolution: vector
+    reuse: Multi
+    can_3d: "~"
+    derives_from: null
+    batch: b14-motion-audio
+    family: assembly
+    scenes: []
+  - id: BN-03
+    name: Anjali Emblem
+    category: bn
+    sections_raw:
+      - FOOTER
+      - CONTACT
+      - JOIN
+    priority: H
+    static_animated: S
+    modality: vector-source
+    transparent_bg: true
+    resolution: vector
+    reuse: Multi
+    can_3d: "~"
+    derives_from: null
+    batch: b02-kolam-borders-geometry
+    family: A
+    scenes:
+      - "14"
+  - id: BN-04
+    name: Dancer Silhouette — Araimandi
+    category: bn
+    sections_raw:
+      - HERO
+      - EVENTS
+    priority: H
+    static_animated: S
+    modality: image
+    transparent_bg: true
+    resolution: 4K
+    reuse: Multi
+    can_3d: Y
+    derives_from: null
+    batch: b06-silhouettes-figurative-shapes
+    family: B
+    scenes: []
+  - id: BN-05
+    name: Dancer Silhouette — Tribhanga
+    category: bn
+    sections_raw:
+      - VISION
+      - GALLERY
+    priority: M
+    static_animated: S
+    modality: image
+    transparent_bg: true
+    resolution: 4K
+    reuse: Multi
+    can_3d: Y
+    derives_from: null
+    batch: b06-silhouettes-figurative-shapes
+    family: B
+    scenes: []
+  - id: BN-06
+    name: Dancer Spin Motion Clip
+    category: bn
+    sections_raw:
+      - HERO
+      - EVENTS
+    priority: H
+    static_animated: A
+    modality: video
+    transparent_bg: variant
+    resolution: vector
+    reuse: Multi
+    can_3d: "~"
+    derives_from: null
+    batch: b10-art-directed-photography
+    family: photo
+    scenes: []
+  - id: BN-07
+    name: Ghungroo Icon + Shimmer
+    category: bn
+    sections_raw:
+      - JOIN
+      - EVENTS
+    priority: M
+    static_animated: S+A
+    modality: vector-source
+    transparent_bg: true
+    resolution: vector
+    reuse: Multi
+    can_3d: "~"
+    derives_from: null
+    batch: b01-brand-marks-icons
+    family: A
+    scenes: []
+  - id: BN-08
+    name: Pambara Radial Motif
+    category: bn
+    sections_raw:
+      - GLOBAL
+    priority: H
+    static_animated: S+A
+    modality: vector-source
+    transparent_bg: true
+    resolution: vector
+    reuse: Multi
+    can_3d: Y
+    derives_from: null
+    batch: b02-kolam-borders-geometry
+    family: A
+    scenes:
+      - "12"
+  - id: BN-09
+    name: Alta Feet + Kolam Plate
+    category: bn
+    sections_raw:
+      - GALLERY
+      - LEGACY
+    priority: M
+    static_animated: S
+    modality: image
+    transparent_bg: variant
+    resolution: "2560"
+    reuse: Multi
+    can_3d: "~"
+    derives_from: null
+    batch: b10-art-directed-photography
+    family: photo
+    scenes: []
+  - id: BN-10
+    name: Costume Fabric Detail
+    category: bn
+    sections_raw:
+      - EVENTS
+      - ALUMNI
+    priority: M
+    static_animated: S
+    modality: image
+    transparent_bg: false
+    resolution: 4K
+    reuse: Multi
+    can_3d: "~"
+    derives_from: null
+    batch: b08-cinematic-atmosphere-backgrounds
+    family: B
+    scenes: []
+  - id: BN-11
+    name: Abhinaya Eyes Interactive
+    category: bn
+    sections_raw:
+      - HERO
+      - GLOBAL
+    priority: L
+    static_animated: A
+    modality: vector-source
+    transparent_bg: true
+    resolution: vector
+    reuse: Multi
+    can_3d: N
+    derives_from: null
+    batch: null
+    family: null
+    scenes: []
+  - id: ARC-01
+    name: Gopuram Silhouette
+    category: arc
+    sections_raw:
+      - HERO
+      - LEGACY
+    priority: H
+    static_animated: S
+    modality: image
+    transparent_bg: true
+    resolution: 3840px
+    reuse: Multi
+    can_3d: Y
+    derives_from: null
+    batch: b06-silhouettes-figurative-shapes
+    family: B
+    scenes:
+      - "04"
+  - id: ARC-02
+    name: Gopuram Tier Timeline Graphic
+    category: arc
+    sections_raw:
+      - LEGACY
+    priority: H
+    static_animated: S+A
+    modality: vector-source
+    transparent_bg: variant
+    resolution: 3840px
+    reuse: Multi
+    can_3d: Y
+    derives_from: null
+    batch: b08-cinematic-atmosphere-backgrounds
+    family: B
+    scenes:
+      - "04"
+  - id: ARC-03
+    name: Pointed Arch Frame (3 ratios)
+    category: arc
+    sections_raw:
+      - EVENTS
+      - ALUMNI
+      - GALLERY
+    priority: H
+    static_animated: S
+    modality: vector-source
+    transparent_bg: true
+    resolution: 3840px
+    reuse: Multi
+    can_3d: Y
+    derives_from: null
+    batch: null
+    family: null
+    scenes:
+      - "06"
+      - "09"
+  - id: ARC-04
+    name: Colonnade / Pillar Divider
+    category: arc
+    sections_raw:
+      - VISION
+      - EVENTS
+    priority: M
+    static_animated: S
+    modality: vector-source
+    transparent_bg: variant
+    resolution: 3840px
+    reuse: Multi
+    can_3d: Y
+    derives_from: null
+    batch: b08-cinematic-atmosphere-backgrounds
+    family: B
+    scenes:
+      - "07"
+  - id: ARC-05
+    name: Sanctum Doorway + Glow
+    category: arc
+    sections_raw:
+      - HERO
+      - thresholds
+    priority: H
+    static_animated: S+A
+    modality: image
+    transparent_bg: false
+    resolution: 4K
+    reuse: Multi
+    can_3d: Y
+    derives_from: null
+    batch: b08-cinematic-atmosphere-backgrounds
+    family: B
+    scenes: []
+  - id: ARC-06
+    name: Bas-Relief Band
+    category: arc
+    sections_raw:
+      - dividers
+    priority: M
+    static_animated: S
+    modality: image
+    transparent_bg: false
+    resolution: 2K
+    reuse: Multi
+    can_3d: Y
+    derives_from: null
+    batch: b04-material-texture-library
+    family: C-tex
+    scenes: []
+  - id: ARC-07
+    name: Gopuram 3D Model
+    category: arc
+    sections_raw:
+      - HERO
+      - LEGACY
+    priority: L
+    static_animated: S+A
+    modality: 3d-ref
+    transparent_bg: variant
+    resolution: 3840px
+    reuse: Multi
+    can_3d: Y
+    derives_from: null
+    batch: null
+    family: null
+    scenes: []
+  - id: ARC-08
+    name: Single Carved Pillar
+    category: arc
+    sections_raw:
+      - GLOBAL
+    priority: M
+    static_animated: S
+    modality: image
+    transparent_bg: true
+    resolution: 3840px
+    reuse: Multi
+    can_3d: Y
+    derives_from: null
+    batch: null
+    family: null
+    scenes: []
+  - id: KOL-01
+    name: Pulli Dot-Grid
+    category: kolam
+    sections_raw:
+      - GLOBAL
+    priority: C
+    static_animated: S
+    modality: vector-source
+    transparent_bg: true
+    resolution: vector
+    reuse: Global
+    can_3d: Y
+    derives_from: null
+    batch: b02-kolam-borders-geometry
+    family: A
+    scenes: []
+  - id: KOL-02
+    name: Self-Drawing Divider (3–5)
+    category: kolam
+    sections_raw:
+      - GLOBAL
+    priority: C
+    static_animated: A
+    modality: vector-source
+    transparent_bg: true
+    resolution: vector
+    reuse: Global
+    can_3d: Y
+    derives_from: null
+    batch: b14-motion-audio
+    family: assembly
+    scenes:
+      - "02"
+  - id: KOL-03
+    name: Kolam Loader
+    category: kolam
+    sections_raw:
+      - GLOBAL
+    priority: H
+    static_animated: A
+    modality: vector-source
+    transparent_bg: true
+    resolution: vector
+    reuse: Global
+    can_3d: Y
+    derives_from: null
+    batch: b14-motion-audio
+    family: assembly
+    scenes: []
+  - id: KOL-04
+    name: Generative Kolam Transition
+    category: kolam
+    sections_raw:
+      - thresholds
+    priority: H
+    static_animated: A
+    modality: vector-source
+    transparent_bg: true
+    resolution: vector
+    reuse: Global
+    can_3d: Y
+    derives_from: null
+    batch: b14-motion-audio
+    family: assembly
+    scenes: []
+  - id: KOL-05
+    name: Kolam Corner Ornaments
+    category: kolam
+    sections_raw:
+      - cards
+    priority: M
+    static_animated: S
+    modality: vector-source
+    transparent_bg: true
+    resolution: vector
+    reuse: Global
+    can_3d: Y
+    derives_from: null
+    batch: b02-kolam-borders-geometry
+    family: A
+    scenes:
+      - "09"
+  - id: KOL-06
+    name: Kolam Under-Feet Motif
+    category: kolam
+    sections_raw:
+      - GALLERY
+      - LEGACY
+    priority: M
+    static_animated: S
+    modality: vector-source
+    transparent_bg: true
+    resolution: vector
+    reuse: Global
+    can_3d: Y
+    derives_from: null
+    batch: b02-kolam-borders-geometry
+    family: A
+    scenes: []
+  - id: KOL-07
+    name: Kolam Border Band
+    category: kolam
+    sections_raw:
+      - dividers
+    priority: M
+    static_animated: S
+    modality: vector-source
+    transparent_bg: true
+    resolution: vector
+    reuse: Global
+    can_3d: Y
+    derives_from: null
+    batch: b02-kolam-borders-geometry
+    family: A
+    scenes: []
+  - id: RAN-01
+    name: Ceremonial Rangoli Burst
+    category: rangoli
+    sections_raw:
+      - HERO
+      - EVENTS
+    priority: M
+    static_animated: S+A
+    modality: vector-source
+    transparent_bg: true
+    resolution: 2048²
+    reuse: Multi
+    can_3d: "~"
+    derives_from: null
+    batch: b03-ceremonial-color-ornaments
+    family: A
+    scenes:
+      - "12"
+  - id: RAN-02
+    name: Rangoli Variations (3)
+    category: rangoli
+    sections_raw:
+      - EVENTS
+      - JOIN
+    priority: L
+    static_animated: S
+    modality: vector-source
+    transparent_bg: true
+    resolution: 2048²
+    reuse: Multi
+    can_3d: "~"
+    derives_from: null
+    batch: b03-ceremonial-color-ornaments
+    family: A
+    scenes: []
+  - id: RAN-03
+    name: Festival Announcement Ornament
+    category: rangoli
+    sections_raw:
+      - EVENTS
+    priority: L
+    static_animated: S
+    modality: vector-source
+    transparent_bg: true
+    resolution: 2048²
+    reuse: Single
+    can_3d: "~"
+    derives_from: null
+    batch: b03-ceremonial-color-ornaments
+    family: A
+    scenes: []
+  - id: MAN-01
+    name: Kindling Load Mandala
+    category: mandala
+    sections_raw:
+      - GLOBAL
+    priority: C
+    static_animated: A
+    modality: vector-source
+    transparent_bg: true
+    resolution: vector
+    reuse: Global
+    can_3d: Y
+    derives_from: null
+    batch: b02-kolam-borders-geometry
+    family: A
+    scenes: []
+  - id: MAN-02
+    name: Threshold Mandala
+    category: mandala
+    sections_raw:
+      - thresholds
+    priority: H
+    static_animated: A
+    modality: vector-source
+    transparent_bg: true
+    resolution: vector
+    reuse: Global
+    can_3d: Y
+    derives_from: null
+    batch: b02-kolam-borders-geometry
+    family: A
+    scenes: []
+  - id: MAN-03
+    name: Portrait Mandala Frame (7)
+    category: mandala
+    sections_raw:
+      - OB
+      - ALUMNI
+    priority: H
+    static_animated: S
+    modality: vector-source
+    transparent_bg: true
+    resolution: vector
+    reuse: Multi
+    can_3d: Y
+    derives_from: null
+    batch: b03-ceremonial-color-ornaments
+    family: A
+    scenes:
+      - "05"
+      - "10"
+  - id: MAN-04
+    name: Ceiling Mandala Backdrop
+    category: mandala
+    sections_raw:
+      - LEGACY
+      - ALUMNI
+    priority: M
+    static_animated: S
+    modality: image
+    transparent_bg: false
+    resolution: 4K
+    reuse: Global
+    can_3d: Y
+    derives_from: null
+    batch: b08-cinematic-atmosphere-backgrounds
+    family: B
+    scenes:
+      - "09"
+  - id: LOT-01
+    name: Ashtadala Geometry
+    category: lotus
+    sections_raw:
+      - VISION
+      - GLOBAL
+    priority: H
+    static_animated: S
+    modality: vector-source
+    transparent_bg: true
+    resolution: vector
+    reuse: Multi
+    can_3d: Y
+    derives_from: null
+    batch: b02-kolam-borders-geometry
+    family: A
+    scenes:
+      - "03"
+  - id: LOT-02
+    name: Lotus Bloom Reveal
+    category: lotus
+    sections_raw:
+      - VISION
+      - HERO
+    priority: H
+    static_animated: A
+    modality: vector-source
+    transparent_bg: true
+    resolution: vector
+    reuse: Multi
+    can_3d: Y
+    derives_from: null
+    batch: b14-motion-audio
+    family: assembly
+    scenes:
+      - "02"
+  - id: LOT-03
+    name: Lotus Icon
+    category: lotus
+    sections_raw:
+      - VISION
+      - nav
+    priority: H
+    static_animated: S
+    modality: vector-source
+    transparent_bg: true
+    resolution: vector
+    reuse: Multi
+    can_3d: Y
+    derives_from: null
+    batch: b01-brand-marks-icons
+    family: A
+    scenes: []
+  - id: LOT-04
+    name: Lotus Low-Light Plate
+    category: lotus
+    sections_raw:
+      - VISION
+      - ALUMNI
+    priority: M
+    static_animated: S
+    modality: image
+    transparent_bg: false
+    resolution: 4K
+    reuse: Multi
+    can_3d: Y
+    derives_from: null
+    batch: b08-cinematic-atmosphere-backgrounds
+    family: B
+    scenes: []
+  - id: LOT-05
+    name: Lotus 3D Model
+    category: lotus
+    sections_raw:
+      - VISION
+    priority: L
+    static_animated: S+A
+    modality: 3d-ref
+    transparent_bg: true
+    resolution: vector
+    reuse: Multi
+    can_3d: Y
+    derives_from: null
+    batch: null
+    family: null
+    scenes: []
+  - id: BOR-01
+    name: Bhairavi Temple Band
+    category: border
+    sections_raw:
+      - dividers
+      - EVENTS
+    priority: H
+    static_animated: S
+    modality: vector-source
+    transparent_bg: true
+    resolution: vector
+    reuse: Global
+    can_3d: Y
+    derives_from: null
+    batch: b02-kolam-borders-geometry
+    family: A
+    scenes: []
+  - id: BOR-02
+    name: Mango/Paisley Band
+    category: border
+    sections_raw:
+      - LEGACY
+      - ALUMNI
+    priority: M
+    static_animated: S
+    modality: vector-source
+    transparent_bg: true
+    resolution: vector
+    reuse: Global
+    can_3d: Y
+    derives_from: null
+    batch: b02-kolam-borders-geometry
+    family: A
+    scenes: []
+  - id: BOR-03
+    name: Yali Guardian Motif
+    category: border
+    sections_raw:
+      - thresholds
+    priority: M
+    static_animated: S
+    modality: vector-source
+    transparent_bg: true
+    resolution: vector
+    reuse: Global
+    can_3d: Y
+    derives_from: null
+    batch: b02-kolam-borders-geometry
+    family: A
+    scenes: []
+  - id: BOR-04
+    name: Hamsa/Swan Border
+    category: border
+    sections_raw:
+      - ALUMNI
+      - FOOTER
+    priority: L
+    static_animated: S
+    modality: vector-source
+    transparent_bg: true
+    resolution: vector
+    reuse: Global
+    can_3d: Y
+    derives_from: null
+    batch: b02-kolam-borders-geometry
+    family: A
+    scenes: []
+  - id: BOR-05
+    name: Zari Gold Hairline
+    category: border
+    sections_raw:
+      - GLOBAL
+    priority: C
+    static_animated: S
+    modality: vector-source
+    transparent_bg: true
+    resolution: vector
+    reuse: Global
+    can_3d: Y
+    derives_from: null
+    batch: b02-kolam-borders-geometry
+    family: A
+    scenes:
+      - "03"
+  - id: BOR-06
+    name: Corner Flourish Set
+    category: border
+    sections_raw:
+      - cards
+      - plaques
+    priority: M
+    static_animated: S
+    modality: vector-source
+    transparent_bg: true
+    resolution: vector
+    reuse: Global
+    can_3d: Y
+    derives_from: null
+    batch: b02-kolam-borders-geometry
+    family: A
+    scenes: []
+  - id: BOR-07
+    name: Creeper/Vine Border
+    category: border
+    sections_raw:
+      - VISION
+      - ALUMNI
+    priority: L
+    static_animated: S
+    modality: vector-source
+    transparent_bg: true
+    resolution: vector
+    reuse: Global
+    can_3d: Y
+    derives_from: null
+    batch: b02-kolam-borders-geometry
+    family: A
+    scenes: []
+  - id: GEO-01
+    name: Phi / Golden-Ratio Overlays
+    category: geo
+    sections_raw:
+      - GLOBAL
+    priority: M
+    static_animated: S
+    modality: vector-source
+    transparent_bg: true
+    resolution: vector
+    reuse: Global
+    can_3d: "~"
+    derives_from: null
+    batch: b02-kolam-borders-geometry
+    family: A
+    scenes: []
+  - id: GEO-02
+    name: Yantra Line Sets (2–3)
+    category: geo
+    sections_raw:
+      - VISION
+      - thresholds
+    priority: M
+    static_animated: S
+    modality: vector-source
+    transparent_bg: true
+    resolution: vector
+    reuse: Global
+    can_3d: "~"
+    derives_from: null
+    batch: b02-kolam-borders-geometry
+    family: A
+    scenes:
+      - "03"
+  - id: GEO-03
+    name: Concentric Circle Systems
+    category: geo
+    sections_raw:
+      - GLOBAL
+    priority: M
+    static_animated: S
+    modality: vector-source
+    transparent_bg: true
+    resolution: vector
+    reuse: Global
+    can_3d: "~"
+    derives_from: null
+    batch: b02-kolam-borders-geometry
+    family: A
+    scenes: []
+  - id: GEO-04
+    name: Swara Spectrum Ring
+    category: geo
+    sections_raw:
+      - GLOBAL
+    priority: H
+    static_animated: S+A
+    modality: vector-source
+    transparent_bg: true
+    resolution: vector
+    reuse: Global
+    can_3d: "~"
+    derives_from: null
+    batch: b02-kolam-borders-geometry
+    family: A
+    scenes: []
+  - id: GEO-05
+    name: Sri-Yantra Focal
+    category: geo
+    sections_raw:
+      - HERO
+      - VISION
+    priority: L
+    static_animated: S
+    modality: vector-source
+    transparent_bg: true
+    resolution: vector
+    reuse: Global
+    can_3d: "~"
+    derives_from: null
+    batch: b02-kolam-borders-geometry
+    family: A
+    scenes: []
+  - id: GLD-01
+    name: Gold-Leaf (Varak) Sheet
+    category: gld
+    sections_raw:
+      - HERO
+      - plaques
+    priority: H
+    static_animated: S
+    modality: image
+    transparent_bg: true
+    resolution: 2K
+    reuse: Global
+    can_3d: N
+    derives_from: null
+    batch: b04-material-texture-library
+    family: C-tex
+    scenes: []
+  - id: GLD-02
+    name: Gold Divider Ornaments (3)
+    category: gld
+    sections_raw:
+      - GLOBAL
+    priority: H
+    static_animated: S
+    modality: vector-source
+    transparent_bg: true
+    resolution: vector
+    reuse: Global
+    can_3d: Y
+    derives_from: null
+    batch: b02-kolam-borders-geometry
+    family: A
+    scenes: []
+  - id: GLD-03
+    name: Gold Framing Corners
+    category: gld
+    sections_raw:
+      - ALUMNI
+      - awards
+    priority: M
+    static_animated: S
+    modality: vector-source
+    transparent_bg: true
+    resolution: vector
+    reuse: Global
+    can_3d: Y
+    derives_from: null
+    batch: null
+    family: null
+    scenes:
+      - "03"
+  - id: GLD-04
+    name: Gold Underline Stroke
+    category: gld
+    sections_raw:
+      - GLOBAL
+    priority: C
+    static_animated: A
+    modality: vector-source
+    transparent_bg: true
+    resolution: vector
+    reuse: Global
+    can_3d: Y
+    derives_from: null
+    batch: b01-brand-marks-icons
+    family: A
+    scenes:
+      - "11"
+  - id: GLD-05
+    name: Kintsugi Crack Seams
+    category: gld
+    sections_raw:
+      - HERO
+      - thresholds
+    priority: L
+    static_animated: S
+    modality: vector-source
+    transparent_bg: true
+    resolution: vector
+    reuse: Global
+    can_3d: "~"
+    derives_from: null
+    batch: b02-kolam-borders-geometry
+    family: A
+    scenes: []
+  - id: GLD-06
+    name: Gold Medallion / Seal
+    category: gld
+    sections_raw:
+      - ALUMNI
+      - EVENTS
+    priority: M
+    static_animated: S
+    modality: vector-source
+    transparent_bg: true
+    resolution: vector
+    reuse: Global
+    can_3d: Y
+    derives_from: null
+    batch: null
+    family: null
+    scenes:
+      - "08"
+  - id: GLD-07
+    name: Hanging Jhumar Ornament
+    category: gld
+    sections_raw:
+      - HERO
+      - FOOTER
+    priority: L
+    static_animated: S+A
+    modality: vector-source
+    transparent_bg: true
+    resolution: vector
+    reuse: Global
+    can_3d: Y
+    derives_from: null
+    batch: null
+    family: null
+    scenes: []
+  - id: LGT-01
+    name: Oil Lamp (Deepam) + Flame
+    category: lgt
+    sections_raw:
+      - HERO
+      - FOOTER
+      - loader
+    priority: C
+    static_animated: S+A
+    modality: image
+    transparent_bg: true
+    resolution: 2048–3840px
+    reuse: Global
+    can_3d: Y
+    derives_from: null
+    batch: b07-lit-metal-hero
+    family: B
+    scenes:
+      - "00"
+  - id: LGT-02
+    name: Volumetric God-Rays
+    category: lgt
+    sections_raw:
+      - HERO
+      - thresholds
+    priority: H
+    static_animated: S+A
+    modality: image
+    transparent_bg: true
+    resolution: 2048–3840px
+    reuse: Multi
+    can_3d: "~"
+    derives_from: null
+    batch: b08-cinematic-atmosphere-backgrounds
+    family: B
+    scenes:
+      - "01"
+  - id: LGT-03
+    name: Bloom / Glow Sprites
+    category: lgt
+    sections_raw:
+      - GLOBAL
+    priority: C
+    static_animated: S
+    modality: image
+    transparent_bg: true
+    resolution: 2048–3840px
+    reuse: Global
+    can_3d: "~"
+    derives_from: null
+    batch: b05-particles-light-sprites
+    family: C-particle
+    scenes: []
+  - id: LGT-04
+    name: Light-Kindling Sequence
+    category: lgt
+    sections_raw:
+      - GLOBAL
+    priority: C
+    static_animated: A
+    modality: video
+    transparent_bg: true
+    resolution: 2048–3840px
+    reuse: Global
+    can_3d: "~"
+    derives_from: null
+    batch: null
+    family: null
+    scenes:
+      - "00"
+  - id: LGT-05
+    name: Rim-Light Gradient Overlays
+    category: lgt
+    sections_raw:
+      - GLOBAL
+    priority: H
+    static_animated: S
+    modality: image
+    transparent_bg: true
+    resolution: 2048–3840px
+    reuse: Global
+    can_3d: "~"
+    derives_from: null
+    batch: b08-cinematic-atmosphere-backgrounds
+    family: B
+    scenes: []
+  - id: LGT-06
+    name: Stage Spotlight Cone
+    category: lgt
+    sections_raw:
+      - HERO
+      - EVENTS
+    priority: H
+    static_animated: S+A
+    modality: image
+    transparent_bg: true
+    resolution: 2048–3840px
+    reuse: Multi
+    can_3d: "~"
+    derives_from: null
+    batch: b08-cinematic-atmosphere-backgrounds
+    family: B
+    scenes:
+      - "01"
+      - "06"
+  - id: LGT-07
+    name: Lens Flare
+    category: lgt
+    sections_raw:
+      - HERO
+      - EVENTS
+    priority: L
+    static_animated: S
+    modality: image
+    transparent_bg: true
+    resolution: 2048–3840px
+    reuse: Global
+    can_3d: "~"
+    derives_from: null
+    batch: b05-particles-light-sprites
+    family: C-particle
+    scenes: []
+  - id: LGT-08
+    name: Vignette Overlay
+    category: lgt
+    sections_raw:
+      - GLOBAL
+    priority: C
+    static_animated: S
+    modality: image
+    transparent_bg: true
+    resolution: 2048–3840px
+    reuse: Global
+    can_3d: "~"
+    derives_from: null
+    batch: b08-cinematic-atmosphere-backgrounds
+    family: B
+    scenes:
+      - "01"
+  - id: LGT-09
+    name: Diya / Hanging Lamp Row
+    category: lgt
+    sections_raw:
+      - HERO
+      - FOOTER
+    priority: M
+    static_animated: S+A
+    modality: image
+    transparent_bg: true
+    resolution: 2048–3840px
+    reuse: Global
+    can_3d: Y
+    derives_from: null
+    batch: b07-lit-metal-hero
+    family: B
+    scenes: []
+  - id: PAR-01
+    name: Gold Dust Motes
+    category: particle
+    sections_raw:
+      - GLOBAL
+    priority: C
+    static_animated: A
+    modality: image
+    transparent_bg: true
+    resolution: 256²
+    reuse: Global
+    can_3d: N
+    derives_from: null
+    batch: b05-particles-light-sprites
+    family: C-particle
+    scenes:
+      - "00"
+  - id: PAR-02
+    name: Incense Smoke
+    category: particle
+    sections_raw:
+      - HERO
+      - thresholds
+    priority: H
+    static_animated: A
+    modality: image
+    transparent_bg: true
+    resolution: 1024²
+    reuse: Global
+    can_3d: N
+    derives_from: null
+    batch: b05-particles-light-sprites
+    family: C-particle
+    scenes:
+      - "00"
+      - "01"
+  - id: PAR-03
+    name: Vibhuti Ash
+    category: particle
+    sections_raw:
+      - HERO
+      - LEGACY
+    priority: M
+    static_animated: A
+    modality: image
+    transparent_bg: true
+    resolution: 256²
+    reuse: Global
+    can_3d: N
+    derives_from: null
+    batch: b05-particles-light-sprites
+    family: C-particle
+    scenes: []
+  - id: PAR-04
+    name: Jasmine Petals
+    category: particle
+    sections_raw:
+      - ALUMNI
+      - JOIN
+    priority: M
+    static_animated: A
+    modality: image
+    transparent_bg: true
+    resolution: 512²
+    reuse: Global
+    can_3d: N
+    derives_from: null
+    batch: b05-particles-light-sprites
+    family: C-particle
+    scenes:
+      - "10"
+  - id: PAR-05
+    name: Embers / Sparks
+    category: particle
+    sections_raw:
+      - JOIN
+    priority: M
+    static_animated: A
+    modality: image
+    transparent_bg: true
+    resolution: 256²
+    reuse: Global
+    can_3d: N
+    derives_from: null
+    batch: b05-particles-light-sprites
+    family: C-particle
+    scenes:
+      - "06"
+      - "12"
+  - id: PAR-06
+    name: Bokeh Light Orbs
+    category: particle
+    sections_raw:
+      - HERO
+      - EVENTS
+    priority: L
+    static_animated: A
+    modality: image
+    transparent_bg: true
+    resolution: 1024²
+    reuse: Global
+    can_3d: N
+    derives_from: null
+    batch: b05-particles-light-sprites
+    family: C-particle
+    scenes: []
+  - id: PAR-07
+    name: Particle Config Presets
+    category: particle
+    sections_raw:
+      - GLOBAL
+    priority: C
+    static_animated: —
+    modality: image
+    transparent_bg: true
+    resolution: 256²
+    reuse: Global
+    can_3d: N
+    derives_from: null
+    batch: null
+    family: null
+    scenes: []
+  - id: TEX-01
+    name: Garbhagriha Black Gradient
+    category: tex
+    sections_raw:
+      - GLOBAL
+    priority: C
+    static_animated: S
+    modality: image
+    transparent_bg: false
+    resolution: 2048²
+    reuse: Global
+    can_3d: N
+    derives_from: null
+    batch: b04-material-texture-library
+    family: C-tex
+    scenes:
+      - "00"
+  - id: TEX-02
+    name: Kanjeevaram Silk (3 hues)
+    category: tex
+    sections_raw:
+      - HERO
+      - EVENTS
+    priority: C
+    static_animated: S+A
+    modality: image
+    transparent_bg: false
+    resolution: 4096²
+    reuse: Global
+    can_3d: Y
+    derives_from: null
+    batch: b04-material-texture-library
+    family: C-tex
+    scenes:
+      - "01"
+      - "06"
+  - id: TEX-03
+    name: Honed Granite
+    category: tex
+    sections_raw:
+      - footers
+      - panels
+    priority: H
+    static_animated: S
+    modality: image
+    transparent_bg: false
+    resolution: 2048²
+    reuse: Global
+    can_3d: Y
+    derives_from: null
+    batch: b04-material-texture-library
+    family: C-tex
+    scenes: []
+  - id: TEX-04
+    name: Palm-Leaf (Ola)
+    category: tex
+    sections_raw:
+      - LEGACY
+      - ALUMNI
+    priority: H
+    static_animated: S
+    modality: image
+    transparent_bg: false
+    resolution: 2048²
+    reuse: Global
+    can_3d: Y
+    derives_from: null
+    batch: b04-material-texture-library
+    family: C-tex
+    scenes:
+      - "04"
+  - id: TEX-05
+    name: Sandalwood Grain
+    category: tex
+    sections_raw:
+      - thresholds
+    priority: M
+    static_animated: S
+    modality: image
+    transparent_bg: false
+    resolution: 2048²
+    reuse: Global
+    can_3d: Y
+    derives_from: null
+    batch: b04-material-texture-library
+    family: C-tex
+    scenes: []
+  - id: TEX-06
+    name: Marble Veining
+    category: tex
+    sections_raw:
+      - awards
+      - quotes
+    priority: M
+    static_animated: S
+    modality: image
+    transparent_bg: false
+    resolution: 4096²
+    reuse: Global
+    can_3d: Y
+    derives_from: null
+    batch: b04-material-texture-library
+    family: C-tex
+    scenes:
+      - "03"
+      - "11"
+  - id: TEX-07
+    name: Film Grain / Haze Overlay
+    category: tex
+    sections_raw:
+      - GLOBAL
+    priority: C
+    static_animated: S+A
+    modality: image
+    transparent_bg: false
+    resolution: 2048²
+    reuse: Global
+    can_3d: Y
+    derives_from: null
+    batch: b04-material-texture-library
+    family: C-tex
+    scenes:
+      - "01"
+  - id: TEX-08
+    name: Chandana Sand Paper
+    category: tex
+    sections_raw:
+      - light sections
+    priority: M
+    static_animated: S
+    modality: image
+    transparent_bg: false
+    resolution: 2048²
+    reuse: Global
+    can_3d: Y
+    derives_from: null
+    batch: b04-material-texture-library
+    family: C-tex
+    scenes: []
+  - id: TEX-09
+    name: Brass Patina
+    category: tex
+    sections_raw:
+      - GLOBAL
+    priority: C
+    static_animated: S
+    modality: image
+    transparent_bg: false
+    resolution: 2048²
+    reuse: Global
+    can_3d: Y
+    derives_from: null
+    batch: b04-material-texture-library
+    family: C-tex
+    scenes: []
+  - id: TEX-10
+    name: Temple Wall / Stucco
+    category: tex
+    sections_raw:
+      - LEGACY
+    priority: L
+    static_animated: S
+    modality: image
+    transparent_bg: false
+    resolution: 2048²
+    reuse: Global
+    can_3d: Y
+    derives_from: null
+    batch: b04-material-texture-library
+    family: C-tex
+    scenes:
+      - "04"
+  - id: DIV-01
+    name: Kolam Self-Draw Divider
+    category: div
+    sections_raw:
+      - GLOBAL
+    priority: C
+    static_animated: A
+    modality: vector-source
+    transparent_bg: true
+    resolution: vector
+    reuse: Global
+    can_3d: N
+    derives_from: KOL-02
+    batch: null
+    family: null
+    scenes: []
+  - id: DIV-02
+    name: Gold Hairline + Ornament
+    category: div
+    sections_raw:
+      - GLOBAL
+    priority: C
+    static_animated: S
+    modality: vector-source
+    transparent_bg: true
+    resolution: vector
+    reuse: Global
+    can_3d: N
+    derives_from: null
+    batch: b02-kolam-borders-geometry
+    family: A
+    scenes:
+      - "02"
+  - id: DIV-03
+    name: Silk Transition Wipe
+    category: div
+    sections_raw:
+      - thresholds
+    priority: H
+    static_animated: A
+    modality: video
+    transparent_bg: true
+    resolution: vector
+    reuse: Global
+    can_3d: N
+    derives_from: null
+    batch: b14-motion-audio
+    family: assembly
+    scenes: []
+  - id: DIV-04
+    name: Mandala Threshold
+    category: div
+    sections_raw:
+      - thresholds
+    priority: H
+    static_animated: A
+    modality: vector-source
+    transparent_bg: true
+    resolution: vector
+    reuse: Global
+    can_3d: N
+    derives_from: MAN-02
+    batch: null
+    family: null
+    scenes: []
+  - id: DIV-05
+    name: Page Transition
+    category: div
+    sections_raw:
+      - GLOBAL
+    priority: C
+    static_animated: A
+    modality: video
+    transparent_bg: true
+    resolution: vector
+    reuse: Global
+    can_3d: N
+    derives_from: null
+    batch: b14-motion-audio
+    family: assembly
+    scenes: []
+  - id: DIV-06
+    name: Gopuram-Tier Separator
+    category: div
+    sections_raw:
+      - LEGACY
+    priority: M
+    static_animated: S
+    modality: vector-source
+    transparent_bg: true
+    resolution: vector
+    reuse: Global
+    can_3d: N
+    derives_from: null
+    batch: b02-kolam-borders-geometry
+    family: A
+    scenes:
+      - "04"
+  - id: DIV-07
+    name: Raga-Line Wave Divider
+    category: div
+    sections_raw:
+      - VISION
+      - EVENTS
+    priority: L
+    static_animated: S+A
+    modality: vector-source
+    transparent_bg: true
+    resolution: vector
+    reuse: Global
+    can_3d: N
+    derives_from: null
+    batch: b02-kolam-borders-geometry
+    family: A
+    scenes: []
+  - id: ICO-01
+    name: UI System Icons (10)
+    category: icon
+    sections_raw:
+      - GLOBAL
+    priority: C
+    static_animated: S
+    modality: vector-source
+    transparent_bg: true
+    resolution: ""
+    reuse: Global
+    can_3d: "~"
+    derives_from: null
+    batch: b01-brand-marks-icons
+    family: A
+    scenes: []
+  - id: ICO-02
+    name: Swara Glyph Set (7)
+    category: icon
+    sections_raw:
+      - GLOBAL
+    priority: C
+    static_animated: S+A
+    modality: vector-source
+    transparent_bg: true
+    resolution: ""
+    reuse: Global
+    can_3d: "~"
+    derives_from: null
+    batch: b01-brand-marks-icons
+    family: A
+    scenes: []
+  - id: ICO-03
+    name: Social Icons (3)
+    category: icon
+    sections_raw:
+      - FOOTER
+      - CONTACT
+    priority: C
+    static_animated: S
+    modality: vector-source
+    transparent_bg: true
+    resolution: ""
+    reuse: Global
+    can_3d: "~"
+    derives_from: null
+    batch: b01-brand-marks-icons
+    family: A
+    scenes:
+      - "13"
+  - id: ICO-04
+    name: Contact Icons (3)
+    category: icon
+    sections_raw:
+      - CONTACT
+      - FOOTER
+    priority: C
+    static_animated: S
+    modality: vector-source
+    transparent_bg: true
+    resolution: ""
+    reuse: Global
+    can_3d: "~"
+    derives_from: null
+    batch: b01-brand-marks-icons
+    family: A
+    scenes: []
+  - id: ICO-05
+    name: Section/Wayfinding Icons (6)
+    category: icon
+    sections_raw:
+      - GLOBAL
+    priority: H
+    static_animated: S
+    modality: vector-source
+    transparent_bg: true
+    resolution: ""
+    reuse: Global
+    can_3d: "~"
+    derives_from: null
+    batch: b01-brand-marks-icons
+    family: A
+    scenes: []
+  - id: ICO-06
+    name: Instrument Icons (=INS-01)
+    category: icon
+    sections_raw:
+      - VISION
+      - EVENTS
+    priority: C
+    static_animated: S
+    modality: vector-source
+    transparent_bg: true
+    resolution: ""
+    reuse: Global
+    can_3d: "~"
+    derives_from: null
+    batch: null
+    family: null
+    scenes:
+      - "13"
+  - id: ICO-07
+    name: Mudra Icons (=BN-01)
+    category: icon
+    sections_raw:
+      - GLOBAL
+    priority: C
+    static_animated: S
+    modality: vector-source
+    transparent_bg: true
+    resolution: ""
+    reuse: Global
+    can_3d: "~"
+    derives_from: null
+    batch: null
+    family: null
+    scenes: []
+  - id: ICO-08
+    name: OB Role Icons (6)
+    category: icon
+    sections_raw:
+      - OB
+    priority: M
+    static_animated: S
+    modality: vector-source
+    transparent_bg: true
+    resolution: ""
+    reuse: Single
+    can_3d: "~"
+    derives_from: null
+    batch: b01-brand-marks-icons
+    family: A
+    scenes: []
+  - id: UID-01
+    name: Primary Button (gold-ignite)
+    category: ui
+    sections_raw:
+      - GLOBAL
+    priority: C
+    static_animated: S+A
+    modality: vector-source
+    transparent_bg: true
+    resolution: vector
+    reuse: Global
+    can_3d: N
+    derives_from: null
+    batch: b12-ui-components-decorative
+    family: assembly
+    scenes: []
+  - id: UID-02
+    name: Secondary / Ghost Button
+    category: ui
+    sections_raw:
+      - GLOBAL
+    priority: C
+    static_animated: S+A
+    modality: vector-source
+    transparent_bg: true
+    resolution: vector
+    reuse: Global
+    can_3d: N
+    derives_from: null
+    batch: b12-ui-components-decorative
+    family: assembly
+    scenes: []
+  - id: UID-03
+    name: Icon Button (circle brass)
+    category: ui
+    sections_raw:
+      - GLOBAL
+    priority: C
+    static_animated: S+A
+    modality: vector-source
+    transparent_bg: true
+    resolution: vector
+    reuse: Global
+    can_3d: N
+    derives_from: null
+    batch: b12-ui-components-decorative
+    family: assembly
+    scenes: []
+  - id: UID-04
+    name: Nav Pill / Active State (7)
+    category: ui
+    sections_raw:
+      - GLOBAL
+    priority: C
+    static_animated: S+A
+    modality: vector-source
+    transparent_bg: true
+    resolution: vector
+    reuse: Global
+    can_3d: N
+    derives_from: null
+    batch: b12-ui-components-decorative
+    family: assembly
+    scenes: []
+  - id: UID-05
+    name: Card Frame Ornament
+    category: ui
+    sections_raw:
+      - EVENTS
+      - OB
+      - ALUMNI
+    priority: H
+    static_animated: S
+    modality: vector-source
+    transparent_bg: true
+    resolution: vector
+    reuse: Global
+    can_3d: N
+    derives_from: null
+    batch: b12-ui-components-decorative
+    family: assembly
+    scenes: []
+  - id: UID-06
+    name: Input Field (brass)
+    category: ui
+    sections_raw:
+      - CONTACT
+    priority: C
+    static_animated: S+A
+    modality: vector-source
+    transparent_bg: true
+    resolution: vector
+    reuse: Global
+    can_3d: N
+    derives_from: null
+    batch: b12-ui-components-decorative
+    family: assembly
+    scenes:
+      - "13"
+  - id: UID-07
+    name: Tag / Chip
+    category: ui
+    sections_raw:
+      - EVENTS
+      - GALLERY
+    priority: M
+    static_animated: S
+    modality: vector-source
+    transparent_bg: true
+    resolution: vector
+    reuse: Global
+    can_3d: N
+    derives_from: null
+    batch: b12-ui-components-decorative
+    family: assembly
+    scenes: []
+  - id: UID-08
+    name: Scroll Progress — Swara Ladder
+    category: ui
+    sections_raw:
+      - GLOBAL
+    priority: H
+    static_animated: A
+    modality: vector-source
+    transparent_bg: true
+    resolution: vector
+    reuse: Global
+    can_3d: N
+    derives_from: null
+    batch: b12-ui-components-decorative
+    family: assembly
+    scenes: []
+  - id: UID-09
+    name: Custom Cursor Light-Mote
+    category: ui
+    sections_raw:
+      - GLOBAL
+    priority: L
+    static_animated: A
+    modality: vector-source
+    transparent_bg: true
+    resolution: vector
+    reuse: Global
+    can_3d: N
+    derives_from: null
+    batch: b12-ui-components-decorative
+    family: assembly
+    scenes: []
+  - id: UID-10
+    name: Quote Plinth Ornament
+    category: ui
+    sections_raw:
+      - ALUMNI
+    priority: M
+    static_animated: S
+    modality: vector-source
+    transparent_bg: true
+    resolution: vector
+    reuse: Global
+    can_3d: N
+    derives_from: null
+    batch: b12-ui-components-decorative
+    family: assembly
+    scenes: []
+  - id: UID-11
+    name: Award / Seal Badge
+    category: ui
+    sections_raw:
+      - EVENTS
+      - ALUMNI
+    priority: M
+    static_animated: S
+    modality: vector-source
+    transparent_bg: true
+    resolution: vector
+    reuse: Global
+    can_3d: Y
+    derives_from: null
+    batch: b12-ui-components-decorative
+    family: assembly
+    scenes: []
+  - id: UID-12
+    name: Skeleton / Loading Shimmer
+    category: ui
+    sections_raw:
+      - GLOBAL
+    priority: H
+    static_animated: A
+    modality: vector-source
+    transparent_bg: true
+    resolution: vector
+    reuse: Global
+    can_3d: N
+    derives_from: null
+    batch: b12-ui-components-decorative
+    family: assembly
+    scenes: []
+  - id: UID-13
+    name: Modal / Lightbox Chrome
+    category: ui
+    sections_raw:
+      - GALLERY
+    priority: C
+    static_animated: S+A
+    modality: vector-source
+    transparent_bg: true
+    resolution: vector
+    reuse: Global
+    can_3d: N
+    derives_from: null
+    batch: b12-ui-components-decorative
+    family: assembly
+    scenes:
+      - "09"
+  - id: UID-14
+    name: Toast / Status Message
+    category: ui
+    sections_raw:
+      - CONTACT
+      - GLOBAL
+    priority: H
+    static_animated: S
+    modality: vector-source
+    transparent_bg: true
+    resolution: vector
+    reuse: Global
+    can_3d: N
+    derives_from: null
+    batch: b12-ui-components-decorative
+    family: assembly
+    scenes:
+      - "13"
+  - id: FTR-01
+    name: Blessing Glyph
+    category: ftr
+    sections_raw:
+      - FOOTER
+    priority: C
+    static_animated: S+A
+    modality: vector-source
+    transparent_bg: true
+    resolution: vector
+    reuse: Single
+    can_3d: "~"
+    derives_from: null
+    batch: b02-kolam-borders-geometry
+    family: A
+    scenes:
+      - "14"
+  - id: FTR-02
+    name: Anjali Sign-Off (=BN-03)
+    category: ftr
+    sections_raw:
+      - FOOTER
+    priority: H
+    static_animated: S
+    modality: vector-source
+    transparent_bg: true
+    resolution: vector
+    reuse: Single
+    can_3d: "~"
+    derives_from: null
+    batch: null
+    family: null
+    scenes: []
+  - id: FTR-03
+    name: Diya / Lamp Accent
+    category: ftr
+    sections_raw:
+      - FOOTER
+    priority: H
+    static_animated: S+A
+    modality: vector-source
+    transparent_bg: true
+    resolution: vector
+    reuse: Single
+    can_3d: Y
+    derives_from: null
+    batch: b14-motion-audio
+    family: assembly
+    scenes:
+      - "14"
+  - id: FTR-04
+    name: Footer Gold Divider (=BOR-05)
+    category: ftr
+    sections_raw:
+      - FOOTER
+    priority: C
+    static_animated: S
+    modality: vector-source
+    transparent_bg: true
+    resolution: vector
+    reuse: Single
+    can_3d: "~"
+    derives_from: null
+    batch: b02-kolam-borders-geometry
+    family: A
+    scenes: []
+  - id: FTR-05
+    name: Footer Logo Lockup + Tamil
+    category: ftr
+    sections_raw:
+      - FOOTER
+    priority: C
+    static_animated: S
+    modality: vector-source
+    transparent_bg: true
+    resolution: vector
+    reuse: Single
+    can_3d: "~"
+    derives_from: null
+    batch: null
+    family: null
+    scenes:
+      - "14"
+  - id: FTR-06
+    name: Ritardando Fade Overlay
+    category: ftr
+    sections_raw:
+      - FOOTER
+    priority: M
+    static_animated: A
+    modality: image
+    transparent_bg: true
+    resolution: vector
+    reuse: Single
+    can_3d: "~"
+    derives_from: null
+    batch: b14-motion-audio
+    family: assembly
+    scenes:
+      - "14"
+  - id: FTR-07
+    name: Footer Kolam Band
+    category: ftr
+    sections_raw:
+      - FOOTER
+    priority: M
+    static_animated: S
+    modality: vector-source
+    transparent_bg: true
+    resolution: vector
+    reuse: Single
+    can_3d: "~"
+    derives_from: null
+    batch: b02-kolam-borders-geometry
+    family: A
+    scenes:
+      - "14"
+  - id: ALM-01
+    name: Alumni Portraits (9+)
+    category: alumni
+    sections_raw:
+      - ALUMNI
+    priority: C
+    static_animated: S
+    modality: image
+    transparent_bg: variant
+    resolution: 1600×2000
+    reuse: Single
+    can_3d: N
+    derives_from: null
+    batch: b10-art-directed-photography
+    family: photo
+    scenes:
+      - "10"
+  - id: ALM-02
+    name: Alumni Portrait Frame
+    category: alumni
+    sections_raw:
+      - ALUMNI
+    priority: H
+    static_animated: S
+    modality: vector-source
+    transparent_bg: variant
+    resolution: per-item
+    reuse: Single
+    can_3d: N
+    derives_from: MAN-03
+    batch: b12-ui-components-decorative
+    family: assembly
+    scenes: []
+  - id: ALM-03
+    name: Testimonial Quote Card
+    category: alumni
+    sections_raw:
+      - ALUMNI
+    priority: H
+    static_animated: S
+    modality: vector-source
+    transparent_bg: variant
+    resolution: per-item
+    reuse: Single
+    can_3d: N
+    derives_from: null
+    batch: b12-ui-components-decorative
+    family: assembly
+    scenes:
+      - "10"
+  - id: ALM-04
+    name: Parampara Lineage Thread
+    category: alumni
+    sections_raw:
+      - ALUMNI
+      - LEGACY
+    priority: M
+    static_animated: S+A
+    modality: vector-source
+    transparent_bg: variant
+    resolution: per-item
+    reuse: Single
+    can_3d: N
+    derives_from: null
+    batch: null
+    family: null
+    scenes:
+      - "04"
+      - "10"
+  - id: ALM-05
+    name: Batch-Year Badge
+    category: alumni
+    sections_raw:
+      - ALUMNI
+    priority: M
+    static_animated: S
+    modality: vector-source
+    transparent_bg: variant
+    resolution: per-item
+    reuse: Single
+    can_3d: N
+    derives_from: null
+    batch: b12-ui-components-decorative
+    family: assembly
+    scenes:
+      - "10"
+  - id: ALM-06
+    name: Alumni Carousel Controls
+    category: alumni
+    sections_raw:
+      - ALUMNI
+    priority: H
+    static_animated: S+A
+    modality: vector-source
+    transparent_bg: variant
+    resolution: per-item
+    reuse: Single
+    can_3d: N
+    derives_from: null
+    batch: b12-ui-components-decorative
+    family: assembly
+    scenes:
+      - "10"
+  - id: OB-01
+    name: OB Portraits (13)
+    category: ob
+    sections_raw:
+      - OB
+    priority: C
+    static_animated: S
+    modality: image
+    transparent_bg: variant
+    resolution: 1600×2000
+    reuse: Single
+    can_3d: N
+    derives_from: null
+    batch: b10-art-directed-photography
+    family: photo
+    scenes:
+      - "05"
+  - id: OB-02
+    name: OB Portrait Frame
+    category: ob
+    sections_raw:
+      - OB
+    priority: H
+    static_animated: S
+    modality: vector-source
+    transparent_bg: variant
+    resolution: per-item
+    reuse: Single
+    can_3d: N
+    derives_from: MAN-03
+    batch: b12-ui-components-decorative
+    family: assembly
+    scenes: []
+  - id: OB-03
+    name: OB Role Icon Set (=ICO-08)
+    category: ob
+    sections_raw:
+      - OB
+    priority: M
+    static_animated: S
+    modality: vector-source
+    transparent_bg: variant
+    resolution: per-item
+    reuse: Single
+    can_3d: N
+    derives_from: null
+    batch: b01-brand-marks-icons
+    family: A
+    scenes:
+      - "05"
+  - id: OB-04
+    name: OB Card Ornament
+    category: ob
+    sections_raw:
+      - OB
+    priority: H
+    static_animated: S
+    modality: vector-source
+    transparent_bg: variant
+    resolution: per-item
+    reuse: Single
+    can_3d: N
+    derives_from: null
+    batch: b12-ui-components-decorative
+    family: assembly
+    scenes:
+      - "05"
+  - id: OB-05
+    name: OB Name Plate Lockup
+    category: ob
+    sections_raw:
+      - OB
+    priority: H
+    static_animated: S
+    modality: vector-source
+    transparent_bg: variant
+    resolution: per-item
+    reuse: Single
+    can_3d: N
+    derives_from: null
+    batch: b12-ui-components-decorative
+    family: assembly
+    scenes:
+      - "05"
+  - id: OB-06
+    name: OB Carousel Controls
+    category: ob
+    sections_raw:
+      - OB
+    priority: H
+    static_animated: S+A
+    modality: vector-source
+    transparent_bg: variant
+    resolution: per-item
+    reuse: Single
+    can_3d: N
+    derives_from: null
+    batch: b12-ui-components-decorative
+    family: assembly
+    scenes:
+      - "05"
+  - id: EVT-01
+    name: Production Hero Images (5)
+    category: evt
+    sections_raw:
+      - EVENTS
+      - GALLERY
+    priority: C
+    static_animated: S
+    modality: image
+    transparent_bg: false
+    resolution: 3840px
+    reuse: Multi
+    can_3d: "~"
+    derives_from: null
+    batch: b10-art-directed-photography
+    family: photo
+    scenes:
+      - "06"
+  - id: EVT-02
+    name: Event Card Frame (arch)
+    category: evt
+    sections_raw:
+      - EVENTS
+    priority: C
+    static_animated: S
+    modality: vector-source
+    transparent_bg: variant
+    resolution: per-item
+    reuse: Multi
+    can_3d: "~"
+    derives_from: ARC-03
+    batch: b12-ui-components-decorative
+    family: assembly
+    scenes:
+      - "06"
+  - id: EVT-03
+    name: Production Title Lockups (5)
+    category: evt
+    sections_raw:
+      - EVENTS
+    priority: H
+    static_animated: S
+    modality: vector-source
+    transparent_bg: true
+    resolution: per-item
+    reuse: Multi
+    can_3d: "~"
+    derives_from: null
+    batch: b02-kolam-borders-geometry
+    family: A
+    scenes:
+      - "06"
+  - id: EVT-04
+    name: Event Date / Tala Badge
+    category: evt
+    sections_raw:
+      - EVENTS
+    priority: M
+    static_animated: S
+    modality: vector-source
+    transparent_bg: variant
+    resolution: per-item
+    reuse: Multi
+    can_3d: "~"
+    derives_from: null
+    batch: b02-kolam-borders-geometry
+    family: A
+    scenes: []
+  - id: EVT-05
+    name: Event Category Tag Chips
+    category: evt
+    sections_raw:
+      - EVENTS
+    priority: M
+    static_animated: S
+    modality: vector-source
+    transparent_bg: variant
+    resolution: per-item
+    reuse: Multi
+    can_3d: "~"
+    derives_from: null
+    batch: b12-ui-components-decorative
+    family: assembly
+    scenes: []
+  - id: EVT-06
+    name: Timeline Milestone Marker
+    category: evt
+    sections_raw:
+      - EVENTS
+      - LEGACY
+    priority: M
+    static_animated: S+A
+    modality: vector-source
+    transparent_bg: variant
+    resolution: per-item
+    reuse: Multi
+    can_3d: "~"
+    derives_from: DIV-06
+    batch: b12-ui-components-decorative
+    family: assembly
+    scenes: []
+  - id: EVT-07
+    name: General Event Thumbnails (6)
+    category: evt
+    sections_raw:
+      - EVENTS
+    priority: H
+    static_animated: S
+    modality: image
+    transparent_bg: false
+    resolution: 2560px
+    reuse: Multi
+    can_3d: "~"
+    derives_from: null
+    batch: b10-art-directed-photography
+    family: photo
+    scenes: []
+  - id: EVT-08
+    name: Event Poster Template
+    category: evt
+    sections_raw:
+      - EVENTS
+      - SOC
+    priority: L
+    static_animated: S
+    modality: image
+    transparent_bg: variant
+    resolution: per-item
+    reuse: Multi
+    can_3d: "~"
+    derives_from: null
+    batch: b11-social-marketing-templates
+    family: assembly
+    scenes: []
+  - id: SOC-01
+    name: Instagram Post Template
+    category: social
+    sections_raw:
+      - external
+    priority: H
+    static_animated: S
+    modality: image
+    transparent_bg: false
+    resolution: 1080²
+    reuse: Multi
+    can_3d: N
+    derives_from: null
+    batch: b11-social-marketing-templates
+    family: assembly
+    scenes: []
+  - id: SOC-02
+    name: Instagram Story Template
+    category: social
+    sections_raw:
+      - external
+    priority: H
+    static_animated: S
+    modality: image
+    transparent_bg: false
+    resolution: 1080×1920
+    reuse: Multi
+    can_3d: N
+    derives_from: null
+    batch: b11-social-marketing-templates
+    family: assembly
+    scenes: []
+  - id: SOC-03
+    name: Event Announcement Template
+    category: social
+    sections_raw:
+      - external
+    priority: H
+    static_animated: S
+    modality: image
+    transparent_bg: false
+    resolution: per-platform
+    reuse: Multi
+    can_3d: N
+    derives_from: null
+    batch: b11-social-marketing-templates
+    family: assembly
+    scenes: []
+  - id: SOC-04
+    name: Quote / Testimonial Share
+    category: social
+    sections_raw:
+      - external
+    priority: M
+    static_animated: S
+    modality: image
+    transparent_bg: false
+    resolution: 1080²
+    reuse: Multi
+    can_3d: N
+    derives_from: null
+    batch: b11-social-marketing-templates
+    family: assembly
+    scenes: []
+  - id: SOC-05
+    name: Brand Avatar / PFP
+    category: social
+    sections_raw:
+      - external
+    priority: C
+    static_animated: S
+    modality: image
+    transparent_bg: variant
+    resolution: 1080²
+    reuse: Multi
+    can_3d: N
+    derives_from: null
+    batch: b11-social-marketing-templates
+    family: assembly
+    scenes: []
+  - id: SOC-06
+    name: Cover Banners (YT/FB)
+    category: social
+    sections_raw:
+      - external
+    priority: M
+    static_animated: S
+    modality: image
+    transparent_bg: false
+    resolution: per-platform
+    reuse: Multi
+    can_3d: N
+    derives_from: null
+    batch: b11-social-marketing-templates
+    family: assembly
+    scenes: []
+  - id: SOC-07
+    name: OG / Link Preview (=BRD-09)
+    category: social
+    sections_raw:
+      - GLOBAL
+    priority: C
+    static_animated: S
+    modality: image
+    transparent_bg: false
+    resolution: 1200×630
+    reuse: Multi
+    can_3d: N
+    derives_from: null
+    batch: b11-social-marketing-templates
+    family: assembly
+    scenes: []
+  - id: SOC-08
+    name: Reel End-Card / Lower-Third
+    category: social
+    sections_raw:
+      - external
+    priority: L
+    static_animated: A
+    modality: video
+    transparent_bg: false
+    resolution: per-platform
+    reuse: Multi
+    can_3d: N
+    derives_from: null
+    batch: b11-social-marketing-templates
+    family: assembly
+    scenes: []
+  - id: SOC-09
+    name: Countdown Template
+    category: social
+    sections_raw:
+      - external
+    priority: L
+    static_animated: S+A
+    modality: image
+    transparent_bg: false
+    resolution: per-platform
+    reuse: Multi
+    can_3d: N
+    derives_from: null
+    batch: b11-social-marketing-templates
+    family: assembly
+    scenes: []
+  - id: SOC-10
+    name: Hashtag / Handle Lockup
+    category: social
+    sections_raw:
+      - external
+    priority: M
+    static_animated: S
+    modality: vector-source
+    transparent_bg: true
+    resolution: per-platform
+    reuse: Multi
+    can_3d: N
+    derives_from: null
+    batch: b11-social-marketing-templates
+    family: assembly
+    scenes: []
+  - id: PHO-01
+    name: Master Color LUT
+    category: photo
+    sections_raw:
+      - GLOBAL
+    priority: C
+    static_animated: —
+    modality: image
+    transparent_bg: false
+    resolution: per-item
+    reuse: Multi
+    can_3d: N
+    derives_from: null
+    batch: b10-art-directed-photography
+    family: photo
+    scenes: []
+  - id: PHO-02
+    name: Performance Hero Stills (8–12)
+    category: photo
+    sections_raw:
+      - HERO
+      - EVENTS
+    priority: C
+    static_animated: S
+    modality: image
+    transparent_bg: false
+    resolution: 3840px
+    reuse: Multi
+    can_3d: N
+    derives_from: null
+    batch: b10-art-directed-photography
+    family: photo
+    scenes:
+      - "06"
+  - id: PHO-03
+    name: Detail / Macro Library (15–20)
+    category: photo
+    sections_raw:
+      - GLOBAL
+    priority: C
+    static_animated: S
+    modality: image
+    transparent_bg: false
+    resolution: 2560px
+    reuse: Multi
+    can_3d: N
+    derives_from: null
+    batch: b10-art-directed-photography
+    family: photo
+    scenes: []
+  - id: PHO-04
+    name: Event Archive Re-grade
+    category: photo
+    sections_raw:
+      - GALLERY
+      - EVENTS
+    priority: C
+    static_animated: S
+    modality: image
+    transparent_bg: false
+    resolution: 2560px
+    reuse: Multi
+    can_3d: N
+    derives_from: null
+    batch: b10-art-directed-photography
+    family: photo
+    scenes:
+      - "09"
+  - id: PHO-05
+    name: Hero Film Loop (=HERO-11)
+    category: photo
+    sections_raw:
+      - HERO
+    priority: H
+    static_animated: A
+    modality: video
+    transparent_bg: false
+    resolution: per-item
+    reuse: Multi
+    can_3d: N
+    derives_from: null
+    batch: null
+    family: null
+    scenes:
+      - "09"
+  - id: D3-01
+    name: Oil Lamp
+    category: 3d
+    sections_raw:
+      - HERO
+      - FOOTER
+    priority: L
+    static_animated: S+A
+    modality: 3d-ref
+    transparent_bg: true
+    resolution: ""
+    reuse: Multi
+    can_3d: N
+    derives_from: null
+    batch: b13-3d-models
+    family: 3D
+    scenes: []
+  - id: D3-02
+    name: Veena
+    category: 3d
+    sections_raw:
+      - HERO
+      - EVENTS
+    priority: L
+    static_animated: S+A
+    modality: 3d-ref
+    transparent_bg: true
+    resolution: ""
+    reuse: Multi
+    can_3d: N
+    derives_from: null
+    batch: b13-3d-models
+    family: 3D
+    scenes: []
+  - id: D3-03
+    name: Mridangam
+    category: 3d
+    sections_raw:
+      - EVENTS
+    priority: L
+    static_animated: S+A
+    modality: 3d-ref
+    transparent_bg: true
+    resolution: ""
+    reuse: Multi
+    can_3d: N
+    derives_from: null
+    batch: b13-3d-models
+    family: 3D
+    scenes: []
+  - id: D3-04
+    name: Gopuram
+    category: 3d
+    sections_raw:
+      - HERO
+      - LEGACY
+    priority: L
+    static_animated: S+A
+    modality: 3d-ref
+    transparent_bg: true
+    resolution: ""
+    reuse: Multi
+    can_3d: N
+    derives_from: null
+    batch: b13-3d-models
+    family: 3D
+    scenes: []
+  - id: D3-05
+    name: Dancer
+    category: 3d
+    sections_raw:
+      - HERO
+    priority: L
+    static_animated: S+A
+    modality: 3d-ref
+    transparent_bg: true
+    resolution: ""
+    reuse: Multi
+    can_3d: N
+    derives_from: null
+    batch: b13-3d-models
+    family: 3D
+    scenes: []
+  - id: D3-06
+    name: Hero Scene
+    category: 3d
+    sections_raw:
+      - HERO
+    priority: L
+    static_animated: S+A
+    modality: 3d-ref
+    transparent_bg: true
+    resolution: ""
+    reuse: Multi
+    can_3d: N
+    derives_from: null
+    batch: b13-3d-models
+    family: 3D
+    scenes: []
+  - id: MOT-01
+    name: Loader (Kindling + Kolam)
+    category: motion
+    sections_raw:
+      - GLOBAL
+    priority: C
+    static_animated: A
+    modality: video
+    transparent_bg: variant
+    resolution: vector
+    reuse: Global
+    can_3d: N
+    derives_from: null
+    batch: b14-motion-audio
+    family: assembly
+    scenes: []
+  - id: MOT-02
+    name: Page Transition
+    category: motion
+    sections_raw:
+      - GLOBAL
+    priority: C
+    static_animated: A
+    modality: video
+    transparent_bg: variant
+    resolution: vector
+    reuse: Global
+    can_3d: N
+    derives_from: DIV-05
+    batch: b14-motion-audio
+    family: assembly
+    scenes: []
+  - id: MOT-03
+    name: Scroll-Linked Kolam Draw
+    category: motion
+    sections_raw:
+      - GLOBAL
+    priority: H
+    static_animated: A
+    modality: video
+    transparent_bg: variant
+    resolution: vector
+    reuse: Global
+    can_3d: N
+    derives_from: null
+    batch: b14-motion-audio
+    family: assembly
+    scenes: []
+  - id: MOT-04
+    name: Reveal Blooms
+    category: motion
+    sections_raw:
+      - GLOBAL
+    priority: H
+    static_animated: A
+    modality: video
+    transparent_bg: variant
+    resolution: vector
+    reuse: Global
+    can_3d: N
+    derives_from: null
+    batch: b14-motion-audio
+    family: assembly
+    scenes: []
+  - id: MOT-05
+    name: Tala-Pulse Ambient
+    category: motion
+    sections_raw:
+      - GLOBAL
+    priority: M
+    static_animated: A
+    modality: video
+    transparent_bg: variant
+    resolution: vector
+    reuse: Global
+    can_3d: N
+    derives_from: null
+    batch: b14-motion-audio
+    family: assembly
+    scenes: []
+  - id: MOT-06
+    name: Sound-Reactive Waveform
+    category: motion
+    sections_raw:
+      - HERO
+      - EVENTS
+    priority: L
+    static_animated: A
+    modality: video
+    transparent_bg: variant
+    resolution: vector
+    reuse: Global
+    can_3d: N
+    derives_from: null
+    batch: b14-motion-audio
+    family: assembly
+    scenes: []
+  - id: MOT-07
+    name: Tambura Drone (Audio)
+    category: motion
+    sections_raw:
+      - GLOBAL
+    priority: H
+    static_animated: A
+    modality: video
+    transparent_bg: variant
+    resolution: vector
+    reuse: Global
+    can_3d: N
+    derives_from: null
+    batch: b14-motion-audio
+    family: assembly
+    scenes: []
+  - id: MOT-08
+    name: Micro-Interaction Cues (Audio)
+    category: motion
+    sections_raw:
+      - GLOBAL
+    priority: M
+    static_animated: A
+    modality: video
+    transparent_bg: variant
+    resolution: vector
+    reuse: Global
+    can_3d: N
+    derives_from: null
+    batch: b14-motion-audio
+    family: assembly
+    scenes: []
+  - id: MOT-09
+    name: Invocation Note (Audio)
+    category: motion
+    sections_raw:
+      - HERO
+    priority: H
+    static_animated: A
+    modality: video
+    transparent_bg: variant
+    resolution: vector
+    reuse: Global
+    can_3d: N
+    derives_from: null
+    batch: b14-motion-audio
+    family: assembly
+    scenes: []
+  - id: MOT-10
+    name: Transition Stingers (Audio)
+    category: motion
+    sections_raw:
+      - thresholds
+    priority: L
+    static_animated: A
+    modality: video
+    transparent_bg: variant
+    resolution: vector
+    reuse: Global
+    can_3d: N
+    derives_from: null
+    batch: b14-motion-audio
+    family: assembly
+    scenes: []

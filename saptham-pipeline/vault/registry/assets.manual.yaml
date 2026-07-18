@@ -1,0 +1,18 @@
+# Hand-authored registry overlay — canon assets the pre-audit inventory omitted.
+# Merged over assets.yaml by loadRegistryAssets (manual wins by id). Survives re-ingest.
+assets:
+  - id: STYLE-00
+    name: Master Style Board
+    category: style
+    sections_raw: [GLOBAL]
+    priority: C
+    static_animated: S
+    modality: image
+    transparent_bg: false
+    resolution: "3840"
+    reuse: Global
+    can_3d: N
+    derives_from: null
+    batch: b00-style-anchor-board
+    family: ref
+    scenes: []

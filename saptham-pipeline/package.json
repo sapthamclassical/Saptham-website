@@ -1,0 +1,46 @@
+{
+  "name": "saptham-pipeline",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Saptham AI Creative Production Engine — provider-agnostic asset pipeline (implements docs/pipeline canon).",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "canon:load": "tsx pipeline/canon/validate.ts",
+    "ingest": "tsx pipeline/cli/ingest.ts",
+    "compose": "tsx pipeline/cli/compose.ts",
+    "generate": "tsx pipeline/cli/generate.ts",
+    "store:external": "tsx pipeline/cli/store-external.ts",
+    "index:rebuild": "tsx pipeline/cli/index-rebuild.ts",
+    "search": "tsx pipeline/cli/search.ts",
+    "report": "tsx pipeline/cli/report.ts",
+    "plan": "tsx pipeline/cli/plan.ts",
+    "approve": "tsx pipeline/cli/approve.ts",
+    "publish": "tsx pipeline/cli/publish.ts",
+    "review": "tsx pipeline/cli/review.ts",
+    "doctor": "tsx pipeline/cli/doctor.ts",
+    "generate:comfy": "tsx pipeline/cli/generate-comfy.ts",
+    "generate:gemini": "tsx pipeline/cli/generate-gemini.ts",
+    "generate:video": "tsx pipeline/cli/generate-video.ts",
+    "jobs": "tsx pipeline/cli/jobs.ts",
+    "video:loop": "tsx pipeline/cli/video-loop.ts",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "better-sqlite3": "^11.3.0",
+    "yaml": "^2.5.1",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.12.0",
+    "@types/better-sqlite3": "^7.6.11",
+    "@types/node": "^20.14.15",
+    "eslint": "^9.12.0",
+    "tsx": "^4.19.1",
+    "typescript": "^5.6.2",
+    "typescript-eslint": "^8.8.0",
+    "vitest": "^2.1.1"
+  }
+}

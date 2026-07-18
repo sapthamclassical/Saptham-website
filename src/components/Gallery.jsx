@@ -1,200 +1,147 @@
-import React, { useState, useEffect } from "react";
-import GalleryCarousel from "./GalleryCarousel";
+import { useEffect, useState } from "react";
+import { AnimatePresence, motion as Motion } from "motion/react";
+import Reveal, { RevealStagger, RevealItem } from "./shared/Reveal";
+import { galleryData, galleryCategories } from "../lib/gallery";
 
-// Import Images
-import g1 from "../assets/Gallery/General/1.webp";
-import g2 from "../assets/Gallery/General/2.webp";
-import g3 from "../assets/Gallery/General/3.webp";
-import g4 from "../assets/Gallery/General/4.webp";
-import g5 from "../assets/Gallery/General/5.webp";
-import g6 from "../assets/Gallery/General/6.webp";
-import g7 from "../assets/Gallery/General/7.webp";
-import g8 from "../assets/Gallery/General/8.webp";
-import g9 from "../assets/Gallery/General/9.webp";
-import g10 from "../assets/Gallery/General/10.webp";
-import g11 from "../assets/Gallery/General/11.webp";
-import g12 from "../assets/Gallery/General/12.webp";
-import g13 from "../assets/Gallery/General/13.webp";
-import g14 from "../assets/Gallery/General/14.webp";
+const EASE = [0.16, 1, 0.3, 1];
 
-import p1 from "../assets/Gallery/Payanam/1.webp";
-import p2 from "../assets/Gallery/Payanam/2.webp";
-import p3 from "../assets/Gallery/Payanam/3.webp";
-import p4 from "../assets/Gallery/Payanam/4.webp";
-import p5 from "../assets/Gallery/Payanam/5.webp";
-import p6 from "../assets/Gallery/Payanam/6.webp";
-import p7 from "../assets/Gallery/Payanam/7.webp";
-
-import v1 from "../assets/Gallery/Vishwam/1.jpeg";
-import v2 from "../assets/Gallery/Vishwam/2.jpeg";
-import v3 from "../assets/Gallery/Vishwam/3.jpeg";
-import v4 from "../assets/Gallery/Vishwam/4.jpeg";
-import v5 from "../assets/Gallery/Vishwam/5.jpeg";
-import v6 from "../assets/Gallery/Vishwam/6.jpeg";
-import v7 from "../assets/Gallery/Vishwam/7.jpeg";
-import v8 from "../assets/Gallery/Vishwam/8.jpeg";
-
-import y1 from "../assets/Gallery/Yaathra/1.webp";
-import y2 from "../assets/Gallery/Yaathra/2.webp";
-import y3 from "../assets/Gallery/Yaathra/3.webp";
-import y4 from "../assets/Gallery/Yaathra/4.webp";  
-import y5 from "../assets/Gallery/Yaathra/5.webp";
-import y6 from "../assets/Gallery/Yaathra/6.webp";
-import y7 from "../assets/Gallery/Yaathra/7.webp";
-import y8 from "../assets/Gallery/Yaathra/8.webp";
-
-import pr1 from "../assets/Gallery/PremaVaibhavam/1.webp"; 
-import pr2 from "../assets/Gallery/PremaVaibhavam/2.webp";
-import pr3 from "../assets/Gallery/PremaVaibhavam/3.webp";
-import pr4 from "../assets/Gallery/PremaVaibhavam/4.webp";  
-import pr5 from "../assets/Gallery/PremaVaibhavam/5.webp";
-import pr6 from "../assets/Gallery/PremaVaibhavam/6.webp";
-
-import r1 from "../assets/Gallery/Rasaleela/1.webp";
-import r2 from "../assets/Gallery/Rasaleela/2.webp";
-import r3 from "../assets/Gallery/Rasaleela/3.webp";
-import r4 from "../assets/Gallery/Rasaleela/4.webp";  
-import r5 from "../assets/Gallery/Rasaleela/5.webp";
-import r6 from "../assets/Gallery/Rasaleela/6.webp";
-import r7 from "../assets/Gallery/Rasaleela/7.webp";
-import r8 from "../assets/Gallery/Rasaleela/8.webp";
-import r9 from "../assets/Gallery/Rasaleela/9.webp";
-import r10 from "../assets/Gallery/Rasaleela/10.webp";
-
+/**
+ * Scene 09 · Smriti — the gallery as a night-museum: warm-black matting, brass
+ * tab rail, images revealed like plates in a catalogue, a candlelit lightbox.
+ * Categories & images auto-discover from src/assets/Gallery/<Folder>/ — drop a
+ * photo in a folder and it appears; add a folder and a new tab appears.
+ */
 const Gallery = () => {
-  const galleryData = {
-    General: [g1,g2,g3,g4,g5,g6,g7,g8,g9,g10,g11,g12,g13,g14],
-    Payanam: [p1, p2, p3, p4, p5, p6, p7],
-    Vishwam: [v6, v7, v8, v5, v3, v1, v4,v2],
-    Rasaleela: [r1, r2, r3, r4, r5, r6, r7, r8, r9, r10],
-    Yaathra: [y1, y2, y3, y4, y5, y6, y7, y8],
-    "Prema Vaibhavam": [pr1, pr2, pr3, pr4, pr5, pr6],
-  };
-
-  const categories = Object.keys(galleryData);
-  const [active, setActive] = useState("General");
-  const [carouselOpen, setCarouselOpen] = useState(false);
-  const [modalOpen, setModalOpen] = useState(false);
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [active, setActive] = useState(galleryCategories[0] ?? "General");
+  const [lightbox, setLightbox] = useState(null); // index | null
+  const images = galleryData[active] ?? [];
 
   useEffect(() => {
-    if (!modalOpen) return;
+    if (lightbox === null) return;
     const onKey = (e) => {
-      if (e.key === "Escape") setModalOpen(false);
-      if (e.key === "ArrowLeft")
-        setCurrentIndex((i) => (i - 1 + galleryData[active].length) % galleryData[active].length);
-      if (e.key === "ArrowRight")
-        setCurrentIndex((i) => (i + 1) % galleryData[active].length);
+      if (e.key === "Escape") setLightbox(null);
+      if (e.key === "ArrowLeft") setLightbox((i) => (i - 1 + images.length) % images.length);
+      if (e.key === "ArrowRight") setLightbox((i) => (i + 1) % images.length);
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [modalOpen, active]);
+  }, [lightbox, images.length]);
+
   return (
-    <div className="py-20 px-6 max-w-7xl mx-auto">
-      {/* Title */}
-      <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-navy-800">
-            Our <span className="text-orange-500">Gallery</span>
-          </h2>
-          <div className="mt-2 h-1 w-20 bg-orange-500 mx-auto"></div>
-        </div>
-      {/* Category Buttons */}
-      <div className="flex flex-wrap justify-center gap-4 mb-10">
-        {categories.map((cat) => (
+    <div className="mx-auto max-w-7xl px-4 pb-10 sm:px-6 lg:px-8">
+      {/* Page invocation */}
+      <header className="pt-16 pb-12 text-center md:pt-24">
+        <Reveal>
+          <p className="eyebrow mb-5">Moments &amp; Memories</p>
+          <h1 className="font-display gold-text text-5xl leading-[1.05] md:text-7xl">Gallery</h1>
+          <p className="mx-auto mt-5 max-w-xl text-ash">
+            Moments held in warm light — from the practice hall to the proscenium.
+          </p>
+        </Reveal>
+      </header>
+
+      {/* Brass tab rail */}
+      <Reveal className="mb-12 flex flex-wrap justify-center gap-3">
+        {galleryCategories.map((cat) => (
           <button
             key={cat}
-            onClick={() => {
-              setActive(cat);
-              setCarouselOpen(false);
-            }}
-            className={`btn ${
+            onClick={() => setActive(cat)}
+            className={`border px-5 py-2 text-[0.7rem] tracking-[0.18em] uppercase transition-all duration-400 ${
               active === cat
-                ? "bg-orange-500 text-white border-none"
-                : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+                ? "border-gold bg-gold/10 text-goldhi shadow-[0_0_24px_rgba(201,162,75,0.15)]"
+                : "border-granite text-ash hover:border-gold/50 hover:text-ivory"
             }`}
           >
             {cat}
           </button>
         ))}
-      </div>
+      </Reveal>
 
-      {/* Grid OR Carousel */}
-      {!carouselOpen ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 px-4">
-          {galleryData[active].map((img, idx) => (
+      {/* Museum plates — masonry columns */}
+      <AnimatePresence mode="wait">
+        <Motion.div
+          key={active}
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -10 }}
+          transition={{ duration: 0.5, ease: EASE }}
+        >
+          <RevealStagger beat={0.05} className="columns-2 gap-4 md:columns-3 lg:columns-4">
+            {images.map((img, idx) => (
+              <RevealItem key={img} className="mb-4 break-inside-avoid">
+                <button
+                  onClick={() => setLightbox(idx)}
+                  className="group block w-full overflow-hidden border border-granite/60 bg-charcoal transition-all duration-500 hover:border-gold/50"
+                  aria-label={`Open image ${idx + 1} of ${active}`}
+                >
+                  <img
+                    src={img}
+                    alt={`${active} — plate ${idx + 1}`}
+                    loading="lazy"
+                    className="w-full transition-all duration-700 ease-out group-hover:scale-[1.03] group-hover:opacity-90"
+                  />
+                </button>
+              </RevealItem>
+            ))}
+          </RevealStagger>
+        </Motion.div>
+      </AnimatePresence>
+
+      {/* Candlelit lightbox */}
+      <AnimatePresence>
+        {lightbox !== null && (
+          <Motion.div
+            className="fixed inset-0 z-[70] flex items-center justify-center bg-sanctum/95 p-4 backdrop-blur-sm"
+            role="dialog"
+            aria-modal="true"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setLightbox(null)}
+          >
             <button
-              key={idx}
-              onClick={() => {
-                setCurrentIndex(idx);
-                setModalOpen(true);
-              }}
-              className="block w-full text-left"
-              aria-label={`Open image ${idx + 1} in full view`}
+              className="absolute top-5 right-6 font-display text-2xl text-gold transition-colors hover:text-goldhi"
+              onClick={() => setLightbox(null)}
+              aria-label="Close full view"
+            >
+              ✕
+            </button>
+
+            <Motion.figure
+              key={lightbox}
+              className="relative max-h-full w-full max-w-5xl"
+              initial={{ opacity: 0, scale: 0.98 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.45, ease: EASE }}
+              onClick={(e) => e.stopPropagation()}
             >
               <img
-                src={img}
-                alt={`Gallery ${active} ${idx + 1}`}
-                className="w-full h-auto rounded-xl shadow-md hover:scale-105 transition-transform duration-200"
+                src={images[lightbox]}
+                alt={`${active} — full view ${lightbox + 1}`}
+                className="mx-auto max-h-[82vh] w-auto border border-granite/70 object-contain shadow-[0_32px_120px_rgba(0,0,0,0.8)]"
               />
-            </button>
-          ))}
-        </div>
-      ) : (
-        <div>
-          <GalleryCarousel images={galleryData[active]} />
+              <figcaption className="mt-4 text-center font-mono text-[0.65rem] tracking-[0.2em] text-ash uppercase">
+                {active} · plate {lightbox + 1} / {images.length}
+              </figcaption>
 
-          <div className="text-center mt-6">
-            <button
-              onClick={() => setCarouselOpen(false)}
-              className="btn bg-gray-900 text-white"
-            >
-              Back to Gallery
-            </button>
-          </div>
-        </div>
-      )}
-
-      {/* Modal / Lightbox for full image view */}
-      {modalOpen && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4"
-          role="dialog"
-          aria-modal="true"
-        >
-          <button
-            className="absolute top-4 right-4 btn btn-circle btn-ghost text-white"
-            onClick={() => setModalOpen(false)}
-            aria-label="Close full view"
-          >
-            ✕
-          </button>
-
-          <div className="relative max-w-5xl w-full max-h-full">
-            <img
-              src={galleryData[active][currentIndex]}
-              alt={`Full view ${currentIndex + 1}`}
-              className="w-full h-auto max-h-[80vh] object-contain rounded-lg bg-black"
-            />
-
-            {/* Prev / Next Controls */}
-            <button
-              onClick={() => setCurrentIndex((i) => (i - 1 + galleryData[active].length) % galleryData[active].length)}
-              className="absolute left-2 top-1/2 -translate-y-1/2 btn btn-ghost btn-circle text-white"
-              aria-label="Previous image"
-            >
-              ‹
-            </button>
-
-            <button
-              onClick={() => setCurrentIndex((i) => (i + 1) % galleryData[active].length)}
-              className="absolute right-2 top-1/2 -translate-y-1/2 btn btn-ghost btn-circle text-white"
-              aria-label="Next image"
-            >
-              ›
-            </button>
-          </div>
-        </div>
-      )}
+              <button
+                onClick={() => setLightbox((i) => (i - 1 + images.length) % images.length)}
+                className="absolute top-1/2 -left-2 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-granite bg-sanctum/70 text-gold transition-all hover:border-gold md:-left-16"
+                aria-label="Previous image"
+              >
+                ←
+              </button>
+              <button
+                onClick={() => setLightbox((i) => (i + 1) % images.length)}
+                className="absolute top-1/2 -right-2 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-granite bg-sanctum/70 text-gold transition-all hover:border-gold md:-right-16"
+                aria-label="Next image"
+              >
+                →
+              </button>
+            </Motion.figure>
+          </Motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };

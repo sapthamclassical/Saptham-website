@@ -1,10 +1,53 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="bg-[#0E0B08]">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="src/assets/logo.png"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Saptham - The Official Classical Arts Club of Anna University</title>
+    <meta name="theme-color" content="#0E0B08" />
+    <title>Saptham — Classical Music &amp; Dance Club, CEG Anna University</title>
+    <meta
+      name="description"
+      content="Saptham — the classical music &amp; dance sabha of CEG, Anna University. Where the seven notes become light."
+    />
+
+    <!-- Brand -->
+    <link rel="icon" type="image/svg+xml" href="/brand/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/brand/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/brand/favicon-16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/brand/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="apple-mobile-web-app-title" content="Saptham" />
+
+    <!-- Social -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Saptham — Classical Music &amp; Dance Club, CEG" />
+    <meta
+      property="og:description"
+      content="The classical music &amp; dance sabha of CEG, Anna University. Where the seven notes become light."
+    />
+    <meta property="og:image" content="/brand/og-mark.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!--
+      Fonts are linked here rather than @import-ed from App.css on purpose: a
+      CSS @import cannot begin downloading until the stylesheet itself has been
+      fetched and parsed, which serialises two round trips onto the critical
+      path. `display=swap` paints text immediately in the fallback face instead
+      of holding a blank screen. Noto Serif Tamil ships one weight only —
+      Tamil appears as an accent (hero line, swara letters), not a system.
+    -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=Inter:wght@300;400;500;600&family=Noto+Serif+Tamil:wght@400&display=swap"
+    />
+
+    <style>
+      html {
+        background: #0e0b08;
+      }
+    </style>
   </head>
   <body>
     <div id="root"></div>

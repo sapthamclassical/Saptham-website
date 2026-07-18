@@ -1,0 +1,292 @@
+batches:
+  - id: b00-style-anchor-board
+    name: STYLE ANCHOR BOARD
+    family: ref
+    order: 0
+    anchor_asset: null
+    members:
+      - STYLE-00
+      - TEX-02
+      - TEX-01
+      - LGT-01
+      - INS-01
+      - BRD-01
+  - id: b01-brand-marks-icons
+    name: BRAND MARKS & ICONS
+    family: A
+    order: 1
+    anchor_asset: null
+    members:
+      - BRD-01
+      - BRD-02
+      - BRD-03
+      - BRD-04
+      - BRD-05
+      - BRD-08
+      - ICO-01
+      - ICO-02
+      - ICO-03
+      - ICO-04
+      - ICO-05
+      - ICO-08
+      - INS-01
+      - BN-01
+      - BN-07
+      - LOT-03
+      - GLD-04
+      - HERO-07
+      - OB-03
+  - id: b02-kolam-borders-geometry
+    name: KOLAM · BORDERS · GEOMETRY · LINE-ORNAMENTS
+    family: A
+    order: 2
+    anchor_asset: null
+    members:
+      - KOL-01
+      - KOL-05
+      - KOL-06
+      - KOL-07
+      - BOR-01
+      - BOR-02
+      - BOR-03
+      - BOR-04
+      - BOR-05
+      - BOR-06
+      - BOR-07
+      - GEO-01
+      - GEO-02
+      - GEO-03
+      - GEO-04
+      - GEO-05
+      - LOT-01
+      - MAN-01
+      - MAN-02
+      - BN-08
+      - GLD-02
+      - GLD-05
+      - DIV-02
+      - DIV-06
+      - DIV-07
+      - FTR-04
+      - FTR-07
+      - INS-02
+      - INS-03
+      - BN-03
+      - FTR-01
+      - EVT-03
+      - EVT-04
+  - id: b03-ceremonial-color-ornaments
+    name: CEREMONIAL COLOR ORNAMENTS
+    family: A
+    order: 3
+    anchor_asset: null
+    members:
+      - RAN-01
+      - RAN-02
+      - RAN-03
+      - MAN-03
+  - id: b04-material-texture-library
+    name: MATERIAL & TEXTURE LIBRARY
+    family: C-tex
+    order: 4
+    anchor_asset: null
+    members:
+      - TEX-01
+      - TEX-02
+      - TEX-03
+      - TEX-04
+      - TEX-05
+      - TEX-06
+      - TEX-07
+      - TEX-08
+      - TEX-09
+      - TEX-10
+      - GLD-01
+      - ARC-06
+  - id: b05-particles-light-sprites
+    name: PARTICLES & LIGHT SPRITES
+    family: C-particle
+    order: 5
+    anchor_asset: null
+    members:
+      - PAR-01
+      - PAR-02
+      - PAR-03
+      - PAR-04
+      - PAR-05
+      - PAR-06
+      - LGT-03
+      - LGT-07
+      - TEX-07
+  - id: b06-silhouettes-figurative-shapes
+    name: SILHOUETTES & FIGURATIVE SHAPES
+    family: B
+    order: 6
+    anchor_asset: null
+    members:
+      - BN-04
+      - BN-05
+      - INS-08
+      - INS-09
+      - INS-10
+      - ARC-01
+      - BOR-03
+      - BOR-04
+  - id: b07-lit-metal-hero
+    name: LIT METAL HERO OBJECTS
+    family: B
+    order: 7
+    anchor_asset: null
+    members:
+      - LGT-01
+      - INS-04
+      - INS-05
+      - INS-06
+      - INS-07
+      - BRD-06
+      - LGT-09
+  - id: b08-cinematic-atmosphere-backgrounds
+    name: CINEMATIC ATMOSPHERE & BACKGROUNDS
+    family: B
+    order: 8
+    anchor_asset: null
+    members:
+      - ARC-05
+      - ARC-02
+      - ARC-04
+      - LGT-02
+      - LGT-05
+      - LGT-06
+      - LGT-08
+      - MAN-04
+      - LOT-04
+      - HERO-03
+      - HERO-08
+      - HERO-09
+      - HERO-10
+      - BN-10
+      - HERO-12
+  - id: b09-hero-composite-scenes
+    name: HERO COMPOSITE SCENES
+    family: B
+    order: 9
+    anchor_asset: null
+    members:
+      - HERO-01
+      - HERO-02
+      - HERO-04
+  - id: b10-art-directed-photography
+    name: ART-DIRECTED PHOTOGRAPHY
+    family: photo
+    order: 10
+    anchor_asset: null
+    members:
+      - PHO-01
+      - PHO-02
+      - PHO-03
+      - PHO-04
+      - OB-01
+      - ALM-01
+      - EVT-01
+      - EVT-07
+      - BN-06
+      - BN-09
+      - HERO-11
+  - id: b11-social-marketing-templates
+    name: SOCIAL & MARKETING TEMPLATES
+    family: assembly
+    order: 11
+    anchor_asset: null
+    members:
+      - SOC-01
+      - SOC-02
+      - SOC-03
+      - SOC-04
+      - SOC-05
+      - SOC-06
+      - SOC-07
+      - SOC-08
+      - SOC-09
+      - SOC-10
+      - EVT-08
+      - BRD-09
+  - id: b12-ui-components-decorative
+    name: UI COMPONENTS & DECORATIVE
+    family: assembly
+    order: 12
+    anchor_asset: null
+    members:
+      - UID-01
+      - UID-02
+      - UID-03
+      - UID-04
+      - UID-05
+      - UID-06
+      - UID-07
+      - UID-08
+      - UID-09
+      - UID-10
+      - UID-11
+      - UID-12
+      - UID-13
+      - UID-14
+      - OB-02
+      - OB-04
+      - OB-05
+      - OB-06
+      - ALM-02
+      - ALM-03
+      - ALM-05
+      - ALM-06
+      - EVT-02
+      - EVT-05
+      - EVT-06
+      - MAN-03
+  - id: b13-3d-models
+    name: 3D MODELS
+    family: 3D
+    order: 13
+    anchor_asset: null
+    members:
+      - D3-01
+      - D3-02
+      - D3-03
+      - D3-04
+      - D3-05
+      - D3-06
+  - id: b14-motion-audio
+    name: MOTION & AUDIO
+    family: assembly
+    order: 14
+    anchor_asset: null
+    members:
+      - MOT-01
+      - MOT-02
+      - MOT-03
+      - MOT-04
+      - MOT-05
+      - MOT-06
+      - MOT-07
+      - MOT-08
+      - MOT-09
+      - MOT-10
+      - KOL-02
+      - KOL-03
+      - KOL-04
+      - MAN-01
+      - MAN-02
+      - BRD-07
+      - LOT-02
+      - BN-02
+      - INS-11
+      - INS-12
+      - INS-13
+      - GEO-04
+      - DIV-03
+      - DIV-05
+      - FTR-01
+      - FTR-03
+      - FTR-06
+      - UID-08
+      - UID-12
+      - HERO-06

@@ -1,0 +1,29 @@
+{
+  "artifact_id": "LGT-01:v1:var-01",
+  "content_hash": "0322c2e9bc30c2a7ef3c6939cb2cf174e1b92ac95ebbeb3fdcde67a9f7fcb127",
+  "asset_id": "LGT-01",
+  "version": "v1",
+  "variant": "var-01",
+  "path": "vault\\store\\03\\0322c2e9bc30c2a7ef3c6939cb2cf174e1b92ac95ebbeb3fdcde67a9f7fcb127.jpg",
+  "mime": "image/jpeg",
+  "status": "published",
+  "provenance": {
+    "prompt_hash": "fe2371b68654f13c69127e8faa991db895075e1256739263b6795080dbbccdf7",
+    "provider": "openart",
+    "model": "nano-banana-2-lite",
+    "seed": null,
+    "reference_ids": [
+      "STYLE-00",
+      "b07-lit-metal-hero"
+    ],
+    "request_id": "compose:LGT-01:v1",
+    "run_id": "run-1784145140028"
+  },
+  "acceptance": {
+    "passed": true,
+    "notes": "passes the 5-point acceptance test (light law, restraint law, workshop law, movement law, recital-not-flyer)",
+    "reviewer": "Executive Creative Director",
+    "ts": "2026-07-16T02:34:42.545Z"
+  },
+  "created_at": "2026-07-15T19:52:20.289Z"
+}

@@ -1,0 +1,16 @@
+# Prompt Card — transcribed from PROMPT_LIBRARY.md B02. Family A (flat gold line).
+asset_id: KOL-01
+subject: "A regular seamless grid of small soft gold dots - the pulli dot-matrix that underlies every kolam."
+composition: "Seamless square-lattice tile."
+lighting: "Flat."
+materials: "Soft gold dots, no fill."
+color_palette: "Saptham Gold #C9A24B on transparent."
+camera_angle: "Flat orthographic."
+background: "Transparent."
+texture: "Clean vector."
+symmetry: "Square lattice, repeating."
+constraints: "Seamless tile; even spacing; vectorize."
+negative_delta: "broken grid, uneven spacing, double dots"
+output_format: "SVG (seamless tile)"
+aspect_ratio: "1:1"
+variants: 4

@@ -1,0 +1,29 @@
+{
+  "artifact_id": "INS-04:v1:var-01",
+  "content_hash": "3822e476ddb588a1eecbef5797f5f8de5769d0c0954d3dcd2983ca9027cc15aa",
+  "asset_id": "INS-04",
+  "version": "v1",
+  "variant": "var-01",
+  "path": "vault\\store\\38\\3822e476ddb588a1eecbef5797f5f8de5769d0c0954d3dcd2983ca9027cc15aa.png",
+  "mime": "image/png",
+  "status": "candidate",
+  "provenance": {
+    "prompt_hash": "96bd622d4537df91c10073e6af6e7de425715b5ebb51a6c5c64b72a3b851f7d1",
+    "provider": "openart",
+    "model": "kling-3-omni",
+    "seed": null,
+    "reference_ids": [
+      "STYLE-00",
+      "b07-lit-metal-hero"
+    ],
+    "request_id": "compose:INS-04:v1",
+    "run_id": "run-1784223133998"
+  },
+  "acceptance": {
+    "passed": null,
+    "notes": "",
+    "reviewer": "",
+    "ts": null
+  },
+  "created_at": "2026-07-16T17:32:14.250Z"
+}

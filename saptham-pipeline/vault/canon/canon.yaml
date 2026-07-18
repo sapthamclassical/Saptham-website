@@ -1,0 +1,54 @@
+# Machine-readable Design Bible (L0). Injected by the Prompt Engine (M2).
+# Source of truth: ../../docs/CANON.md + DESIGN_BIBLE.md. CANON.md wins on conflict.
+version: "1.0"
+
+gsc: >-
+  warm candlelit chiaroscuro lighting, 2700-3200K, deep warm near-black
+  background (#0E0B08), antique temple-brass gold (#C9A24B) accents, single
+  directional key light, rich deep shadows, small controlled specular
+  highlights, subtle incense haze and drifting gold-dust particles, cinematic
+  2.39:1 or 3:2 framing, shallow depth of field, film grain, no flash, no cold
+  blue light, no neon, no clutter, museum-grade, luxurious, restrained.
+
+tokens:
+  palette:
+    garbhagriha_black: "#0E0B08"
+    sabha_charcoal: "#171310"
+    temple_granite: "#2A241D"
+    vibhuti_ivory: "#F4EDE0"
+    chandana_sand: "#E5D6B8"
+    kumkum_crimson: "#9B1C2E"
+    alta_vermillion: "#D64027"
+  gold_gradient: ["#8A6A25", "#C9A24B", "#EBD08A"]
+  swara_hues:
+    Sa: "#C9A24B"
+    Ri: "#C57B26"
+    Ga: "#14604E"
+    Ma: "#0E5A63"
+    Pa: "#9B1C2E"
+    Da: "#5E2E52"
+    Ni: "#1C2A57"
+
+neg_presets:
+  A: "photorealism, 3D, shading, inner gradients, drop shadows, filled shapes, background color, uneven strokes, blur, cartoon, clip-art, cold colors, neon, rainbow, watermark, text, signature"
+  B: "flat even lighting, cold blue/white light, neon, blown highlights, chrome/plastic, flat yellow gold, cluttered background, tourist saturation, harsh flash, deformed anatomy, extra fingers, low contrast, muddy shadows, watermark, text"
+  C-tex: "seams, visible repeat, directional hotspot, any subject, focal point, text, watermark, uneven exposure, color-cast, plastic sheen, blur"
+  C-particle: "hard edges, solid shape, background, frame, banding, neon, clustered particles, text, watermark"
+  photo: "flash, cold white balance, clutter, plastic chairs, banners, oversaturation, heavy retouch, plastic skin, deformed hands, motion smear on face, low contrast, watermark"
+
+families:
+  A: { lighting_override: "flat, no directional light", background_default: "transparent", vectorize: true }
+  B: { lighting_override: null, background_default: "black, alpha-isolated" }
+  C-tex: { lighting_override: "flat even, no hotspot", tileable: true }
+  C-particle: { lighting_override: "self-luminous soft glow", background_default: "transparent" }
+  photo: { lighting_override: "physical single warm key 2700-3200K Rembrandt" }
+  assembly: { lighting_override: null }
+
+naming_convention: "sap_[cat]_[asset]_[variant]_[state]@[res].[ext]"
+
+acceptance_test:
+  - "light law"
+  - "restraint law"
+  - "workshop law"
+  - "movement law"
+  - "recital-not-flyer"

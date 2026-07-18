@@ -1,0 +1,68 @@
+{
+  "note": "Add alumni here — no code changes needed. Drop a portrait named 'Full Name.jpg' into src/assets/people/ and it appears automatically; until then an elegant placeholder shows.",
+  "members": [
+    {
+      "name": "Reshma",
+      "role": "President",
+      "year": "'16 – '17",
+      "image": "",
+      "quote": "Saptham took me from member to President, giving me opportunities, learning experiences, and a space to grow my talent and character. Organising and hosting events shaped me hugely. It is a wonderful platform for those passionate about music and performing arts and wanting to take their skills to a larger audience."
+    },
+    {
+      "name": "Shraddha",
+      "role": "Vice President",
+      "year": "'17 – '19",
+      "image": "",
+      "quote": "Saptham was an ideal platform for anyone who wanted to showcase their talent in the classical arts. As the VP for 2 consecutive academic years I watched the club grow tremendously and am especially proud of how far they've come in the years after I graduated. Onward and upward!"
+    },
+    {
+      "name": "Sakthi",
+      "role": "Vice President",
+      "year": "'20",
+      "image": "",
+      "quote": "SAPTHAM is an excellent organisation to explore artistic aspects. I served as secretary for a year and vice president the next. Organising performances, rehearsals, and events created unforgettable, fun-filled memories. The club provided a platform to showcase talents and connect with like-minded individuals passionate about Indian classical arts."
+    },
+    {
+      "name": "Harini",
+      "role": "Vice President",
+      "year": "'20 – '21",
+      "image": "",
+      "quote": "Despite juggling many activities, Saptham was where I felt truly seen. I loved being among people dedicated to Indian classical arts. I interacted with talented artists and helped the club grow, especially during the pandemic when we had to innovate. Saptham gave me some of my best university memories."
+    },
+    {
+      "name": "Meenakshi",
+      "role": "President",
+      "year": "'21 – '22",
+      "image": "",
+      "quote": "Saptham is very close to my heart. This club gave me a platform to experiment and get creative with dance. During the four years, I learnt a lot and performed on various stages, all while creating some great memories with amazing friends. My time in Saptham is something I will cherish forever."
+    },
+    {
+      "name": "Ananya",
+      "role": "Vice President",
+      "year": "'21 – '22",
+      "image": "",
+      "quote": "My time as the vice president of Saptham was one of the best experiences of my college life. With countless memories and unforgettable experiences, I got to learn, explore and lead a team to help the club reach new heights. Working with like-minded people gave me a sense of satisfaction and happiness."
+    },
+    {
+      "name": "Sushrut",
+      "role": "Music Head",
+      "year": "'21 – '22",
+      "image": "",
+      "quote": "Saptham is one club that always feels like home. Saptham grew from being a club no one knew about, to the club that performed its own 1.5 hour special and growing up with that was phenomenal. I met some of the wonderful people I know through Saptham, and I'll always be a proud Saptham Alumnus!"
+    },
+    {
+      "name": "Viniksha",
+      "role": "Batch of",
+      "year": "'22",
+      "image": "",
+      "quote": "I learnt a lot in dance during my days in Saptham club. The practice sessions before every programme are the best. It was chill, fun and I had the best experience there."
+    },
+    {
+      "name": "Rose",
+      "role": "Batch of",
+      "year": "'22",
+      "image": "",
+      "quote": "I joined Saptham in my second year and first performed at Agni'19. After Covid, I became more involved — helping with Saptham's first dance drama and performing at Techofes'22. I met amazing people and made meaningful connections. My only regret is not being more involved earlier."
+    }
+  ]
+}

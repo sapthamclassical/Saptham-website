@@ -1,0 +1,18 @@
+{
+  "run_id": "run-1784144991881",
+  "ts": "2026-07-15T19:49:51.895Z",
+  "target": "--asset KOL-01",
+  "resolved_jobs": [
+    "KOL-01"
+  ],
+  "policy": {
+    "provider": "fake"
+  },
+  "totals": {
+    "cost": 0,
+    "count": 1,
+    "retries": 0,
+    "duration": 13
+  },
+  "dlq_count": 0
+}

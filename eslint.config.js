@@ -4,7 +4,13 @@ import reactHooks from 'eslint-plugin-react-hooks'
 import reactRefresh from 'eslint-plugin-react-refresh'
 
 export default [
-  { ignores: ['dist'] },
+  { ignores: ['dist', 'supabase/**'] },
+  // Root config files and maintenance scripts run in Node, so `module`,
+  // `require` and `process` are legitimate globals there.
+  {
+    files: ['*.config.js', '*.config.cjs', 'scripts/**/*.mjs'],
+    languageOptions: { globals: { ...globals.node } },
+  },
   {
     files: ['**/*.{js,jsx}'],
     languageOptions: {

@@ -1,0 +1,19 @@
+{
+  "run_id": "run-1784298900663",
+  "ts": "2026-07-17T14:35:00.674Z",
+  "target": "video:loop HERO-11 from LGT-01",
+  "resolved_jobs": [
+    "HERO-11"
+  ],
+  "policy": {
+    "provider": "ffmpeg",
+    "source": "LGT-01"
+  },
+  "totals": {
+    "cost": 0,
+    "count": 0,
+    "retries": 0,
+    "duration": 0
+  },
+  "dlq_count": 0
+}

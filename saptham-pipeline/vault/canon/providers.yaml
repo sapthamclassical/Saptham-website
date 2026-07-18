@@ -1,0 +1,175 @@
+# Provider registry (L0). Capabilities are facts; routing weights + free-first live in policy.yaml.
+# The router selects by CAPABILITY (capability_tags), never by provider name.
+# Secrets are referenced by env-var NAME only (auth.secrets / requires_env) — never values.
+providers:
+  # ── PRIMARY: OpenArt MCP aggregator (OAuth-connected, has credits) ───────────
+  - id: openart
+    display_name: "OpenArt MCP (primary aggregator)"
+    kind: mcp
+    enabled: true
+    connected: true
+    tier: free_mcp
+    quality: 5
+    mcp_server: "bad77fe6-b31c-4d32-a7d7-ab9489d5c106"
+    dynamic_catalog: true
+    models:
+      - nano-banana-pro
+      - nano-banana-2
+      - gpt-image-2
+      - byte-plus-seedream-4-5
+      - kling-3-omni
+      - byte-plus-seedance-2
+      - wan2-7
+      - pixverseV6
+      - gemini-omni-flash
+    capability_tags:
+      [text_to_image, image_to_image, image_to_video, text_to_video,
+       character_consistency, camera_motion, style_transfer,
+       material_reference, lighting_reference, upscaling]
+    capabilities:
+      - { modality: image, mode: sync, max_resolution: 4096, aspect_ratios: ["1:1","3:2","2:3","4:3","3:4","16:9","9:16","21:9"], supports_negative_prompt: false, reference_images: 14, supports_seed: false, formats: ["png","webp"] }
+      - { modality: video, mode: async, max_resolution: 2160, aspect_ratios: ["16:9","9:16","1:1","21:9"], supports_negative_prompt: false, reference_images: 3, supports_seed: false, formats: ["mp4"] }
+    auth:
+      type: mcp_session
+      secrets: []
+      note: "PRIMARY. OAuth-connected. Free plan, ~40 credits (2026-07-16). Prefer for all capabilities."
+
+  # ── Kling MCP (connected, no credits) ───────────────────────────────────────
+  - id: kling
+    display_name: "Kling MCP"
+    kind: mcp
+    enabled: true
+    connected: true
+    tier: free_mcp
+    quality: 4
+    mcp_server: "59437aad-af11-4d6f-8b11-782115db43db"
+    dynamic_catalog: true
+    capability_tags: [text_to_image, image_to_image, image_to_video, text_to_video, camera_motion, character_consistency]
+    capabilities:
+      - { modality: video, mode: async, max_resolution: 2160, aspect_ratios: ["16:9","9:16","1:1"], supports_negative_prompt: false, reference_images: 1, supports_seed: false, formats: ["mp4"] }
+    auth:
+      type: mcp_session
+      secrets: []
+      note: "Connected. Free plan, 0 credits (2026-07-16) -> AuthGate: needs_credits. Kling models also reachable via OpenArt (kling-3-omni)."
+
+  # ── Higgsfield MCP (connected earlier, no credits) ──────────────────────────
+  - id: higgsfield
+    display_name: "Higgsfield MCP"
+    kind: mcp
+    enabled: true
+    connected: true
+    tier: free_mcp
+    quality: 3
+    mcp_server: "b268a533-d2df-450e-bf47-9b0e168bbe33"
+    dynamic_catalog: true
+    capability_tags: [text_to_image, image_to_video, text_to_video, upscaling, camera_motion]
+    capabilities:
+      - { modality: image, mode: sync, max_resolution: 4096, aspect_ratios: ["1:1","16:9","9:16","4:5","21:9"], supports_negative_prompt: false, reference_images: 1, supports_seed: false, formats: ["png"] }
+    auth:
+      type: mcp_session
+      secrets: []
+      note: "Connected. Free plan, 0 credits -> needs_credits."
+
+  # ── PixVerse (HTTP, secondary; env key) ─────────────────────────────────────
+  - id: pixverse
+    display_name: "PixVerse V6 (direct API)"
+    kind: http
+    enabled: true
+    tier: free_api
+    quality: 3
+    endpoint: "https://app-api.pixverse.ai"
+    capability_tags: [image_to_video, text_to_video, camera_motion]
+    capabilities:
+      - { modality: video, mode: async, max_resolution: 1080, aspect_ratios: ["16:9","9:16","1:1"], supports_negative_prompt: false, reference_images: 1, supports_seed: true, formats: ["mp4"] }
+    auth:
+      type: api_key
+      secrets: ["PIXVERSE_API_KEY"]
+      note: "Secondary. Also reachable via OpenArt (pixverseV6)."
+
+  # ── Gemini (HTTP; reasoning, prompt-opt, OCR, image) ────────────────────────
+  - id: gemini
+    display_name: "Google Gemini (direct API)"
+    kind: http
+    enabled: true
+    tier: free_api
+    quality: 4
+    endpoint: "https://generativelanguage.googleapis.com"
+    capability_tags: [text_to_image, image_to_image, asset_review, prompt_enhancement]
+    capabilities:
+      - { modality: image, mode: sync, max_resolution: 4096, aspect_ratios: ["1:1","16:9","9:16"], supports_negative_prompt: false, reference_images: 14, supports_seed: false, formats: ["png"] }
+    auth:
+      type: api_key
+      secrets: ["GEMINI_API_KEY"]
+      note: "Reasoning / prompt optimization / OCR / image. Also reachable via OpenArt (nano-banana = Gemini)."
+
+  # ── ComfyUI (local; Ollama feeds prompt enhancement) ────────────────────────
+  - id: comfyui
+    display_name: "ComfyUI (local workflows)"
+    kind: local
+    enabled: true
+    tier: local_oss
+    quality: 4
+    endpoint: "http://127.0.0.1:8188"
+    capability_tags: [text_to_image, image_to_image, upscaling, style_transfer, material_reference, lighting_reference]
+    capabilities:
+      - { modality: image, mode: async, max_resolution: 4096, aspect_ratios: ["1:1","16:9","9:16","4:5","21:9"], supports_negative_prompt: true, reference_images: 4, supports_seed: true, formats: ["png"] }
+    requires_env: ["COMFYUI_HOST"]
+    auth:
+      type: api_key
+      secrets: ["COMFYUI_TOKEN"]
+      note: "Local, free. Ollama enhances/decomposes prompts + negatives, then ComfyUI executes the workflow."
+
+  # ── Ollama (local reasoning; feeds ComfyUI) ─────────────────────────────────
+  - id: ollama
+    display_name: "Ollama (local reasoning)"
+    kind: local
+    enabled: true
+    tier: local_oss
+    quality: 3
+    capability_tags: [prompt_enhancement, asset_review]
+    requires_env: ["OLLAMA_HOST"]
+    auth:
+      type: none
+      secrets: []
+      note: "Local, free. Prompt enhancement/decomposition, negatives, reference summarization, consistency checking, prompt memory."
+
+  # ── FFmpeg (local video post) ───────────────────────────────────────────────
+  - id: ffmpeg
+    display_name: "FFmpeg (local video post)"
+    kind: local
+    enabled: true
+    tier: local_oss
+    quality: 5
+    capability_tags: [video_post]
+    requires_env: ["FFMPEG_PATH"]
+    auth:
+      type: none
+      secrets: []
+      note: "Local, free. Encode / concat / reframe / poster-frame / loop for delivered video."
+
+  # ── Blender (local 3D prep) ─────────────────────────────────────────────────
+  - id: blender
+    display_name: "Blender (local 3D)"
+    kind: local
+    enabled: true
+    tier: local_oss
+    quality: 5
+    capability_tags: [model_3d]
+    requires_env: ["BLENDER_PATH"]
+    auth:
+      type: none
+      secrets: []
+      note: "Local, free. Headless GLB export + baked PNG fallback (Batch 13). Prep only in M3."
+
+  # ── LumeFlow (optional plugin; loosely coupled, disabled) ───────────────────
+  - id: lumeflow
+    display_name: "LumeFlow (optional plugin)"
+    kind: local
+    enabled: false
+    tier: local_oss
+    quality: 3
+    capability_tags: []
+    auth:
+      type: none
+      secrets: []
+      note: "Optional plugin (github.com/lumeflow-ai/skill). Loosely coupled; enable only when needed."

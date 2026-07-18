@@ -1,0 +1,20 @@
+{
+  "asset_id": "STYLE-00",
+  "current": {
+    "version": "v1",
+    "published_variant": "var-01"
+  },
+  "versions": [
+    {
+      "version": "v1",
+      "status": "published",
+      "parent": null,
+      "variants": [
+        "var-01"
+      ],
+      "approved": "var-01",
+      "prompt_hash": "94c06d3e3321af8c04f73d3959bf2e5ef4e9cd16ef22cd08500a3d30c8927f63",
+      "run_id": "run-1784169244496"
+    }
+  ]
+}

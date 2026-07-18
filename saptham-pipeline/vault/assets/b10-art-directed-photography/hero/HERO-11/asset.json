@@ -1,0 +1,17 @@
+{
+  "asset_id": "HERO-11",
+  "current": null,
+  "versions": [
+    {
+      "version": "v1",
+      "status": "candidate",
+      "parent": null,
+      "variants": [
+        "var-01"
+      ],
+      "approved": null,
+      "prompt_hash": "b487a6afaa72619fbfebd595bbfb09802d4be2fc6b936bc49b26d1774290fa5f",
+      "run_id": "run-1784298900663"
+    }
+  ]
+}

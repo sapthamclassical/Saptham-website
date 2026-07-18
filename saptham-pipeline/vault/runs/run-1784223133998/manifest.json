@@ -1,0 +1,18 @@
+{
+  "run_id": "run-1784223133998",
+  "ts": "2026-07-16T17:32:14.255Z",
+  "target": "store:external INS-04",
+  "resolved_jobs": [
+    "INS-04"
+  ],
+  "policy": {
+    "provider": "openart"
+  },
+  "totals": {
+    "cost": 0,
+    "count": 0,
+    "retries": 0,
+    "duration": 0
+  },
+  "dlq_count": 0
+}

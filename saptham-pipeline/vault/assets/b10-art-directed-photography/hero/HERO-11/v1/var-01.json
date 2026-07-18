@@ -1,0 +1,29 @@
+{
+  "artifact_id": "HERO-11:v1:var-01",
+  "content_hash": "124d2b553e91103bb6f6f20c3a53c2b394a778d716635b86041556d6c1c61d1b",
+  "asset_id": "HERO-11",
+  "version": "v1",
+  "variant": "var-01",
+  "path": "vault\\store\\12\\124d2b553e91103bb6f6f20c3a53c2b394a778d716635b86041556d6c1c61d1b.mp4",
+  "mime": "video/mp4",
+  "status": "candidate",
+  "provenance": {
+    "prompt_hash": "b487a6afaa72619fbfebd595bbfb09802d4be2fc6b936bc49b26d1774290fa5f",
+    "provider": "ffmpeg",
+    "model": "ambient-loop",
+    "seed": null,
+    "reference_ids": [
+      "STYLE-00",
+      "b10-art-directed-photography"
+    ],
+    "request_id": "compose:HERO-11:v1",
+    "run_id": "run-1784298900663"
+  },
+  "acceptance": {
+    "passed": null,
+    "notes": "",
+    "reviewer": "",
+    "ts": null
+  },
+  "created_at": "2026-07-17T14:35:00.669Z"
+}

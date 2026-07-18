@@ -1,0 +1,16 @@
+# Prompt Card — INS-04 Veena Brass Render (the melodic emblem). Family B, from PROMPT_LIBRARY B07.
+asset_id: INS-04
+subject: "A Saraswati veena in lit aged temple brass — the carved yali (dragon) head catching the warm key light, long fretted neck, round gourd resonator, strings glinting, standing in darkness."
+composition: "Diagonal hero, a single object, museum-vitrine, 60-70% black negative space."
+lighting: "Single warm key from upper-left 45 (Rembrandt) with a warm gold rim on the brass; small controlled speculars; deep shadow; faint bloom and haze."
+materials: "Aged temple brass and bronze with patina and micro-scratches, dark carved wood, thin glinting strings."
+color_palette: "brass #8A6A25 to #C9A24B, lit edge #EBD08A, on #0E0B08"
+camera_angle: "Eye-level to slightly-low hero, diagonal."
+background: "Garbhagriha black, isolated."
+texture: "Brass micro-scratch, patina, film grain, warm haze."
+symmetry: "Object-natural, off-center."
+constraints: "One hero object; the melodic emblem; jewelry-grade lit brass; museum-grade restraint."
+negative_delta: "flat yellow gold, chrome, plastic, extra or tangled strings, broken neck, cluttered background, cold light"
+output_format: "PNG, 4K, alpha"
+aspect_ratio: "3:4"
+variants: 1

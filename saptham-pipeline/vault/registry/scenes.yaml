@@ -1,0 +1,206 @@
+scenes:
+  - id: "00"
+    name: THE HUSH
+    swara: Ni
+    order: 0
+    route: null
+    priority: H
+    required_assets:
+      - SYS-09
+      - LGT-01
+      - LGT-04
+      - PAR-01
+      - PAR-02
+      - TEX-01
+      - BRD-01
+  - id: "01"
+    name: PUSHPANJALI
+    swara: Sa
+    order: 1
+    route: null
+    priority: H
+    required_assets:
+      - HERO-01
+      - HERO-02
+      - HERO-03
+      - HERO-06
+      - INS-04
+      - LGT-06
+      - LGT-02
+      - LGT-08
+      - PAR-02
+      - TEX-02
+      - TEX-07
+      - BRD-02
+      - BRD-03
+  - id: "02"
+    name: ALARIPPU
+    swara: Ri
+    order: 2
+    route: null
+    priority: H
+    required_assets:
+      - INS-01
+      - BN-01
+      - KOL-02
+      - LOT-02
+      - INS-12
+      - DIV-02
+  - id: "03"
+    name: JATISWARAM
+    swara: Ga
+    order: 3
+    route: null
+    priority: H
+    required_assets:
+      - LOT-01
+      - GEO-02
+      - TEX-06
+      - GLD-03
+      - BOR-05
+  - id: "04"
+    name: SHABDAM
+    swara: Ma
+    order: 4
+    route: null
+    priority: H
+    required_assets:
+      - ARC-02
+      - ARC-01
+      - DIV-06
+      - ALM-04
+      - TEX-04
+      - TEX-10
+  - id: "05"
+    name: THE CUSTODIANS
+    swara: Sa
+    order: 5
+    route: null
+    priority: H
+    required_assets:
+      - OB-01
+      - MAN-03
+      - OB-04
+      - OB-05
+      - OB-03
+      - OB-06
+  - id: "06"
+    name: VARNAM
+    swara: Pa
+    order: 6
+    route: /events
+    priority: H
+    required_assets:
+      - EVT-01
+      - EVT-02
+      - EVT-03
+      - PHO-02
+      - ARC-03
+      - LGT-06
+      - PAR-05
+      - TEX-02
+  - id: "07"
+    name: SADHANA
+    swara: Ga
+    order: 7
+    route: /workshops
+    priority: H
+    required_assets:
+      - WRK-01
+      - WRK-02
+      - WRK-03
+      - WRK-04
+      - ARC-04
+      - BN-01
+  - id: "08"
+    name: THE ARENA
+    swara: Pa
+    order: 8
+    route: /competitions
+    priority: H
+    required_assets:
+      - CMP-01
+      - CMP-02
+      - CMP-03
+      - CMP-04
+      - CMP-05
+      - GLD-06
+  - id: "09"
+    name: THE MEMORY HALL
+    swara: Da
+    order: 9
+    route: /gallery
+    priority: H
+    required_assets:
+      - PHO-04
+      - PHO-05
+      - ARC-03
+      - UID-13
+      - KOL-05
+      - MAN-04
+  - id: "10"
+    name: PADAM
+    swara: Da
+    order: 10
+    route: null
+    priority: H
+    required_assets:
+      - ALM-01
+      - MAN-03
+      - ALM-03
+      - ALM-05
+      - ALM-06
+      - ALM-04
+      - PAR-04
+  - id: "11"
+    name: THE PATRONS' GALLERY
+    swara: Sa
+    order: 11
+    route: null
+    priority: H
+    required_assets:
+      - SPN-01
+      - SPN-02
+      - SPN-03
+      - SPN-04
+      - TEX-06
+      - GLD-04
+  - id: "12"
+    name: THILLANA
+    swara: Pa
+    order: 12
+    route: null
+    priority: H
+    required_assets:
+      - JOIN-01
+      - JOIN-02
+      - BN-08
+      - PAR-05
+      - RAN-01
+  - id: "13"
+    name: THE THRESHOLD
+    swara: Ma
+    order: 13
+    route: /contact
+    priority: H
+    required_assets:
+      - CON-01
+      - UID-06
+      - UID-14
+      - ICO-06
+      - ICO-03
+  - id: "14"
+    name: MANGALAM
+    swara: Sa
+    order: 14
+    route: null
+    priority: H
+    required_assets:
+      - FTR-01
+      - FTR-03
+      - FTR-05
+      - FTR-06
+      - FTR-07
+      - BRD-03
+      - BRD-04
+      - BN-03

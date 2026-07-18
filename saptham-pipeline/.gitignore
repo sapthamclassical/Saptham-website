@@ -1,0 +1,26 @@
+# deps / build
+node_modules/
+dist/
+
+# secrets — never commit values
+.env
+.env.local
+
+# derived + large binaries (see .gitattributes for LFS)
+vault/index/*.db
+vault/store/**
+vault/review/**
+vault/assets/**/*.png
+vault/assets/**/*.webp
+vault/assets/**/*.jpg
+vault/assets/**/*.mp4
+vault/delivery/**/*.png
+vault/delivery/**/*.webp
+vault/delivery/**/*.jpg
+vault/delivery/**/*.mp4
+
+# logs
+*.log
+
+# keep tracked-but-empty dirs
+!vault/**/.gitkeep

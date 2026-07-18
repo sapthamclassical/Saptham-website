@@ -1,0 +1,16 @@
+# Prompt Card — HERO-11 Hero Film Loop (video, ambient b-roll). Family photo.
+asset_id: HERO-11
+subject: "A slow ambient hero b-roll loop: a lit brass temple oil lamp flame flickering gently in darkness, drifting gold dust and faint incense haze, a whisper of silk sheen shifting at the edge of frame."
+composition: "Locked-off cinematic frame, off-center flame, vast warm-black negative space, seamless 6-8s loop."
+lighting: "Single warm key from the flame; deep chiaroscuro; no camera light."
+materials: "Aged temple brass, live flame, gold dust, incense smoke, jewel silk."
+color_palette: "black #0E0B08, gold 3-stop, Sa gold accent"
+camera_angle: "Eye-level, near-static with an imperceptible slow drift."
+background: "Garbhagriha black, full-bleed."
+texture: "Film grain, warm haze."
+symmetry: "Asymmetric cinematic."
+constraints: "Seamless loop; motion is minimal and breath-eased (attack-sustain-decay); no hard cuts."
+negative_delta: "fast motion, camera shake, cold light, text, watermark"
+output_format: "MP4, 1920x1080, 6-8s"
+aspect_ratio: "16:9"
+variants: 1

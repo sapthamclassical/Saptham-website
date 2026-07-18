@@ -1,2 +1,286 @@
+/* ── Saptham Design System · from docs/DESIGN_BIBLE.md ─────────────────────── */
+/* Fonts are <link>-ed from index.html — a CSS @import would serialise an
+   extra round trip onto the critical path. */
 @import "tailwindcss";
 @plugin "daisyui";
+
+@theme {
+  /* Core palette — material-named (Design Bible §7) */
+  --color-sanctum: #0e0b08; /* Garbhagriha Black */
+  --color-charcoal: #171310; /* Sabha Charcoal */
+  --color-granite: #2a241d; /* Temple Granite */
+  --color-basalt: #4a4236;
+  --color-gold: #c9a24b; /* Saptham Gold */
+  --color-goldhi: #ebd08a; /* Deepam Gold (highlight) */
+  --color-goldlo: #8a6a25; /* Brass Umber (shadow) */
+  --color-ivory: #f4ede0; /* Vibhuti Ivory */
+  --color-ash: #8c826e; /* Stone 300 */
+  --color-sand: #e5d6b8; /* Chandana Sand */
+  --color-kumkum: #9b1c2e; /* Pa — crimson */
+  --color-plum: #5e2e52; /* Da — Amethyst Plum */
+  --color-teal-swara: #0e5a63; /* Ma — Peacock Teal */
+  --color-emerald-swara: #14604e; /* Ga */
+  --color-ochre: #c57b26; /* Ri */
+  --color-alta: #d64027; /* Alta Vermillion — sparks only */
+
+  --font-display: "Fraunces", "Georgia", serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-tamil: "Noto Serif Tamil", serif;
+}
+
+/* ── Base ──────────────────────────────────────────────────────────────────── */
+html {
+  scroll-behavior: smooth;
+}
+body {
+  background: var(--color-sanctum);
+  color: var(--color-ivory);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+::selection {
+  background: color-mix(in srgb, var(--color-gold) 35%, transparent);
+  color: var(--color-ivory);
+}
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-sanctum);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-granite);
+  border-radius: 5px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-goldlo);
+}
+
+/* ── Utilities ─────────────────────────────────────────────────────────────── */
+
+/* Museum-placard eyebrow (Bible §10.3) */
+.eyebrow {
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-gold);
+  font-weight: 500;
+}
+
+/* Gold behaving as lit metal — 3-stop gradient text (Bible §5.2) */
+.gold-text {
+  background: linear-gradient(
+    170deg,
+    var(--color-goldhi) 0%,
+    var(--color-gold) 45%,
+    var(--color-goldlo) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Thin gold hairline (BOR-05) */
+.gold-hairline {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--color-goldlo) 20%,
+    var(--color-gold) 50%,
+    var(--color-goldlo) 80%,
+    transparent
+  );
+}
+
+/* Kolam pulli dot-grid background (KOL-01) — felt, not seen */
+.kolam-dots {
+  background-image: radial-gradient(
+    color-mix(in srgb, var(--color-gold) 14%, transparent) 1px,
+    transparent 1px
+  );
+  background-size: 26px 26px;
+}
+
+/* Primary CTA — brass border, gold light "ignites" L→R on hover (Bible §13) */
+.btn-brass {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.85rem 2.2rem;
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-goldhi);
+  border: 1px solid color-mix(in srgb, var(--color-gold) 55%, transparent);
+  background: linear-gradient(
+      120deg,
+      color-mix(in srgb, var(--color-gold) 22%, transparent),
+      color-mix(in srgb, var(--color-gold) 8%, transparent)
+    )
+    no-repeat;
+  background-size: 0% 100%;
+  cursor: pointer;
+  transition:
+    background-size 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.3s,
+    color 0.3s,
+    box-shadow 0.5s;
+}
+.btn-brass:hover {
+  background-size: 100% 100%;
+  border-color: var(--color-gold);
+  color: var(--color-ivory);
+  box-shadow: 0 0 32px color-mix(in srgb, var(--color-gold) 25%, transparent);
+}
+.btn-brass--ghost {
+  border-color: color-mix(in srgb, var(--color-ivory) 25%, transparent);
+  color: var(--color-ivory);
+}
+
+/* Link underline draws itself like a kolam stroke */
+.draw-link {
+  position: relative;
+  padding-bottom: 3px;
+}
+.draw-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 1px;
+  width: 100%;
+  background: var(--color-gold);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.draw-link:hover::after,
+.draw-link.active::after {
+  transform: scaleX(1);
+}
+
+/* Global film grain (Bible §14 — "shot on film" cohesion) */
+.grain-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Tala-pulse — slow 7s ambient breathing (Bible §13) */
+@keyframes tala-pulse {
+  0%,
+  100% {
+    opacity: 0.55;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.04);
+  }
+}
+.tala-pulse {
+  animation: tala-pulse 7s ease-in-out infinite;
+}
+
+/* Drifting gold-dust motes (PAR-01) */
+@keyframes mote-drift {
+  0% {
+    transform: translateY(8vh) translateX(0);
+    opacity: 0;
+  }
+  12% {
+    opacity: var(--mote-o, 0.7);
+  }
+  88% {
+    opacity: var(--mote-o, 0.7);
+  }
+  100% {
+    transform: translateY(-92vh) translateX(var(--mote-x, 20px));
+    opacity: 0;
+  }
+}
+.mote {
+  position: absolute;
+  bottom: 0;
+  border-radius: 9999px;
+  background: radial-gradient(circle, #ebd08a 0%, rgba(201, 162, 75, 0.35) 55%, transparent 75%);
+  animation: mote-drift linear infinite;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tala-pulse,
+  .mote {
+    animation: none;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* ── Reduced motion ────────────────────────────────────────────────────────
+   Motion components already branch on useReducedMotion(), but CSS-driven
+   animation (the gold motes, the tala pulse, the grain drift) lives outside
+   React and needs its own answer. Near-zero rather than `none` so anything
+   that waits on animationend/transitionend still fires and does not hang.   */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* Keyboard users must be able to see where they are. */
+:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* Images must never be the reason the page reflows. */
+img,
+video {
+  max-width: 100%;
+  height: auto;
+}
+
+/* ── The seven swaras (Vision) ─────────────────────────────────────────────
+   Gold columns breathing like a held chord. scaleY only — compositor-safe.  */
+.swara-bar {
+  background: linear-gradient(
+    to top,
+    var(--color-goldlo),
+    var(--color-gold) 55%,
+    var(--color-goldhi)
+  );
+  box-shadow: 0 0 18px rgba(201, 162, 75, 0.25);
+  animation: swara-breathe 3.6s ease-in-out infinite;
+}
+@keyframes swara-breathe {
+  0%,
+  100% {
+    transform: scaleY(1);
+  }
+  50% {
+    transform: scaleY(0.82);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .swara-bar {
+    animation: none;
+  }
+}

@@ -1,143 +1,136 @@
-import React, { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
-import logo from "../assets/logo.png";
-import { Menu, X } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Link, NavLink, useLocation } from "react-router-dom";
+import { AnimatePresence, motion as Motion, useReducedMotion } from "motion/react";
+import SapthamMark from "./brand/SapthamMark";
+import { EASE } from "../lib/motion";
+
+const LINKS = [
+  { to: "/", label: "Home" },
+  { to: "/events", label: "Events" },
+  { to: "/gallery", label: "Gallery" },
+  { to: "/office-bearers", label: "Office Bearers" },
+  { to: "/alumni", label: "Alumni" },
+  { to: "/contact", label: "Contact" },
+];
 
 const Navbar = () => {
-  const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [open, setOpen] = useState(false);
   const location = useLocation();
-
-  const navItems = [
-    { name: "Home", type: "route", path: "/" },
-    { name: "Vision", type: "anchor", path: "vision" },
-    { name: "Office Bearers", type: "anchor", path: "office-bearers" },
-    { name: "Events", type: "route", path: "/events" },
-    { name: "Gallery", type: "route", path: "/gallery" },
-    { name: "Contact Us", type: "route", path: "/contact" },
-  ];
-
-  const handleScroll = (id) => {
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-  };
+  const still = useReducedMotion();
 
   useEffect(() => {
-    // Only track scroll on home page
-    if (location.pathname === "/") {
-      const handleScrollEvent = () => {
-        setScrolled(window.scrollY > 20);
-      };
-      window.addEventListener("scroll", handleScrollEvent);
-      return () => window.removeEventListener("scroll", handleScrollEvent);
-    } else {
-      setScrolled(true); // Always show on other pages
-    }
-  }, [location.pathname]);
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
-  // Determine navbar classes
-  const navbarClasses =
-  location.pathname === "/" && !scrolled
-    ? "absolute top-0 w-full z-50 transition-all duration-300 bg-transparent h-20 justify-center"
-    : "fixed top-0 w-full z-50 transition-all duration-300 bg-white shadow-md h-16 justify-between";
+  useEffect(() => setOpen(false), [location.pathname]);
+
+  // The menu overlays the page on mobile; letting the body scroll behind it is
+  // the classic scroll-through bug.
+  useEffect(() => {
+    if (!open) return;
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = previous;
+    };
+  }, [open]);
 
   return (
-    <div className={navbarClasses}>
-      <div className="flex items-center px-4 sm:px-6 lg:px-8">
-        {/* Logo */}
-        <div className="flex items-center">
-          <Link to="/" onClick={() => setIsOpen(false)} className="flex items-center">
-            <img src={logo} alt="Saptham Logo" className="h-12 w-12 object-contain" />
-          </Link>
+    <header
+      className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
+        scrolled ? "bg-sanctum/90 backdrop-blur-md" : "bg-transparent"
+      }`}
+    >
+      <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
+        {/* Brand */}
+        <Link to="/" className="group flex items-center gap-2.5" aria-label="Saptham — home">
+          <Motion.span
+            className="flex"
+            whileHover={still ? undefined : { rotate: -4, scale: 1.06 }}
+            transition={{ type: "spring", stiffness: 300, damping: 18 }}
+          >
+            <SapthamMark size={34} title="" />
+          </Motion.span>
+          <span className="font-display gold-text text-xl font-medium tracking-[0.14em] sm:text-2xl">
+            SAPTHAM
+          </span>
+        </Link>
+
+        {/* Desktop links */}
+        <div className="hidden items-center gap-7 lg:flex">
+          {LINKS.map((l) => (
+            <NavLink
+              key={l.to}
+              to={l.to}
+              end={l.to === "/"}
+              className={({ isActive }) =>
+                `draw-link text-[0.68rem] font-medium tracking-[0.18em] whitespace-nowrap uppercase transition-colors duration-300 ${
+                  isActive ? "active text-gold" : "text-ivory/70 hover:text-ivory"
+                }`
+              }
+            >
+              {l.label}
+            </NavLink>
+          ))}
         </div>
 
-        {/* Desktop Menu */}
-        {(scrolled || location.pathname !== "/") && (
-          <div className="hidden md:flex ml-auto">
-            <ul className="menu menu-horizontal px-1 font-medium space-x-4">
-              {navItems.map((item) =>
-                item.type === "route" ? (
-                  <li key={item.name}>
-                    <Link
-                      to={item.path}
-                      className="text-[#1E1E1E] hover:text-[#F26B1D] transition-all duration-300"
-                    >
-                      {item.name}
-                    </Link>
-                  </li>
-                ) : (
-                  <li key={item.name}>
-                    <button
-                      onClick={() => {
-                        if (location.pathname !== "/") {
-                          window.location.href = `/#${item.path}`;
-                        } else {
-                          handleScroll(item.path);
-                        }
-                      }}
-                      className="text-[#1E1E1E] hover:text-[#F26B1D] transition-all duration-300"
-                    >
-                      {item.name}
-                    </button>
-                  </li>
-                )
-              )}
-            </ul>
-          </div>
-        )}
+        {/* Mobile toggle */}
+        <button
+          className="flex h-10 w-10 flex-col items-center justify-center gap-1.5 lg:hidden"
+          onClick={() => setOpen(!open)}
+          aria-label={open ? "Close menu" : "Open menu"}
+          aria-expanded={open}
+        >
+          <span
+            className={`block h-px w-6 bg-gold transition-transform duration-300 ${open ? "translate-y-[3.5px] rotate-45" : ""}`}
+          />
+          <span
+            className={`block h-px w-6 bg-gold transition-transform duration-300 ${open ? "-translate-y-[3.5px] -rotate-45" : ""}`}
+          />
+        </button>
+      </nav>
+      <div
+        className={`gold-hairline transition-opacity duration-500 ${scrolled ? "opacity-60" : "opacity-0"}`}
+      />
 
-        {/* Mobile Menu Button */}
-        {(scrolled || location.pathname !== "/") && (
-          <div className="md:hidden ml-auto">
-            <button
-              onClick={() => setIsOpen(!isOpen)}
-              className="btn btn-ghost btn-circle text-[#1E1E1E]"
-            >
-              {isOpen ? <X size={24} /> : <Menu size={24} />}
-            </button>
-          </div>
+      {/* Mobile menu — the curtain */}
+      <AnimatePresence>
+        {open && (
+          <Motion.div
+            className="bg-sanctum/95 backdrop-blur-lg lg:hidden"
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.45, ease: EASE }}
+          >
+            <div className="flex flex-col gap-1 px-6 pt-2 pb-10">
+              {LINKS.map((l, i) => (
+                <Motion.div
+                  key={l.to}
+                  initial={{ opacity: 0, x: -12 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.06 * i, duration: 0.4, ease: EASE }}
+                >
+                  <NavLink
+                    to={l.to}
+                    end={l.to === "/"}
+                    className={({ isActive }) =>
+                      `block py-3 font-display text-2xl ${isActive ? "gold-text" : "text-ivory/80"}`
+                    }
+                  >
+                    {l.label}
+                  </NavLink>
+                </Motion.div>
+              ))}
+            </div>
+          </Motion.div>
         )}
-
-        {/* Mobile Menu */}
-        {isOpen && (
-          <div className="absolute top-16 left-0 w-full shadow-md md:hidden bg-white">
-            <ul className="menu menu-vertical px-2 py-4 space-y-1 font-medium">
-              {navItems.map((item) =>
-                item.type === "route" ? (
-                  <li key={item.name}>
-                    <Link
-                      to={item.path}
-                      className="text-[#1E1E1E] hover:text-[#F26B1D] transition-all duration-300"
-                      onClick={() => setIsOpen(false)}
-                    >
-                      {item.name}
-                    </Link>
-                  </li>
-                ) : (
-                  <li key={item.name}>
-                    <button
-                      onClick={() => {
-                        if (location.pathname !== "/") {
-                          window.location.href = `/#${item.path}`;
-                        } else {
-                          handleScroll(item.path);
-                        }
-                        setIsOpen(false);
-                      }}
-                      className="w-full text-left text-[#1E1E1E] hover:text-[#F26B1D] transition-all duration-300"
-                    >
-                      {item.name}
-                    </button>
-                  </li>
-                )
-              )}
-            </ul>
-          </div>
-        )}
-      </div>
-    </div>
+      </AnimatePresence>
+    </header>
   );
 };
 

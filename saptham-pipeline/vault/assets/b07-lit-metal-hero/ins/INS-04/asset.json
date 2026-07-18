@@ -1,0 +1,17 @@
+{
+  "asset_id": "INS-04",
+  "current": null,
+  "versions": [
+    {
+      "version": "v1",
+      "status": "candidate",
+      "parent": null,
+      "variants": [
+        "var-01"
+      ],
+      "approved": null,
+      "prompt_hash": "96bd622d4537df91c10073e6af6e7de425715b5ebb51a6c5c64b72a3b851f7d1",
+      "run_id": "run-1784223133998"
+    }
+  ]
+}

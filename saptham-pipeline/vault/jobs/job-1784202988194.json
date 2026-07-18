@@ -1,0 +1,48 @@
+{
+  "job_id": "job-1784202988194",
+  "asset_id": "HERO-11",
+  "version": "v1",
+  "provider": "fake-async",
+  "model": "fake-video-1",
+  "state": "succeeded",
+  "job_handle": "handle-compose:HERO-11:v1",
+  "request": {
+    "request_id": "compose:HERO-11:v1",
+    "asset_id": "HERO-11",
+    "version": "v1",
+    "modality": "video",
+    "family": "photo",
+    "composed_prompt": "warm candlelit chiaroscuro lighting, 2700-3200K, deep warm near-black background (#0E0B08), antique temple-brass gold (#C9A24B) accents, single directional key light, rich deep shadows, small controlled specular highlights, subtle incense haze and drifting gold-dust particles, cinematic 2.39:1 or 3:2 framing, shallow depth of field, film grain, no flash, no cold blue light, no neon, no clutter, museum-grade, luxurious, restrained. A slow ambient hero b-roll loop: a lit brass temple oil lamp flame flickering gently in darkness, drifting gold dust and faint incense haze, a whisper of silk sheen shifting at the edge of frame. Locked-off cinematic frame, off-center flame, vast warm-black negative space, seamless 6-8s loop. physical single warm key 2700-3200K Rembrandt Aged temple brass, live flame, gold dust, incense smoke, jewel silk. black #0E0B08, gold 3-stop, Sa gold accent Eye-level, near-static with an imperceptible slow drift. Garbhagriha black, full-bleed. Film grain, warm haze. Asymmetric cinematic. Seamless loop; motion is minimal and breath-eased (attack-sustain-decay); no hard cuts.",
+    "negative_prompt": "flash, cold white balance, clutter, plastic chairs, banners, oversaturation, heavy retouch, plastic skin, deformed hands, motion smear on face, low contrast, watermark, fast motion, camera shake, cold light, text, watermark",
+    "aspect_ratio": "16:9",
+    "resolution": "3840×2160",
+    "seed": null,
+    "num_variants": 1,
+    "reference_images": [
+      {
+        "id": "STYLE-00",
+        "role": "style_anchor"
+      },
+      {
+        "id": "b10-art-directed-photography",
+        "role": "batch_anchor"
+      }
+    ],
+    "scene_id": null,
+    "prompt_hash": "b487a6afaa72619fbfebd595bbfb09802d4be2fc6b936bc49b26d1774290fa5f",
+    "provider_hint": null,
+    "cost_ceiling": null,
+    "params": {}
+  },
+  "meta": {
+    "asset_id": "HERO-11",
+    "batch": "b10-art-directed-photography",
+    "category": "hero",
+    "version": "v1",
+    "naming": "sap_hero_hero11"
+  },
+  "run_id": "run-1784202988193",
+  "attempts": 1,
+  "last_error": null,
+  "created_at": "2026-07-16T11:56:28.194Z"
+}

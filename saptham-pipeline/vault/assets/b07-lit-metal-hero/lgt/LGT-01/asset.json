@@ -1,0 +1,20 @@
+{
+  "asset_id": "LGT-01",
+  "current": {
+    "version": "v1",
+    "published_variant": "var-01"
+  },
+  "versions": [
+    {
+      "version": "v1",
+      "status": "published",
+      "parent": null,
+      "variants": [
+        "var-01"
+      ],
+      "approved": "var-01",
+      "prompt_hash": "fe2371b68654f13c69127e8faa991db895075e1256739263b6795080dbbccdf7",
+      "run_id": "run-1784145140028"
+    }
+  ]
+}

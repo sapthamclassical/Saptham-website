@@ -1,0 +1,16 @@
+# Prompt Card — S1-01 Master Style Board (the root anchor). Transcribed from PROMPT_PACK_01.
+asset_id: STYLE-00
+subject: "A reference contact-sheet on a deep warm near-black (#0E0B08) field, arranged as a clean 3x2 grid of labelled cells with generous black gutters, museum-precise: cell 1 a horizontal gold gradient bar from #8A6A25 to #C9A24B to #EBD08A; cell 2 an aged temple-brass swatch with fine micro-scratches and patina; cell 3 a jewel-emerald Kanjeevaram silk swatch with woven gold zari threads; cell 4 a pure warm-black field; cell 5 a lit brass oil lamp with a small warm flame casting gold reflections in darkness; cell 6 a single minimal gold calligraphic line-drawing of a veena; and a small elegant gold 'Saptham' monogram centered above the grid."
+composition: "Ordered 3x2 grid of isolated labelled cells, generous black gutters, contact-sheet."
+lighting: "Dual - swatches flat-even; the oil lamp lit by its own warm flame with deep shadow."
+materials: "Aged temple brass, jewel silk, patinated metal, oil-lamp flame."
+color_palette: "black #0E0B08, gold 3-stop, ivory #F4EDE0, kumkum #9B1C2E, emerald #14604E"
+camera_angle: "Flat orthographic, straight-on."
+background: "Garbhagriha black #0E0B08, full-bleed."
+texture: "Brass micro-scratch, silk weave, fine film grain."
+symmetry: "Grid symmetry."
+constraints: "Small refined uppercase labels under each cell; this plate defines the whole system and is pinned as a reference on every subsequent run."
+negative_delta: "mismatched styles, inconsistent gold tone, messy layout, gibberish text, watermark"
+output_format: "PNG, 3840x2160"
+aspect_ratio: "16:9"
+variants: 4

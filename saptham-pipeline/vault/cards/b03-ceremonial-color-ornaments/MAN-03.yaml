@@ -1,0 +1,16 @@
+# Prompt Card — transcribed from PROMPT_LIBRARY.md B03. Family A; `{{swara}}` resolves from the scene.
+asset_id: MAN-03
+subject: "A circular mandala portrait frame with an empty aperture, fine gold line and one swara accent."
+composition: "Ring frame, empty center."
+lighting: "Flat, faint inner glow."
+materials: "Gold line + one jewel accent."
+color_palette: "Saptham Gold #C9A24B + {{swara}} jewel accent"
+camera_angle: "Flat."
+background: "Transparent."
+texture: "Clean."
+symmetry: "Radial."
+constraints: "7 consistent variants; center aperture clear."
+negative_delta: "filled center, rainbow"
+output_format: "SVG x7"
+aspect_ratio: "1:1"
+variants: 4

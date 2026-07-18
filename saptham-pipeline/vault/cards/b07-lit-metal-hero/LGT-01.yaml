@@ -1,0 +1,16 @@
+# Prompt Card — transcribed from PROMPT_LIBRARY.md B07 + DATA_MODELS §4. Family B (lit object).
+asset_id: LGT-01
+subject: "A brass temple oil lamp (kuthuvilakku) with a live warm flame in darkness, lit by its own flame."
+composition: "Centered, tight hero; flame the brightest point; 60-70% black negative space."
+lighting: "Lit by its own flame; warm bloom; gold reflections rippling on patinated metal; faint smoke."
+materials: "Aged brass/bronze, flame, faint smoke."
+color_palette: "brass gradient + flame #EBD08A/#D64027, on #0E0B08"
+camera_angle: "Eye-level, slightly low hero."
+background: "Garbhagriha black, isolated with alpha."
+texture: "Brass micro-scratch, patina, haze, grain."
+symmetry: "Near-bilateral."
+constraints: "One hero object; museum-vitrine; the light source that calibrates Batch 07."
+negative_delta: "electric bulb, candle wax, plastic"
+output_format: "PNG with alpha, 3840px"
+aspect_ratio: "4:5"
+variants: 4

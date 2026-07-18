@@ -1,49 +1,72 @@
-import React from "react";
-import { Routes, Route } from "react-router-dom";
+import { lazy, Suspense } from "react";
+import { Routes, Route, useLocation } from "react-router-dom";
+import { AnimatePresence } from "motion/react";
 import Navbar from "./components/Navbar";
-import Hero from "./components/Hero";
-import Vision from "./components/Vision";
-import OfficeBearers from "./components/OfficeBearers";
-import Testimonials from "./components/Testimonials";
-import ContactUs from "./components/ContactUs";
-import Events from "./components/Events";
-import Gallery from "./components/Gallery";
 import Footer from "./components/Footer";
+import ScrollToTop from "./components/ScrollToTop";
+import PageTransition from "./components/PageTransition";
+import Home from "./routes/Home";
+
+/**
+ * The scroll is a margam: invocation → who we are → the custodians → the
+ * lineage → blessing. Darkness is the stage (#0E0B08); a site-wide film-grain
+ * overlay unifies every view.
+ *
+ * Home is imported eagerly — it is the landing route for nearly every visit, so
+ * deferring it would only add a round trip to the Largest Contentful Paint.
+ * Every other route is split, so /events does not ship the gallery lightbox and
+ * /contact does not ship the hero video player.
+ */
+const EventsPage = lazy(() => import("./routes/EventsPage"));
+const GalleryPage = lazy(() => import("./routes/GalleryPage"));
+const OfficeBearersPage = lazy(() => import("./routes/OfficeBearersPage"));
+const AlumniPage = lazy(() => import("./routes/AlumniPage"));
+const ContactPage = lazy(() => import("./routes/ContactPage"));
+
+/**
+ * Suspense fallback.
+ *
+ * Deliberately an empty box of viewport height, not a spinner: chunks resolve
+ * in tens of milliseconds on a warm connection, and a spinner that flashes for
+ * 40ms reads as jank. Reserving the height is what keeps CLS at zero.
+ */
+const RouteFallback = () => <div className="min-h-svh" aria-hidden="true" />;
 
 function App() {
+  const location = useLocation();
+
   return (
-    <div className="min-h-screen bg-white overflow-x-hidden">
+    <div className="min-h-screen overflow-x-hidden bg-sanctum text-ivory">
+      <ScrollToTop />
       <Navbar />
 
-      <main className="pt-20">
-        <Routes>
-          {/* Home page renders all sections */}
-          <Route
-            path="/"
-            element={
-              <>
-                <Hero />
-                <section id="vision">
-                  <Vision />
-                </section>
-                <section id="office-bearers">
-                  <OfficeBearers />
-                </section>
-                <section id="testimonials">
-                  <Testimonials />
-                </section>
-              </>
-            }
-          />
-
-          {/* Other dedicated pages */}
-          <Route path="/events" element={<Events />} />
-          <Route path="/gallery" element={<Gallery />} />
-          <Route path="/contact" element={<ContactUs />} />
-        </Routes>
+      <main id="main">
+        {/*
+          `mode="wait"` holds the incoming route until the outgoing one has
+          finished leaving. That is what gives ScrollToTop a covered moment to
+          reset the offset, so the jump to top is never visible.
+        */}
+        <AnimatePresence mode="wait" initial={false}>
+          <Suspense fallback={<RouteFallback />}>
+            <Routes location={location} key={location.pathname}>
+              <Route path="/" element={<PageTransition><Home /></PageTransition>} />
+              <Route path="/events" element={<PageTransition><EventsPage /></PageTransition>} />
+              <Route path="/gallery" element={<PageTransition><GalleryPage /></PageTransition>} />
+              <Route
+                path="/office-bearers"
+                element={<PageTransition><OfficeBearersPage /></PageTransition>}
+              />
+              <Route path="/alumni" element={<PageTransition><AlumniPage /></PageTransition>} />
+              <Route path="/contact" element={<PageTransition><ContactPage /></PageTransition>} />
+            </Routes>
+          </Suspense>
+        </AnimatePresence>
       </main>
 
       <Footer />
+
+      {/* site-wide film grain — "shot on film in a candlelit hall" */}
+      <div className="grain-overlay" aria-hidden="true" />
     </div>
   );
 }

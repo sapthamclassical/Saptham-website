@@ -1,0 +1,27 @@
+# Routing + governance (L0). The router (M6) sorts candidates by tier_order (free-first),
+# then cost, then capability fit; the orchestrator (M4) enforces retry/concurrency/breaker.
+free_first: true
+# Free-first ranking (your policy): local tools -> free MCP -> free API quotas -> paid.
+tier_order: ["local_oss", "free_mcp", "free_api", "free_credits", "paid"]
+
+cost:
+  per_run_ceiling: null        # null = no hard ceiling yet; set a number to cap a run
+  require_confirm_over: 50     # estimated credits above this require an explicit --confirm
+
+retry:
+  max_attempts: 4
+  backoff_base_ms: 1000
+  jitter: true
+
+concurrency:
+  global: 4
+  per_provider: 2
+
+circuit_breaker:
+  failures_to_open: 3
+  cooldown_ms: 60000
+
+approval:
+  require_acceptance_for: ["C", "H"]   # Critical/High assets need recorded acceptance before publish
+
+variants_default: 4

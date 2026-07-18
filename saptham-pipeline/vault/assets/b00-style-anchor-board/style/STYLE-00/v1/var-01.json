@@ -1,0 +1,29 @@
+{
+  "artifact_id": "STYLE-00:v1:var-01",
+  "content_hash": "b38b83bb2616f38d798387fcd1961bbf73547b1721351af184cfd4b334d470e1",
+  "asset_id": "STYLE-00",
+  "version": "v1",
+  "variant": "var-01",
+  "path": "vault\\store\\b3\\b38b83bb2616f38d798387fcd1961bbf73547b1721351af184cfd4b334d470e1.jpg",
+  "mime": "image/jpeg",
+  "status": "published",
+  "provenance": {
+    "prompt_hash": "94c06d3e3321af8c04f73d3959bf2e5ef4e9cd16ef22cd08500a3d30c8927f63",
+    "provider": "openart",
+    "model": "nano-banana-2-lite",
+    "seed": null,
+    "reference_ids": [
+      "STYLE-00",
+      "b00-style-anchor-board"
+    ],
+    "request_id": "compose:STYLE-00:v1",
+    "run_id": "run-1784169244496"
+  },
+  "acceptance": {
+    "passed": true,
+    "notes": "passes the 5-point acceptance test (light law, restraint law, workshop law, movement law, recital-not-flyer)",
+    "reviewer": "Executive Creative Director",
+    "ts": "2026-07-16T02:34:40.076Z"
+  },
+  "created_at": "2026-07-16T02:34:04.759Z"
+}

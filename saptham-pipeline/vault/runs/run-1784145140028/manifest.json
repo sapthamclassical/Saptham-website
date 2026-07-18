@@ -1,0 +1,18 @@
+{
+  "run_id": "run-1784145140028",
+  "ts": "2026-07-15T19:52:20.297Z",
+  "target": "store:external LGT-01",
+  "resolved_jobs": [
+    "LGT-01"
+  ],
+  "policy": {
+    "provider": "openart"
+  },
+  "totals": {
+    "cost": 0,
+    "count": 0,
+    "retries": 0,
+    "duration": 0
+  },
+  "dlq_count": 0
+}

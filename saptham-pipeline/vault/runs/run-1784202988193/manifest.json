@@ -1,0 +1,18 @@
+{
+  "run_id": "run-1784202988193",
+  "ts": "2026-07-16T11:56:28.417Z",
+  "target": "generate:video HERO-11",
+  "resolved_jobs": [
+    "HERO-11"
+  ],
+  "policy": {
+    "provider": "fake-async"
+  },
+  "totals": {
+    "cost": 0,
+    "count": 0,
+    "retries": 0,
+    "duration": 0
+  },
+  "dlq_count": 0
+}
