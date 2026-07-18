@@ -1,5 +1,6 @@
 import { getPersonImage, initialsOf } from "../../lib/people";
 import { RevealItem } from "./Reveal";
+import TiltCard from "../motion/TiltCard";
 
 /**
  * Portrait card with graceful missing-image handling.
@@ -32,6 +33,7 @@ const PersonCard = ({ person, accent = "#C9A24B" }) => {
   const img = getPersonImage(person.name, person.image);
   return (
     <RevealItem className="group">
+      <TiltCard>
       <div className="relative overflow-hidden border border-granite/80 bg-charcoal transition-all duration-500 group-hover:border-gold/50 group-hover:shadow-[0_8px_48px_rgba(201,162,75,0.12)]">
         {/* Portrait area — 4:5 like the OB shoot spec */}
         <div className="relative aspect-[4/5] overflow-hidden">
@@ -77,6 +79,7 @@ const PersonCard = ({ person, accent = "#C9A24B" }) => {
           {person.department && <p className="mt-1 text-xs text-ash">{person.department}</p>}
         </div>
       </div>
+      </TiltCard>
     </RevealItem>
   );
 };

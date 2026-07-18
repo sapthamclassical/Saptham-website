@@ -3,8 +3,13 @@ import { motion as Motion, useReducedMotion, useScroll, useTransform } from "mot
 import { Link } from "react-router-dom";
 import heroLoop from "../assets/brand/hero-loop.mp4";
 import lampStill from "../assets/brand/lamp.jpg";
+import Magnetic from "./motion/Magnetic";
+import { introDelay } from "../lib/intro";
 
 const EASE = [0.16, 1, 0.3, 1];
+/* When the Overture plays, the hero waits in the wings and enters as the
+   curtains part — one continuous piece of choreography, not two intros. */
+const HOLD = introDelay();
 
 /* Deterministic gold-dust field (PAR-01) — low density, "made of air" */
 const MOTES = [...Array(18)].map((_, i) => ({
@@ -22,7 +27,7 @@ const letterVariants = {
     opacity: 1,
     y: 0,
     filter: "blur(0px)",
-    transition: { duration: 1.1, delay: 0.9 + i * 0.09, ease: EASE },
+    transition: { duration: 1.1, delay: HOLD + 0.9 + i * 0.09, ease: EASE },
   }),
 };
 
@@ -100,7 +105,7 @@ const Hero = () => {
           className="eyebrow mb-8"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 1.4, delay: 0.4 }}
+          transition={{ duration: 1.4, delay: HOLD + 0.4 }}
         >
           College of Engineering Guindy · Anna University
         </Motion.p>
@@ -128,7 +133,7 @@ const Hero = () => {
         <Motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.2, delay: 1.9, ease: EASE }}
+          transition={{ duration: 1.2, delay: HOLD + 1.9, ease: EASE }}
         >
           <div className="gold-hairline mx-auto my-6 w-56" />
           <p className="font-tamil text-2xl text-gold md:text-3xl">சப்தம்</p>
@@ -138,7 +143,7 @@ const Hero = () => {
           className="mx-auto mt-8 max-w-xl leading-relaxed text-ash"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 1.4, delay: 2.4 }}
+          transition={{ duration: 1.4, delay: HOLD + 2.4 }}
         >
           The classical music &amp; dance sabha of CEG — where the seven notes
           become light, and tradition meets technology.
@@ -148,14 +153,18 @@ const Hero = () => {
           className="mt-12 flex flex-wrap items-center justify-center gap-5"
           initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 2.8, ease: EASE }}
+          transition={{ duration: 1, delay: HOLD + 2.8, ease: EASE }}
         >
-          <Link to="/events" className="btn-brass">
-            Witness the Recital
-          </Link>
-          <a href="#office-bearers" className="btn-brass btn-brass--ghost">
-            Meet the Custodians
-          </a>
+          <Magnetic>
+            <Link to="/events" className="btn-brass">
+              Witness the Recital
+            </Link>
+          </Magnetic>
+          <Magnetic>
+            <a href="#office-bearers" className="btn-brass btn-brass--ghost">
+              Meet the Custodians
+            </a>
+          </Magnetic>
         </Motion.div>
       </Motion.div>
 
@@ -165,7 +174,7 @@ const Hero = () => {
         className="absolute bottom-8 left-1/2 z-10 -translate-x-1/2"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 3.6, duration: 1.2 }}
+        transition={{ delay: HOLD + 3.6, duration: 1.2 }}
         aria-label="Begin"
       >
         <div className="tala-pulse flex flex-col items-center gap-3">

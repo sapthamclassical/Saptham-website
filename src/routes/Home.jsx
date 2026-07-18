@@ -3,6 +3,7 @@ import Vision from "../components/Vision";
 import OfficeBearers from "../components/OfficeBearers";
 import Testimonials from "../components/Testimonials";
 import KolamDivider from "../components/shared/KolamDivider";
+import Marquee from "../components/shared/Marquee";
 
 /**
  * The margam: invocation → who we are → the custodians → the lineage.
@@ -13,7 +14,7 @@ const Home = () => (
     <Hero />
     <KolamDivider />
     <Vision />
-    <KolamDivider />
+    <Marquee />
     <OfficeBearers />
     <KolamDivider />
     <Testimonials />

@@ -284,3 +284,61 @@ video {
     animation: none;
   }
 }
+
+/* ── Lenis inertia scroll (lenis.dev recommended base) ─────────────────────── */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+/* ── The ember cursor ──────────────────────────────────────────────────────
+   Native cursor hides ONLY while the ember component is mounted; text fields
+   keep the I-beam — losing it there is disorienting, not premium.           */
+html.has-ember,
+html.has-ember a,
+html.has-ember button {
+  cursor: none;
+}
+html.has-ember input,
+html.has-ember textarea,
+html.has-ember select {
+  cursor: auto;
+}
+
+/* ── The processional (marquee) ────────────────────────────────────────────
+   Stroke-only type so it reads as relief carving, not as a headline.
+   transform loop; duplicated track makes -50% seamless.                     */
+.marquee-word {
+  color: transparent;
+  -webkit-text-stroke: 1px color-mix(in srgb, var(--color-goldlo) 75%, transparent);
+  letter-spacing: 0.04em;
+}
+.marquee-track {
+  animation: marquee-run 36s linear infinite;
+  will-change: transform;
+}
+.marquee:hover .marquee-track {
+  animation-play-state: paused;
+}
+@keyframes marquee-run {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
+  }
+}

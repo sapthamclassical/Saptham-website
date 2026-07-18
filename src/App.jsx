@@ -1,9 +1,13 @@
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useEffect } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import { AnimatePresence } from "motion/react";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import ScrollToTop from "./components/ScrollToTop";
+import Overture from "./components/Overture";
+import Cursor from "./components/Cursor";
+import ScrollProgress from "./components/ScrollProgress";
+import { startLenis, stopLenis } from "./lib/scroll";
 import PageTransition from "./components/PageTransition";
 import Home from "./routes/Home";
 
@@ -35,8 +39,19 @@ const RouteFallback = () => <div className="min-h-svh" aria-hidden="true" />;
 function App() {
   const location = useLocation();
 
+  // Inertia scroll for pointer input. Reduced-motion users keep native
+  // scrolling — easing the wheel is itself motion they asked to remove.
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    startLenis();
+    return () => stopLenis();
+  }, []);
+
   return (
     <div className="min-h-screen overflow-x-hidden bg-sanctum text-ivory">
+      <Overture />
+      <Cursor />
+      <ScrollProgress />
       <ScrollToTop />
       <Navbar />
 
