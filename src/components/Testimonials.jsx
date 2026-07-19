@@ -51,7 +51,10 @@ const Portrait = ({ person, accent }) => {
 };
 
 const Testimonials = () => {
-  const { members } = useAlumni();
+  const { members: allMembers } = useAlumni();
+  // Only quote-bearing alumni take the carousel stage — newer alumni without
+  // quotes still appear on /alumni, but a blank slide here reads as a bug.
+  const members = allMembers.filter((m) => m.quote);
   const still = useReducedMotion();
   const [index, setIndex] = useState(0);
   const active = members[index] ?? members[0];
