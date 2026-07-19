@@ -39,26 +39,25 @@ const Footer = () => {
           <div className="grid gap-12 md:grid-cols-3">
             {/* Brand + blessing */}
             <div>
-
-              <p className="mt-4 max-w-xs text-sm leading-relaxed text-ash">
-                The classical music &amp; dance club of the College of Engineering
-                Guindy, Anna University.
-              </p>
-              {/* the official logo, rewoven in zari for the dark stage */}
-              <div className="relative mt-6 inline-block">
+              {/* the official logo IS the wordmark — it leads the column */}
+              <Link to="/" className="relative inline-block" aria-label="Saptham — home">
                 <div
-                  className="tala-pulse absolute -inset-6 rounded-full opacity-20 blur-2xl"
+                  className="tala-pulse absolute -inset-5 rounded-full opacity-15 blur-2xl"
                   style={{ background: "radial-gradient(circle, #E8B84D, transparent 70%)" }}
                   aria-hidden="true"
                 />
                 <img
                   src={officialGold}
-                  alt="Official Saptham logo"
-                  className="logo-glow relative h-20 w-auto"
+                  alt="Saptham"
+                  className="logo-glow relative h-16 w-auto"
                   loading="lazy"
                   draggable="false"
                 />
-              </div>
+              </Link>
+              <p className="mt-5 max-w-xs text-sm leading-relaxed text-ash">
+                The classical music &amp; dance club of the College of Engineering
+                Guindy, Anna University.
+              </p>
             </div>
 
             {/* Wayfinding */}

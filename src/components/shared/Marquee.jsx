@@ -1,4 +1,4 @@
-import SapthamMark from "../brand/SapthamMark";
+import officialGold from "../../assets/logo-gold.png";
 
 /**
  * The processional — a slow band of vast outlined type moving like a temple
@@ -8,7 +8,7 @@ import SapthamMark from "../brand/SapthamMark";
  * Pure CSS animation on transform, duplicated content for a seamless loop.
  * aria-hidden — it is texture; the words also live in real content elsewhere.
  */
-const WORDS = ["Music", "Dance", "Tradition", "Saptham"];
+const WORDS = ["Music", "Dance", "Tradition"];
 
 const Strip = () => (
   <div className="marquee-strip flex shrink-0 items-center">
@@ -17,7 +17,7 @@ const Strip = () => (
         <span className="marquee-word font-display px-8 text-7xl font-medium whitespace-nowrap md:px-14 md:text-8xl">
           {w}
         </span>
-        <SapthamMark size={30} variant="gold" title="" className="opacity-40" />
+        <img src={officialGold} alt="" className="h-12 w-auto opacity-70 md:h-14" draggable="false" />
       </span>
     ))}
   </div>
