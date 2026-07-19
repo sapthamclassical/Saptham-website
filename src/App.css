@@ -355,11 +355,16 @@ html.has-ember select {
   border-radius: 2px;
 }
 
-/* Images must never be the reason the page reflows. */
-img,
-video {
-  max-width: 100%;
-  height: auto;
+/* Images must never be the reason the page reflows.
+   MUST live in the base layer: an unlayered rule beats Tailwind's layered
+   utilities in the cascade, which silently voids every h-* class on an <img>
+   (the navbar logo once rendered at its full 1500px because of this). */
+@layer base {
+  img,
+  video {
+    max-width: 100%;
+    height: auto;
+  }
 }
 
 /* ── Stage utilities (Ragamalika) ─────────────────────────────────────────── */
