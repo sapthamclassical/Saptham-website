@@ -26,6 +26,7 @@ const GalleryPage = lazy(() => import("./routes/GalleryPage"));
 const OfficeBearersPage = lazy(() => import("./routes/OfficeBearersPage"));
 const AlumniPage = lazy(() => import("./routes/AlumniPage"));
 const ContactPage = lazy(() => import("./routes/ContactPage"));
+const CalendarPage = lazy(() => import("./routes/CalendarPage"));
 
 /**
  * Suspense fallback.
@@ -73,6 +74,7 @@ function App() {
               />
               <Route path="/alumni" element={<PageTransition><AlumniPage /></PageTransition>} />
               <Route path="/contact" element={<PageTransition><ContactPage /></PageTransition>} />
+              <Route path="/calendar" element={<PageTransition><CalendarPage /></PageTransition>} />
             </Routes>
           </Suspense>
         </AnimatePresence>

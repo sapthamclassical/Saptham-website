@@ -1,48 +1,70 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
-import Reveal from "./shared/Reveal";
+import { Atmosphere, SWARA_LIGHTS } from "./stage/Stage";
+import { Reveal } from "./motion/Motion";
 import SapthamMark from "./brand/SapthamMark";
+import officialLogo from "../assets/logo.png";
+import AdminGate, { useSecretKnock } from "./AdminGate";
+
+const LINKS = [
+  ["/", "Home"],
+  ["/events", "Events"],
+  ["/gallery", "Gallery"],
+  ["/calendar", "Calendar"],
+  ["/office-bearers", "Office Bearers"],
+  ["/alumni", "Alumni"],
+  ["/contact", "Contact"],
+];
+
+/** The seven lights, in scale order — the last chord before the hall goes dark. */
+const SWARAS = Object.values(SWARA_LIGHTS);
 
 /**
- * The blessing — the page resolves into the deep MS Blue field, entered
- * through a korvai border, the way a recital resolves onto the tonic.
+ * The finale. The page resolves into the deepest panel on the site, entered
+ * through a korvai of stage light; a whisper of atmosphere keeps the stage
+ * breathing while the house lights come down.
  */
-const Footer = () => (
-  <footer className="on-blue relative mt-24">
+const Footer = () => {
+  const [gateOpen, setGateOpen] = useState(false);
+  // seven taps on the (c) glyph inside four seconds - the hidden door
+  const knock = useSecretKnock(() => setGateOpen(true));
+  return (
+  <footer className="relative mt-24">
     <div className="korvai" aria-hidden="true" />
-    <div className="bg-msblue text-sanctum">
-      <div className="mx-auto max-w-7xl px-6 py-16">
+    <div className="relative overflow-hidden bg-msdeep">
+      {/* the last of the stage light — deliberately sparse */}
+      <Atmosphere colors={[SWARA_LIGHTS.da, SWARA_LIGHTS.ma]} beams={0} particles={20} />
+
+      <div className="relative mx-auto max-w-7xl px-6 py-16">
         <Reveal>
           <div className="grid gap-12 md:grid-cols-3">
             {/* Brand + blessing */}
             <div>
               <span className="flex items-center gap-3">
-                <SapthamMark size={44} variant="light" title="" />
-                <span className="font-display text-3xl tracking-[0.12em] text-sanctum">
+                <SapthamMark size={44} title="" />
+                <span className="font-display text-3xl tracking-[0.12em] text-ivory">
                   SAPTHAM
                 </span>
               </span>
-              <p className="mt-4 max-w-xs text-sm leading-relaxed text-sanctum/70">
+              <p className="mt-4 max-w-xs text-sm leading-relaxed text-ash">
                 The classical music &amp; dance club of the College of Engineering
                 Guindy, Anna University.
               </p>
+              {/* the official crest, mounted on ivory so its ink reads */}
+              <div className="mt-6 inline-block rounded-md bg-ivory/95 p-4 shadow-[0_10px_36px_rgba(0,0,0,0.45)]">
+                <img src={officialLogo} alt="Official Saptham logo" className="h-16 w-auto" loading="lazy" />
+              </div>
             </div>
 
             {/* Wayfinding */}
             <div>
-              <p className="eyebrow mb-5">The Margam</p>
+              <p className="eyebrow mb-5">Explore</p>
               <ul className="space-y-3 text-sm">
-                {[
-                  ["/", "Home"],
-                  ["/events", "Events"],
-                  ["/gallery", "Gallery"],
-                  ["/office-bearers", "Office Bearers"],
-                  ["/alumni", "Alumni"],
-                  ["/contact", "Contact"],
-                ].map(([to, label]) => (
+                {LINKS.map(([to, label]) => (
                   <li key={to}>
                     <Link
                       to={to}
-                      className="draw-link text-sanctum/80 transition-colors hover:text-goldhi"
+                      className="draw-link text-ivory/70 transition-colors duration-300 hover:text-goldhi"
                     >
                       {label}
                     </Link>
@@ -53,12 +75,12 @@ const Footer = () => (
 
             {/* Contact */}
             <div>
-              <p className="eyebrow mb-5">Reach the Sabha</p>
-              <ul className="space-y-3 text-sm text-sanctum/80">
+              <p className="eyebrow mb-5">Get in Touch</p>
+              <ul className="space-y-3 text-sm text-ivory/70">
                 <li>
                   <a
                     href="mailto:sapthamclassical@gmail.com"
-                    className="draw-link transition-colors hover:text-goldhi"
+                    className="draw-link transition-colors duration-300 hover:text-goldhi"
                   >
                     sapthamclassical@gmail.com
                   </a>
@@ -68,31 +90,46 @@ const Footer = () => (
                     href="https://www.instagram.com/saptham_ceg/"
                     target="_blank"
                     rel="noreferrer"
-                    className="draw-link transition-colors hover:text-goldhi"
+                    className="draw-link transition-colors duration-300 hover:text-goldhi"
                   >
                     Instagram · @saptham_ceg
                   </a>
                 </li>
-                <li className="text-sanctum/60">College of Engineering Guindy, Chennai 600025</li>
+                <li className="text-ash">College of Engineering Guindy, Chennai 600025</li>
               </ul>
             </div>
           </div>
         </Reveal>
 
-        {/* the last lamp */}
+        {/* the final chord — seven lights, then dark */}
         <div className="mt-16 flex flex-col items-center gap-5">
           <div className="gold-hairline w-full" />
-          <div className="tala-pulse mt-2 h-2 w-2 rounded-full bg-goldhi shadow-[0_0_18px_4px_rgba(201,162,75,0.5)]" />
-          <p className="font-display text-center text-sm text-sanctum/70 italic">
+          <div className="mt-2 flex items-center gap-3" aria-hidden="true">
+            {SWARAS.map((c, i) => (
+              <span
+                key={c}
+                className="tala-pulse h-1.5 w-1.5 rounded-full"
+                style={{
+                  background: c,
+                  boxShadow: `0 0 12px 2px color-mix(in srgb, ${c} 55%, transparent)`,
+                  animationDelay: `${i * 0.28}s`,
+                }}
+              />
+            ))}
+          </div>
+          <p className="font-display text-center text-sm text-ivory/75 italic">
             Where the seven notes become light.
           </p>
-          <p className="text-[0.65rem] tracking-[0.2em] text-sanctum/40 uppercase">
-            © {new Date().getFullYear()} Saptham · CEG, Anna University
+          <p className="text-[0.65rem] tracking-[0.2em] text-ash/70 uppercase">
+            <span onClick={knock} className="cursor-default select-none">©</span>{" "}
+            {new Date().getFullYear()} Saptham · CEG, Anna University
           </p>
         </div>
       </div>
     </div>
+    <AdminGate open={gateOpen} onClose={() => setGateOpen(false)} />
   </footer>
-);
+  );
+};
 
 export default Footer;

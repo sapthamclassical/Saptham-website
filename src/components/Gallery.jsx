@@ -1,20 +1,95 @@
 import { useEffect, useState } from "react";
-import { AnimatePresence, motion as Motion } from "motion/react";
-import Reveal, { RevealStagger, RevealItem } from "./shared/Reveal";
+import { AnimatePresence, motion as Motion, useReducedMotion } from "motion/react";
+import { Reveal } from "./motion/Motion";
+import { CharReveal, Orb, SWARA_LIGHTS } from "./stage/Stage";
 import { galleryData, galleryCategories } from "../lib/gallery";
 
 const EASE = [0.16, 1, 0.3, 1];
 
 /**
- * Scene 09 · Smriti — the gallery as a night-museum: warm-black matting, brass
- * tab rail, images revealed like plates in a catalogue, a candlelit lightbox.
- * Categories & images auto-discover from src/assets/Gallery/<Folder>/ — drop a
- * photo in a folder and it appears; add a folder and a new tab appears.
+ * Scene · Smriti under stage light — the gallery as a concert in the dark.
+ * Every production keeps its own swara light; the chips, tile glows, and the
+ * lightbox all answer in that category's colour, consistently.
  */
+const CATEGORY_LIGHT = {
+  General: SWARA_LIGHTS.sa, // amber — the house light
+  Payanam: SWARA_LIGHTS.ma, // peacock — the journey
+  Vishwam: SWARA_LIGHTS.ga, // emerald — the cosmos
+  Rasaleela: SWARA_LIGHTS.pa, // crimson — the dance
+  Yaathra: SWARA_LIGHTS.ri, // vermilion — the pilgrimage
+  "Prema Vaibhavam": SWARA_LIGHTS.da, // violet — the love
+};
+const lightFor = (cat) => CATEGORY_LIGHT[cat] ?? SWARA_LIGHTS.ni;
+
+/**
+ * Ragged-grid plate ratios — FIXED per index so the masonry never reflows as
+ * images decode (zero CLS). The lightbox shows the uncropped photograph.
+ */
+const RATIOS = [
+  "aspect-[3/4]",
+  "aspect-[4/3]",
+  "aspect-square",
+  "aspect-[4/5]",
+  "aspect-[5/4]",
+  "aspect-[2/3]",
+];
+
+/**
+ * One plate: clip-path mask entrance (the ImageReveal `maskUp` recipe, inlined
+ * because a per-tile stagger delay must live outside the variant's own
+ * transition), slow hover zoom, and a swara-glow ring. Transform / opacity /
+ * clip-path only.
+ */
+const PlateTile = ({ src, idx, cat, accent, onOpen, still }) => (
+  <Motion.div
+    className="mb-4 break-inside-avoid"
+    initial={still ? false : { clipPath: "inset(100% 0% 0% 0%)", scale: 1.06 }}
+    whileInView={{ clipPath: "inset(0% 0% 0% 0%)", scale: 1 }}
+    viewport={{ once: true, margin: "-6%" }}
+    transition={{ duration: 1.05, ease: EASE, delay: (idx % 4) * 0.09 }}
+    style={{ willChange: still ? undefined : "clip-path, transform" }}
+  >
+    <button
+      onClick={onOpen}
+      className={`group relative block w-full overflow-hidden border border-granite/60 bg-charcoal ${
+        RATIOS[idx % RATIOS.length]
+      }`}
+      aria-label={`Open image ${idx + 1} of ${cat}`}
+    >
+      {/* the photograph — slow zoom, no layout involved */}
+      <img
+        src={src}
+        alt={`${cat} — plate ${idx + 1}`}
+        loading="lazy"
+        className="h-full w-full object-cover transition-transform duration-[1600ms] ease-out group-hover:scale-[1.07]"
+      />
+      {/* swara glow ring — a static shadow layer whose opacity animates */}
+      <span
+        className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-700 group-hover:opacity-100"
+        style={{
+          boxShadow: `inset 0 0 0 1px ${accent}99, inset 0 0 70px ${accent}1f, 0 0 42px ${accent}33`,
+        }}
+        aria-hidden="true"
+      />
+      {/* plate placard */}
+      <span
+        className="pointer-events-none absolute bottom-3 left-3 flex translate-y-1 items-center gap-2 font-mono text-[0.58rem] tracking-[0.22em] uppercase opacity-0 transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100"
+        style={{ color: accent }}
+        aria-hidden="true"
+      >
+        <span className="inline-block h-1 w-1 rounded-full" style={{ background: accent, boxShadow: `0 0 8px ${accent}` }} />
+        plate {String(idx + 1).padStart(2, "0")}
+      </span>
+    </button>
+  </Motion.div>
+);
+
 const Gallery = () => {
+  const still = useReducedMotion();
   const [active, setActive] = useState(galleryCategories[0] ?? "General");
   const [lightbox, setLightbox] = useState(null); // index | null
   const images = galleryData[active] ?? [];
+  const accent = lightFor(active);
 
   useEffect(() => {
     if (lightbox === null) return;
@@ -29,78 +104,116 @@ const Gallery = () => {
 
   return (
     <div className="mx-auto max-w-7xl px-4 pb-10 sm:px-6 lg:px-8">
-      {/* Page invocation */}
+      {/* Page invocation — per-character rise under the rig */}
       <header className="pt-16 pb-12 text-center md:pt-24">
-        <Reveal>
+        <Reveal y={12}>
           <p className="eyebrow mb-5">Moments &amp; Memories</p>
-          <h1 className="font-display gold-text text-5xl leading-[1.05] md:text-7xl">Gallery</h1>
+        </Reveal>
+        <CharReveal
+          as="h1"
+          text="Gallery"
+          beat={0.055}
+          className="font-display text-5xl leading-[1.05] md:text-7xl"
+          charClassName="gold-text"
+        />
+        <Reveal delay={0.35}>
           <p className="mx-auto mt-5 max-w-xl text-ash">
-            Moments held in warm light — from the practice hall to the proscenium.
+            Moments held in stage light — from the practice hall to the proscenium.
           </p>
         </Reveal>
+        <Motion.div
+          className="korvai mx-auto mt-8 max-w-xs"
+          initial={still ? false : { scaleX: 0 }}
+          whileInView={{ scaleX: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 1, ease: EASE, delay: 0.4 }}
+        />
       </header>
 
-      {/* Brass tab rail */}
+      {/* Swara chips — each production wears its own light */}
       <Reveal className="mb-12 flex flex-wrap justify-center gap-3">
-        {galleryCategories.map((cat) => (
-          <button
-            key={cat}
-            onClick={() => setActive(cat)}
-            className={`border px-5 py-2 text-[0.7rem] tracking-[0.18em] uppercase transition-all duration-400 ${
-              active === cat
-                ? "border-gold bg-gold/10 text-goldhi shadow-[0_0_24px_rgba(201,162,75,0.15)]"
-                : "border-granite text-ash hover:border-gold/50 hover:text-ivory"
-            }`}
-          >
-            {cat}
-          </button>
-        ))}
+        {galleryCategories.map((cat) => {
+          const on = active === cat;
+          const c = lightFor(cat);
+          return (
+            <button
+              key={cat}
+              onClick={() => setActive(cat)}
+              aria-pressed={on}
+              className={`relative rounded-full border px-5 py-2 text-[0.68rem] font-medium tracking-[0.18em] uppercase transition-all duration-500 ${
+                on ? "" : "border-granite text-ash hover:border-basalt/80 hover:text-ivory"
+              }`}
+              style={
+                on
+                  ? {
+                      borderColor: c,
+                      color: c,
+                      background: `${c}14`,
+                      boxShadow: `0 0 26px ${c}45, inset 0 0 14px ${c}1f`,
+                      textShadow: `0 0 18px ${c}90`,
+                    }
+                  : undefined
+              }
+            >
+              <span
+                className="mr-2 inline-block h-1.5 w-1.5 rounded-full align-middle transition-opacity duration-500"
+                style={{
+                  background: c,
+                  boxShadow: on ? `0 0 10px ${c}` : "none",
+                  opacity: on ? 1 : 0.4,
+                }}
+                aria-hidden="true"
+              />
+              {cat}
+            </button>
+          );
+        })}
       </Reveal>
 
-      {/* Museum plates — masonry columns */}
+      {/* Ragged plates — masked entrances, staggered by column beat */}
       <AnimatePresence mode="wait">
         <Motion.div
           key={active}
-          initial={{ opacity: 0, y: 16 }}
+          initial={still ? false : { opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -10 }}
+          exit={{ opacity: 0, y: still ? 0 : -10 }}
           transition={{ duration: 0.5, ease: EASE }}
+          className="columns-2 gap-4 md:columns-3 lg:columns-4"
         >
-          <RevealStagger beat={0.05} className="columns-2 gap-4 md:columns-3 lg:columns-4">
-            {images.map((img, idx) => (
-              <RevealItem key={img} className="mb-4 break-inside-avoid">
-                <button
-                  onClick={() => setLightbox(idx)}
-                  className="group block w-full overflow-hidden border border-granite/60 bg-charcoal transition-all duration-500 hover:border-gold/50"
-                  aria-label={`Open image ${idx + 1} of ${active}`}
-                >
-                  <img
-                    src={img}
-                    alt={`${active} — plate ${idx + 1}`}
-                    loading="lazy"
-                    className="w-full transition-all duration-700 ease-out group-hover:scale-[1.03] group-hover:opacity-90"
-                  />
-                </button>
-              </RevealItem>
-            ))}
-          </RevealStagger>
+          {images.map((img, idx) => (
+            <PlateTile
+              key={img}
+              src={img}
+              idx={idx}
+              cat={active}
+              accent={accent}
+              onOpen={() => setLightbox(idx)}
+              still={still}
+            />
+          ))}
         </Motion.div>
       </AnimatePresence>
 
-      {/* Candlelit lightbox */}
+      {/* Lightbox — the deep void, one photograph in its own swara light */}
       <AnimatePresence>
         {lightbox !== null && (
           <Motion.div
-            className="fixed inset-0 z-[70] flex items-center justify-center bg-msdeep/95 p-4 backdrop-blur-sm"
+            className="fixed inset-0 z-[70] flex items-center justify-center overflow-hidden bg-sanctum/95 p-4 backdrop-blur-md"
             role="dialog"
             aria-modal="true"
-            initial={{ opacity: 0 }}
+            aria-label={`${active} gallery viewer`}
+            initial={still ? false : { opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setLightbox(null)}
           >
+            {/* two low stage lights behind the plate */}
+            <Orb color={accent} x="12%" y="16%" size={420} opacity={0.14} dur={16} />
+            <Orb color={SWARA_LIGHTS.da} x="66%" y="62%" size={380} opacity={0.1} dur={20} delay={1.2} />
+
             <button
-              className="absolute top-5 right-6 font-display text-2xl text-gold transition-colors hover:text-goldhi"
+              className="absolute top-5 right-6 z-10 flex h-11 w-11 items-center justify-center rounded-full border transition-transform duration-300 hover:scale-110"
+              style={{ borderColor: `${accent}66`, color: accent, textShadow: `0 0 16px ${accent}` }}
               onClick={() => setLightbox(null)}
               aria-label="Close full view"
             >
@@ -110,7 +223,7 @@ const Gallery = () => {
             <Motion.figure
               key={lightbox}
               className="relative max-h-full w-full max-w-5xl"
-              initial={{ opacity: 0, scale: 0.98 }}
+              initial={still ? false : { opacity: 0, scale: 0.98 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.45, ease: EASE }}
               onClick={(e) => e.stopPropagation()}
@@ -118,22 +231,36 @@ const Gallery = () => {
               <img
                 src={images[lightbox]}
                 alt={`${active} — full view ${lightbox + 1}`}
-                className="mx-auto max-h-[82vh] w-auto border border-granite/70 object-contain shadow-[0_32px_120px_rgba(0,0,0,0.8)]"
+                className="mx-auto max-h-[82vh] w-auto border object-contain"
+                style={{
+                  borderColor: `${accent}44`,
+                  boxShadow: `0 32px 120px rgba(0,0,0,0.85), 0 0 90px ${accent}1f`,
+                }}
               />
-              <figcaption className="mt-4 text-center font-mono text-[0.65rem] tracking-[0.2em] text-ash uppercase">
+              <figcaption
+                className="mt-4 flex items-center justify-center gap-2 text-center font-mono text-[0.65rem] tracking-[0.2em] uppercase"
+                style={{ color: accent }}
+              >
+                <span
+                  className="inline-block h-1 w-1 rounded-full"
+                  style={{ background: accent, boxShadow: `0 0 8px ${accent}` }}
+                  aria-hidden="true"
+                />
                 {active} · plate {lightbox + 1} / {images.length}
               </figcaption>
 
               <button
                 onClick={() => setLightbox((i) => (i - 1 + images.length) % images.length)}
-                className="absolute top-1/2 -left-2 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-goldhi/40 bg-msdeep/70 text-goldhi transition-all hover:border-goldhi md:-left-16"
+                className="absolute top-1/2 -left-2 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border bg-sanctum/70 transition-transform duration-300 hover:scale-110 md:-left-16"
+                style={{ borderColor: `${accent}66`, color: accent, boxShadow: `0 0 24px ${accent}33` }}
                 aria-label="Previous image"
               >
                 ←
               </button>
               <button
                 onClick={() => setLightbox((i) => (i + 1) % images.length)}
-                className="absolute top-1/2 -right-2 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-goldhi/40 bg-msdeep/70 text-goldhi transition-all hover:border-goldhi md:-right-16"
+                className="absolute top-1/2 -right-2 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border bg-sanctum/70 transition-transform duration-300 hover:scale-110 md:-right-16"
+                style={{ borderColor: `${accent}66`, color: accent, boxShadow: `0 0 24px ${accent}33` }}
                 aria-label="Next image"
               >
                 →

@@ -2,15 +2,21 @@ import { useEffect, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { AnimatePresence, motion as Motion, useReducedMotion } from "motion/react";
 import SapthamMark from "./brand/SapthamMark";
+import { SWARA_LIGHTS } from "./stage/Stage";
 import { EASE } from "../lib/motion";
 
+/**
+ * Each destination carries its own swara light — the active link glows in its
+ * note's colour, so the nav itself reads sa–ri–ga–ma–pa–da like a scale.
+ */
 const LINKS = [
-  { to: "/", label: "Home" },
-  { to: "/events", label: "Events" },
-  { to: "/gallery", label: "Gallery" },
-  { to: "/office-bearers", label: "Office Bearers" },
-  { to: "/alumni", label: "Alumni" },
-  { to: "/contact", label: "Contact" },
+  { to: "/", label: "Home", swara: SWARA_LIGHTS.sa },
+  { to: "/events", label: "Events", swara: SWARA_LIGHTS.ri },
+  { to: "/gallery", label: "Gallery", swara: SWARA_LIGHTS.ga },
+  { to: "/calendar", label: "Calendar", swara: SWARA_LIGHTS.ni },
+  { to: "/office-bearers", label: "Office Bearers", swara: SWARA_LIGHTS.ma },
+  { to: "/alumni", label: "Alumni", swara: SWARA_LIGHTS.da },
+  { to: "/contact", label: "Contact", swara: SWARA_LIGHTS.pa },
 ];
 
 const Navbar = () => {
@@ -42,7 +48,7 @@ const Navbar = () => {
   return (
     <header
       className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
-        scrolled ? "bg-sanctum/90 backdrop-blur-md" : "bg-transparent"
+        scrolled ? "bg-sanctum/80 backdrop-blur-md" : "bg-transparent"
       }`}
     >
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
@@ -60,7 +66,7 @@ const Navbar = () => {
           </span>
         </Link>
 
-        {/* Desktop links */}
+        {/* Desktop links — each glows in its own swara when active */}
         <div className="hidden items-center gap-7 lg:flex">
           {LINKS.map((l) => (
             <NavLink
@@ -69,8 +75,16 @@ const Navbar = () => {
               end={l.to === "/"}
               className={({ isActive }) =>
                 `draw-link text-[0.68rem] font-medium tracking-[0.18em] whitespace-nowrap uppercase transition-colors duration-300 ${
-                  isActive ? "active text-kumkum" : "text-ivory/70 hover:text-ivory"
+                  isActive ? "active" : "text-ivory/70 hover:text-ivory"
                 }`
+              }
+              style={({ isActive }) =>
+                isActive
+                  ? {
+                      color: l.swara,
+                      textShadow: `0 0 18px color-mix(in srgb, ${l.swara} 60%, transparent)`,
+                    }
+                  : undefined
               }
             >
               {l.label}
@@ -86,15 +100,18 @@ const Navbar = () => {
           aria-expanded={open}
         >
           <span
-            className={`block h-px w-6 bg-kumkum transition-transform duration-300 ${open ? "translate-y-[3.5px] rotate-45" : ""}`}
+            className={`block h-px w-6 bg-gold transition-transform duration-300 ${open ? "translate-y-[3.5px] rotate-45" : ""}`}
           />
           <span
-            className={`block h-px w-6 bg-kumkum transition-transform duration-300 ${open ? "-translate-y-[3.5px] -rotate-45" : ""}`}
+            className={`block h-px w-6 bg-gold transition-transform duration-300 ${open ? "-translate-y-[3.5px] -rotate-45" : ""}`}
           />
         </button>
       </nav>
+
+      {/* a strip of stage light seals the glass once the page scrolls */}
       <div
-        className={`gold-hairline transition-opacity duration-500 ${scrolled ? "opacity-60" : "opacity-0"}`}
+        className={`korvai transition-opacity duration-500 ${scrolled ? "opacity-50" : "opacity-0"}`}
+        aria-hidden="true"
       />
 
       {/* Mobile menu — the curtain */}
@@ -119,8 +136,9 @@ const Navbar = () => {
                     to={l.to}
                     end={l.to === "/"}
                     className={({ isActive }) =>
-                      `block py-3 font-display text-2xl ${isActive ? "text-kumkum italic" : "text-ivory/80"}`
+                      `block py-3 font-display text-2xl ${isActive ? "text-glow italic" : "text-ivory/80"}`
                     }
+                    style={({ isActive }) => (isActive ? { color: l.swara } : undefined)}
                   >
                     {l.label}
                   </NavLink>

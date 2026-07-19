@@ -73,7 +73,7 @@ const Cursor = () => {
       />
       {/* the afterglow ring */}
       <Motion.div
-        className="absolute h-8 w-8 rounded-full border border-msblue/50"
+        className="absolute h-8 w-8 rounded-full border border-gold/60"
         style={{ x: rx, y: ry, translateX: "-50%", translateY: "-50%" }}
         animate={{ scale: hot ? 1.9 : down ? 0.8 : 1, opacity: hot ? 0.9 : 0.55 }}
         transition={{ type: "spring", stiffness: 260, damping: 24 }}

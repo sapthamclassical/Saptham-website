@@ -2,21 +2,25 @@ import { motion as Motion, useReducedMotion } from "motion/react";
 import SectionHeading from "./shared/SectionHeading";
 import SapthamMark from "./brand/SapthamMark";
 import { Reveal, StaggerGroup, StaggerItem, HoverLift, Parallax } from "./motion/Motion";
+import { Atmosphere, ScrollFloat, SWARA_LIGHTS } from "./stage/Stage";
 import { EASE, VIEWPORT } from "../lib/motion";
 
 /**
- * The seven swaras — the club's namesake — rendered as a living instrument:
- * seven gold columns that rise like a held chord. Tamil letters ride above the
- * Latin names; the script survives here as an accent, not a system.
+ * Scene 02 · The chord — the seven swaras as a live equalizer.
+ *
+ * Each column now burns in ITS OWN swara light: entrance rise (scroll-triggered
+ * scaleY), then an endless equalizer breathe, each note on its own tempo so the
+ * chord shimmers rather than marches. The instrument sits on a glow-border
+ * panel that floats against the scroll while the mark parallaxes behind it.
  */
 const SWARAS = [
-  { latin: "Sa", tamil: "ச", h: 0.52 },
-  { latin: "Ri", tamil: "ரி", h: 0.66 },
-  { latin: "Ga", tamil: "க", h: 0.58 },
-  { latin: "Ma", tamil: "ம", h: 0.82 },
-  { latin: "Pa", tamil: "ப", h: 1.0 },
-  { latin: "Da", tamil: "த", h: 0.72 },
-  { latin: "Ni", tamil: "நி", h: 0.9 },
+  { latin: "Sa", tamil: "ச", h: 0.52, c: SWARA_LIGHTS.sa },
+  { latin: "Ri", tamil: "ரி", h: 0.66, c: SWARA_LIGHTS.ri },
+  { latin: "Ga", tamil: "க", h: 0.58, c: SWARA_LIGHTS.ga },
+  { latin: "Ma", tamil: "ம", h: 0.82, c: SWARA_LIGHTS.ma },
+  { latin: "Pa", tamil: "ப", h: 1.0, c: SWARA_LIGHTS.pa },
+  { latin: "Da", tamil: "த", h: 0.72, c: SWARA_LIGHTS.da },
+  { latin: "Ni", tamil: "நி", h: 0.9, c: SWARA_LIGHTS.ni },
 ];
 
 const PILLARS = [
@@ -24,68 +28,112 @@ const PILLARS = [
     n: "01",
     title: "Carnatic Music",
     body: "Veena to violin, mridangam to voice — the discipline of the seven swaras, practiced and performed as living tradition.",
+    a: SWARA_LIGHTS.sa,
+    b: SWARA_LIGHTS.ri,
   },
   {
     n: "02",
     title: "Classical Dance",
     body: "Bharatanatyam and beyond — geometry, devotion and storytelling carried in araimandi, mudra and abhinaya.",
+    a: SWARA_LIGHTS.ga,
+    b: SWARA_LIGHTS.ma,
   },
   {
     n: "03",
     title: "One Family",
     body: "An unbroken lineage of students and alumni — a sabha where every newcomer belongs and every senior still returns.",
+    a: SWARA_LIGHTS.pa,
+    b: SWARA_LIGHTS.da,
   },
 ];
 
-/** One column of the chord. Scale-only animation, so it never touches layout. */
+/** One note of the chord. Entrance + endless breathe, transforms only. */
 const SwaraBar = ({ swara, index }) => {
   const still = useReducedMotion();
   return (
     <div className="flex flex-1 flex-col items-center gap-3">
-      <span className="font-tamil text-sm text-goldhi/70">{swara.tamil}</span>
+      <span className="font-tamil text-sm" style={{ color: swara.c }}>
+        {swara.tamil}
+      </span>
       <div className="relative flex h-44 w-full items-end justify-center md:h-56">
         <Motion.div
-          className="swara-bar w-2.5 rounded-full md:w-3"
+          className="relative w-2.5 rounded-full md:w-3"
           style={{
             height: `${swara.h * 100}%`,
             transformOrigin: "bottom",
-            animationDelay: still ? undefined : `${index * 0.45}s`,
+            background: `linear-gradient(to top, ${swara.c}55, ${swara.c})`,
+            boxShadow: `0 0 16px ${swara.c}88, 0 0 40px ${swara.c}44`,
           }}
           initial={still ? false : { scaleY: 0 }}
           whileInView={{ scaleY: 1 }}
           viewport={VIEWPORT}
           transition={{ duration: 1.1, delay: 0.15 + index * 0.09, ease: EASE }}
-        />
+        >
+          {/* the live layer — each note breathing on its own tala */}
+          {!still && (
+            <Motion.div
+              className="absolute inset-0 rounded-full"
+              style={{
+                transformOrigin: "bottom",
+                background: `linear-gradient(to top, transparent, ${swara.c})`,
+              }}
+              animate={{ scaleY: [1, 0.72, 1.06, 1], opacity: [0.9, 0.45, 1, 0.9] }}
+              transition={{
+                duration: 2.4 + index * 0.35,
+                delay: index * 0.4,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+              aria-hidden="true"
+            />
+          )}
+        </Motion.div>
       </div>
-      <span className="text-[0.7rem] tracking-[0.24em] text-goldhi/80 uppercase">{swara.latin}</span>
+      <span className="text-[0.7rem] tracking-[0.24em] uppercase" style={{ color: swara.c }}>
+        {swara.latin}
+      </span>
     </div>
   );
 };
 
 const Vision = () => (
   <section id="vision" className="relative overflow-hidden py-24 md:py-32">
-    <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    {/* second movement — the stage turns emerald and peacock */}
+    <Atmosphere colors={[SWARA_LIGHTS.ga, SWARA_LIGHTS.ma]} beams={1} particles={40} />
+
+    <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <div className="grid items-center gap-14 lg:grid-cols-2 lg:gap-20">
-        {/* The chord — seven notes standing like lamp flames */}
+        {/* The chord — seven notes standing in their own lights */}
         <Reveal className="relative order-2 lg:order-1">
           <div className="relative mx-auto max-w-md">
             {/* the mark, vast and faint behind the instrument */}
             <Parallax depth={28} className="pointer-events-none absolute inset-0 flex items-center justify-center">
-              <SapthamMark size={380} variant="mono" title="" className="text-msblue opacity-[0.06]" />
+              <SapthamMark size={380} variant="mono" title="" className="text-teal-swara opacity-[0.06]" />
             </Parallax>
 
-            <div className="on-blue relative bg-msblue px-6 py-10 shadow-[0_24px_60px_rgba(22,36,78,0.3)] md:px-10">
-              
-              <div className="relative flex items-end gap-2 md:gap-3">
-                {SWARAS.map((s, i) => (
-                  <SwaraBar key={s.latin} swara={s} index={i} />
-                ))}
+            {/* the panel floats against the scroll — the parallax moment */}
+            <ScrollFloat depth={36}>
+              <div
+                className="glow-border relative px-6 py-10 shadow-[0_24px_60px_rgba(6,7,13,0.6)] md:px-10"
+                style={{ "--gb-a": SWARA_LIGHTS.ga, "--gb-b": SWARA_LIGHTS.ma }}
+              >
+                <div className="relative flex items-end gap-2 md:gap-3">
+                  {SWARAS.map((s, i) => (
+                    <SwaraBar key={s.latin} swara={s} index={i} />
+                  ))}
+                </div>
+                <div
+                  className="mt-8 h-px"
+                  style={{
+                    background: `linear-gradient(90deg, transparent, ${SWARA_LIGHTS.ga}, ${SWARA_LIGHTS.ma}, transparent)`,
+                  }}
+                  aria-hidden="true"
+                />
+                <p className="mt-4 text-center text-[0.6rem] tracking-[0.3em] text-ash uppercase">
+                  Sapta Swara · the seven notes
+                </p>
               </div>
-              <div className="gold-hairline mt-8" />
-              <p className="mt-4 text-center text-[0.6rem] tracking-[0.3em] text-goldhi/80 uppercase">
-                Sapta Swara · the seven notes
-              </p>
-            </div>
+            </ScrollFloat>
           </div>
         </Reveal>
 
@@ -109,15 +157,24 @@ const Vision = () => (
         </div>
       </div>
 
-      {/* Three pillars */}
+      {/* Three pillars — each lit by its own pair of swara lights */}
       <StaggerGroup beat={0.12} className="mt-24 grid gap-6 md:grid-cols-3">
         {PILLARS.map((p) => (
           <StaggerItem key={p.title} className="h-full">
             <HoverLift className="h-full" lift={-8}>
-              <div className="group relative h-full overflow-hidden border border-granite/70 bg-charcoal/60 p-8 transition-colors duration-500 hover:border-gold/40 hover:bg-charcoal">
-                {/* top rule ignites on hover */}
-                <div className="gold-hairline absolute inset-x-0 top-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-                <span className="font-display text-sm text-goldlo/80 tracking-[0.3em]">{p.n}</span>
+              <div
+                className="glow-border group relative h-full overflow-hidden p-8"
+                style={{ "--gb-a": p.a, "--gb-b": p.b }}
+              >
+                {/* top light-strip ignites on hover */}
+                <div
+                  className="absolute inset-x-0 top-0 h-px opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+                  style={{ background: `linear-gradient(90deg, transparent, ${p.a}, ${p.b}, transparent)` }}
+                  aria-hidden="true"
+                />
+                <span className="font-display text-glow text-sm tracking-[0.3em]" style={{ color: p.a }}>
+                  {p.n}
+                </span>
                 <h3 className="font-display mt-3 text-xl text-ivory">{p.title}</h3>
                 <p className="mt-3 text-sm leading-relaxed text-ash">{p.body}</p>
               </div>

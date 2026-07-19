@@ -178,6 +178,19 @@ export type SettingRow = {
   updated_at: string;
 };
 
+export type CalendarEventRow = {
+  id: string;
+  title: string;
+  details: string | null;
+  venue: string | null;
+  happens_on: string;
+  time_note: string | null;
+  accent: string | null;
+  is_published: boolean;
+  created_at: string;
+  updated_at: string;
+};
+
 /** Collapses an intersection into one object type so `.insert()` infers cleanly. */
 type Flatten<T> = { [K in keyof T]: T[K] };
 
@@ -203,6 +216,7 @@ export type Database = {
       contact_messages: Table<ContactMessageRow, "name" | "email" | "message">;
       media_assets: Table<MediaAssetRow, "bucket" | "path">;
       settings: Table<SettingRow, "key">;
+      calendar_events: Table<CalendarEventRow, "title" | "happens_on">;
     };
     Views: Record<string, never>;
     Functions: {

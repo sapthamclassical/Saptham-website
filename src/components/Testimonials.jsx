@@ -1,20 +1,30 @@
 import { useCallback, useEffect, useState } from "react";
-import { AnimatePresence, motion as Motion } from "motion/react";
+import { AnimatePresence, motion as Motion, useReducedMotion } from "motion/react";
 import SectionHeading from "./shared/SectionHeading";
+import { Atmosphere, SWARA_LIGHTS } from "./stage/Stage";
 import { getPersonImage, initialsOf } from "../lib/people";
 import { useAlumni } from "../hooks/useContent";
 
 const EASE = [0.16, 1, 0.3, 1];
-const PLUM = "#5E2E52"; // Da — the Padam movement's swara accent
+/* Each voice takes the stage under its own swara light. */
+const SWARA_CYCLE = Object.values(SWARA_LIGHTS);
 
 /**
- * Scene 10 · Padam — the alumni lineage. Data-driven from Supabase (`alumni`),
+ * Scene 04 · Padam — the alumni lineage. Data-driven from Supabase (`alumni`),
  * falling back to src/data/alumni.json until the CMS is migrated.
+ *
+ * Carousel mechanics kept (slow auto-advance, prev/next, jump dots); the
+ * dressing is now the stage — a violet/crimson Atmosphere, a glow-border
+ * portrait frame whose light changes with each voice, and a quote mark that
+ * burns in the same colour.
  */
-const Portrait = ({ person }) => {
+const Portrait = ({ person, accent }) => {
   const img = getPersonImage(person.name, person.image);
   return (
-    <div className="relative mx-auto aspect-[4/5] w-full max-w-sm overflow-hidden border border-granite bg-charcoal">
+    <div
+      className="glow-border relative mx-auto aspect-[4/5] w-full max-w-sm overflow-hidden"
+      style={{ "--gb-a": accent, "--gb-b": SWARA_LIGHTS.da }}
+    >
       {img ? (
         <>
           <img src={img} alt={person.name} className="h-full w-full object-cover" />
@@ -23,11 +33,15 @@ const Portrait = ({ person }) => {
       ) : (
         <div className="kolam-dots flex h-full w-full items-center justify-center bg-gradient-to-b from-charcoal to-sanctum">
           <div
-            className="absolute h-48 w-48 rounded-full opacity-25 blur-2xl tala-pulse"
-            style={{ background: `radial-gradient(circle, ${PLUM}, transparent 70%)` }}
+            className="tala-pulse absolute h-48 w-48 rounded-full opacity-30 blur-2xl"
+            style={{ background: `radial-gradient(circle, ${accent}, transparent 70%)` }}
+            aria-hidden="true"
           />
-          <div className="relative flex h-40 w-40 items-center justify-center rounded-full border border-goldlo/70">
-            <div className="absolute inset-2 rounded-full border border-gold/40 border-dashed" />
+          <div
+            className="relative flex h-40 w-40 items-center justify-center rounded-full border"
+            style={{ borderColor: `${accent}88` }}
+          >
+            <div className="absolute inset-2 rounded-full border border-dashed border-gold/40" />
             <span className="font-display gold-text text-5xl">{initialsOf(person.name)}</span>
           </div>
         </div>
@@ -38,8 +52,10 @@ const Portrait = ({ person }) => {
 
 const Testimonials = () => {
   const { members } = useAlumni();
+  const still = useReducedMotion();
   const [index, setIndex] = useState(0);
   const active = members[index] ?? members[0];
+  const accent = SWARA_CYCLE[index % SWARA_CYCLE.length];
 
   const next = useCallback(() => setIndex((i) => (i + 1) % members.length), [members.length]);
   const prev = useCallback(
@@ -53,12 +69,17 @@ const Testimonials = () => {
     return () => clearInterval(t);
   }, [next]);
 
+  if (!active) return null;
+
   return (
-    <section id="alumni" className="relative py-24 md:py-32">
-      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+    <section id="alumni" className="relative overflow-hidden py-24 md:py-32">
+      {/* final movement — violet and crimson wash */}
+      <Atmosphere colors={[SWARA_LIGHTS.da, SWARA_LIGHTS.pa]} beams={1} particles={40} />
+
+      <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <SectionHeading
           eyebrow="The Lineage"
-          title="Voices of the Parampara"
+          title="Voices of Saptham"
           sub="Those who carried the lamp before us, on what Saptham meant — and means."
         />
 
@@ -66,34 +87,43 @@ const Testimonials = () => {
           <AnimatePresence mode="wait">
             <Motion.div
               key={`p-${index}`}
-              initial={{ opacity: 0, x: -24, filter: "blur(4px)" }}
-              animate={{ opacity: 1, x: 0, filter: "blur(0px)" }}
-              exit={{ opacity: 0, x: 24, filter: "blur(4px)" }}
+              initial={still ? false : { opacity: 0, x: -24 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={still ? undefined : { opacity: 0, x: 24 }}
               transition={{ duration: 0.7, ease: EASE }}
             >
-              <Portrait person={active} />
+              <Portrait person={active} accent={accent} />
             </Motion.div>
           </AnimatePresence>
 
           <div className="relative">
-            <span className="font-display gold-text pointer-events-none absolute -top-10 -left-2 text-8xl opacity-40 select-none">
+            {/* the quote mark burns in this voice's swara light */}
+            <span
+              className="font-display text-glow pointer-events-none absolute -top-10 -left-2 text-8xl opacity-60 transition-colors duration-700 select-none"
+              style={{ color: accent }}
+              aria-hidden="true"
+            >
               &ldquo;
             </span>
             <AnimatePresence mode="wait">
               <Motion.blockquote
                 key={`q-${index}`}
-                initial={{ opacity: 0, y: 18 }}
+                initial={still ? false : { opacity: 0, y: 18 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -14 }}
+                exit={still ? undefined : { opacity: 0, y: -14 }}
                 transition={{ duration: 0.7, ease: EASE }}
               >
                 <p className="font-display text-xl leading-relaxed font-light text-ivory/90 italic md:text-2xl">
                   {active.quote}
                 </p>
                 <footer className="mt-8">
-                  <div className="gold-hairline mb-5 w-24" />
-                  <p className="font-display text-lg text-gold">{active.name}</p>
-                  <p className="eyebrow mt-1 !text-[0.62rem]" style={{ color: "var(--color-kumkum)" }}>
+                  <div
+                    className="mb-5 h-px w-24"
+                    style={{ background: `linear-gradient(90deg, ${accent}, transparent)` }}
+                    aria-hidden="true"
+                  />
+                  <p className="font-display text-lg text-goldhi">{active.name}</p>
+                  <p className="eyebrow mt-1 !text-[0.62rem]" style={{ color: accent }}>
                     {active.role} {active.year}
                   </p>
                 </footer>
@@ -105,27 +135,33 @@ const Testimonials = () => {
               <button
                 onClick={prev}
                 aria-label="Previous voice"
-                className="flex h-11 w-11 items-center justify-center rounded-full border border-granite text-gold transition-all duration-300 hover:border-gold hover:shadow-[0_0_20px_rgba(201,162,75,0.25)]"
+                className="flex h-11 w-11 items-center justify-center rounded-full border border-granite text-gold transition-all duration-300 hover:border-plum hover:shadow-[0_0_20px_rgba(176,107,255,0.35)]"
               >
                 ←
               </button>
               <button
                 onClick={next}
                 aria-label="Next voice"
-                className="flex h-11 w-11 items-center justify-center rounded-full border border-granite text-gold transition-all duration-300 hover:border-gold hover:shadow-[0_0_20px_rgba(201,162,75,0.25)]"
+                className="flex h-11 w-11 items-center justify-center rounded-full border border-granite text-gold transition-all duration-300 hover:border-plum hover:shadow-[0_0_20px_rgba(176,107,255,0.35)]"
               >
                 →
               </button>
               <div className="ml-2 flex gap-2">
-                {members.map((m, i) => (
-                  <button
-                    key={m.name + i}
-                    onClick={() => setIndex(i)}
-                    aria-label={`Voice ${i + 1}`}
-                    className="h-1 w-6 transition-all duration-500"
-                    style={{ background: i === index ? "#C9A24B" : "#2A241D" }}
-                  />
-                ))}
+                {members.map((m, i) => {
+                  const c = SWARA_CYCLE[i % SWARA_CYCLE.length];
+                  return (
+                    <button
+                      key={m.name + i}
+                      onClick={() => setIndex(i)}
+                      aria-label={`Voice ${i + 1}`}
+                      className="h-1 w-6 transition-all duration-500"
+                      style={{
+                        background: i === index ? c : "#232741",
+                        boxShadow: i === index ? `0 0 10px ${c}` : "none",
+                      }}
+                    />
+                  );
+                })}
               </div>
             </div>
           </div>

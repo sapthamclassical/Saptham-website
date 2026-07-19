@@ -8,7 +8,7 @@ import SapthamMark from "../brand/SapthamMark";
  * Pure CSS animation on transform, duplicated content for a seamless loop.
  * aria-hidden — it is texture; the words also live in real content elsewhere.
  */
-const WORDS = ["Sangeetham", "Natyam", "Parampara", "Sabha"];
+const WORDS = ["Music", "Dance", "Tradition", "Saptham"];
 
 const Strip = () => (
   <div className="marquee-strip flex shrink-0 items-center">

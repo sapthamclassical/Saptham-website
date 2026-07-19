@@ -47,9 +47,9 @@ const ContactUs = () => {
       {/* Page invocation */}
       <header className="pt-16 pb-14 text-center md:pt-24">
         <Reveal>
-          <p className="eyebrow mb-5">Reach the Sabha</p>
+          <p className="eyebrow mb-5">Get in Touch</p>
           <h1 className="font-display gold-text text-5xl leading-[1.05] md:text-7xl">
-            Reach the Sabha
+            Get in touch
           </h1>
         </Reveal>
       </header>
@@ -102,7 +102,7 @@ const ContactUs = () => {
             </ul>
 
             <div>
-              <p className="eyebrow mb-4 !text-[0.6rem]">Follow the Sabha</p>
+              <p className="eyebrow mb-4 !text-[0.6rem]">Follow Us</p>
               <div className="flex gap-4">
                 {[
                   { href: "https://www.facebook.com/sapthamceg", Icon: Facebook, label: "Facebook" },

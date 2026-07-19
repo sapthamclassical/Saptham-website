@@ -27,4 +27,7 @@ export { submitContactMessage } from "./contact";
 export type { ContactSubmission } from "./contact";
 
 export { getPublicSettings, getSetting } from "./settings";
+
+export { getSeasonEvents, createSeasonEvent, updateSeasonEvent, deleteSeasonEvent } from "./calendar";
+export type { SeasonEvent } from "./calendar";
 export type { SettingsMap } from "./settings";

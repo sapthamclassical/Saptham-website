@@ -5,6 +5,7 @@ import heroLoop from "../assets/brand/hero-loop.mp4";
 import lampStill from "../assets/brand/lamp.jpg";
 import SapthamMark from "./brand/SapthamMark";
 import Magnetic from "./motion/Magnetic";
+import { Atmosphere, CharReveal, SWARA_LIGHTS } from "./stage/Stage";
 import { introDelay } from "../lib/intro";
 
 const EASE = [0.16, 1, 0.3, 1];
@@ -12,63 +13,52 @@ const EASE = [0.16, 1, 0.3, 1];
    curtains part — one continuous piece of choreography, not two intros. */
 const HOLD = introDelay();
 
-/* The headline, one word per beat. "seven notes" carries the lac-red thread. */
-const HEADLINE = [
-  { t: "Where" },
-  { t: "the" },
-  { t: "seven", accent: true },
-  { t: "notes", accent: true },
-  { t: "come" },
-  { t: "home." },
-];
+/* The seven lights, in swara order, for the orbit around the lamp. */
+const ORBIT = Object.values(SWARA_LIGHTS);
 
-const wordVariants = {
-  hidden: { y: "112%" },
-  show: (i) => ({
-    y: "0%",
-    transition: { duration: 0.95, delay: HOLD + 0.35 + i * 0.09, ease: EASE },
-  }),
-};
-
+/**
+ * Scene 01 · The stage in the dark.
+ *
+ * A full lighting rig (Atmosphere: orbs, two beams, dense embers), a
+ * per-character headline blooming out of the void, the lamp footage
+ * screen-blended inside a slowly turning ring of all seven swara lights,
+ * and the mark rotating vast and faint behind everything.
+ */
 const Hero = () => {
   const ref = useRef(null);
   const still = useReducedMotion();
 
-  /* Two depths as the hero leaves: the arch drifts slow, the words rise faster.
-     Driven off scroll progress, so values interpolate on the compositor. */
+  /* Three depths as the hero leaves: the lamp sinks slow, the words rise
+     faster, both dim. Scroll-linked transforms — compositor only. */
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
-  const archY = useTransform(scrollYProgress, [0, 1], ["0%", "12%"]);
-  const wordsY = useTransform(scrollYProgress, [0, 1], ["0%", "-26%"]);
-  const fade = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
+  const wordsY = useTransform(scrollYProgress, [0, 1], ["0%", "-24%"]);
+  const lampY = useTransform(scrollYProgress, [0, 1], ["0%", "14%"]);
+  const fade = useTransform(scrollYProgress, [0, 0.75], [1, 0]);
 
   return (
-    <section
-      ref={ref}
-      className="relative flex min-h-svh items-center overflow-hidden bg-sanctum pt-24"
-    >
-      {/* faint kolam field over the silk */}
-      <div className="kolam-dots absolute inset-0 opacity-40" aria-hidden="true" />
+    <section ref={ref} className="relative flex min-h-svh items-center overflow-hidden bg-sanctum pt-24">
+      {/* the rig: 8 orbs, 2 beams, ember canvas, kolam field, vignette */}
+      <Atmosphere
+        colors={[SWARA_LIGHTS.sa, SWARA_LIGHTS.pa, SWARA_LIGHTS.da, SWARA_LIGHTS.ma]}
+        beams={2}
+        particles={90}
+        dense
+      />
 
-      {/* pollen drift */}
-      <div className="absolute inset-0 overflow-hidden" aria-hidden="true">
-        {[...Array(10)].map((_, i) => (
-          <span
-            key={i}
-            className="mote"
-            style={{
-              left: `${(i * 53) % 100}%`,
-              width: 2 + ((i * 7) % 3),
-              height: 2 + ((i * 7) % 3),
-              animationDuration: `${16 + ((i * 5) % 12)}s`,
-              animationDelay: `${-((i * 3.7) % 14)}s`,
-              "--mote-o": 0.3,
-              "--mote-x": `${(i % 2 ? 1 : -1) * (14 + ((i * 11) % 30))}px`,
-            }}
-          />
-        ))}
+      {/* the mark — a vast, slowly turning watermark behind the stage */}
+      <div
+        className="pointer-events-none absolute top-1/2 -right-44 -translate-y-1/2 lg:-right-24"
+        aria-hidden="true"
+      >
+        <Motion.div
+          animate={still ? undefined : { rotate: 360 }}
+          transition={{ duration: 160, repeat: Infinity, ease: "linear" }}
+        >
+          <SapthamMark size={680} variant="mono" title="" className="text-goldhi opacity-[0.05]" />
+        </Motion.div>
       </div>
 
-      <div className="relative z-10 mx-auto grid w-full max-w-7xl items-center gap-14 px-6 py-16 lg:grid-cols-[1.15fr_0.85fr] lg:gap-20 lg:px-8">
+      <div className="relative z-10 mx-auto grid w-full max-w-7xl items-center gap-14 px-6 py-16 lg:grid-cols-[1.1fr_0.9fr] lg:gap-20 lg:px-8">
         {/* ── The words ── */}
         <Motion.div style={still ? undefined : { y: wordsY, opacity: fade }}>
           <Motion.p
@@ -77,32 +67,28 @@ const Hero = () => {
             animate={{ opacity: 1 }}
             transition={{ duration: 1, delay: HOLD + 0.2 }}
           >
-            The Classical Music &amp; Dance Sabha · CEG, Anna University
+            Classical Music &amp; Dance · CEG, Anna University
           </Motion.p>
 
           <h1
-            className="font-display mt-6 text-[13vw] leading-[1.02] font-medium tracking-tight text-ivory sm:text-6xl lg:text-7xl xl:text-[5.2rem]"
+            className="font-display mt-6 text-[12.5vw] leading-[1.06] font-medium tracking-tight text-ivory sm:text-6xl lg:text-7xl xl:text-[5.3rem]"
             aria-label="Where the seven notes come home."
           >
-            {HEADLINE.map((w, i) => (
-              <span key={i} className="inline-block overflow-hidden align-bottom">
-                <Motion.span
-                  className={`inline-block pr-[0.24em] ${w.accent ? "accent-ital" : ""}`}
-                  custom={i}
-                  initial={still ? false : "hidden"}
-                  animate="show"
-                  variants={still ? undefined : wordVariants}
-                >
-                  {w.t}
-                </Motion.span>
-              </span>
-            ))}
+            <CharReveal text="Where the" as="span" className="block" delay={HOLD + 0.35} />
+            <CharReveal
+              text="seven notes"
+              as="span"
+              className="block"
+              charClassName="accent-ital"
+              delay={HOLD + 0.65}
+            />
+            <CharReveal text="come home." as="span" className="text-glow block" delay={HOLD + 0.95} />
           </h1>
 
           <Motion.div
             initial={still ? false : { opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: HOLD + 1.1, ease: EASE }}
+            transition={{ duration: 1, delay: HOLD + 1.45, ease: EASE }}
           >
             <p className="mt-7 max-w-lg leading-relaxed text-ash">
               Saptham is the classical music and dance club of the College of
@@ -119,51 +105,101 @@ const Hero = () => {
               </Magnetic>
               <Magnetic>
                 <a href="#office-bearers" className="btn-brass btn-brass--ghost">
-                  Meet the Sabha
+                  Meet the Team
                 </a>
               </Magnetic>
             </div>
           </Motion.div>
         </Motion.div>
 
-        {/* ── The niche: lamp footage in a temple arch on MS Blue ── */}
-        <Motion.div
-          className="relative mx-auto w-full max-w-sm lg:max-w-md"
-          style={still ? undefined : { y: archY }}
-          initial={still ? false : { opacity: 0, y: 34 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.2, delay: HOLD + 0.7, ease: EASE }}
-        >
-          <div className="on-blue relative bg-msblue p-5 pb-7 shadow-[0_28px_70px_rgba(22,36,78,0.35)] md:p-7 md:pb-9">
-            {/* the mark, woven faint into the blue */}
-            <SapthamMark
-              size={220}
-              variant="mono"
-              title=""
-              className="pointer-events-none absolute -right-10 -bottom-10 text-goldhi opacity-[0.07]"
-            />
-            <div className="arch relative overflow-hidden border-2 border-goldhi/60">
-              <video
-                className="aspect-[4/5] h-auto w-full object-cover motion-reduce:hidden"
-                src={heroLoop}
-                poster={lampStill}
-                autoPlay
-                muted
-                loop
-                playsInline
+        {/* ── The lamp, held in a turning ring of all seven lights ── */}
+        <Motion.div style={still ? undefined : { y: lampY, opacity: fade }}>
+          <Motion.div
+            className="relative mx-auto w-full max-w-xs sm:max-w-sm"
+            initial={still ? false : { opacity: 0, scale: 0.92 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1.4, delay: HOLD + 0.8, ease: EASE }}
+          >
+            <div className="relative mx-auto aspect-square w-full">
+              {/* halo bloom behind the ring */}
+              <div
+                className="absolute -inset-10 rounded-full opacity-50 blur-3xl"
+                style={{
+                  background:
+                    "radial-gradient(circle, rgba(255,184,77,0.38), rgba(176,107,255,0.16) 58%, transparent 76%)",
+                }}
+                aria-hidden="true"
               />
-              <img
-                src={lampStill}
-                alt="A lit temple lamp"
-                className="hidden aspect-[4/5] w-full object-cover motion-reduce:block"
-              />
+
+              {/* the ragamalika rim — a conic sweep of the seven lights, turning */}
+              <Motion.div
+                className="absolute inset-0 rounded-full"
+                style={{
+                  background: `conic-gradient(from 0deg, ${ORBIT.join(", ")}, ${ORBIT[0]})`,
+                }}
+                animate={still ? undefined : { rotate: 360 }}
+                transition={{ duration: 26, repeat: Infinity, ease: "linear" }}
+                aria-hidden="true"
+              >
+                <div className="absolute inset-[2px] rounded-full bg-sanctum" />
+              </Motion.div>
+
+              {/* zari inner rim */}
+              <div className="absolute inset-[7px] rounded-full border border-goldhi/30" aria-hidden="true" />
+
+              {/* seven swara satellites in slow orbit */}
+              <Motion.div
+                className="pointer-events-none absolute inset-0"
+                animate={still ? undefined : { rotate: -360 }}
+                transition={{ duration: 48, repeat: Infinity, ease: "linear" }}
+                aria-hidden="true"
+              >
+                {ORBIT.map((c, i) => {
+                  const a = (i / ORBIT.length) * Math.PI * 2;
+                  return (
+                    <span
+                      key={c}
+                      className="absolute h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full"
+                      style={{
+                        left: `${50 + 49 * Math.cos(a)}%`,
+                        top: `${50 + 49 * Math.sin(a)}%`,
+                        background: c,
+                        boxShadow: `0 0 10px ${c}, 0 0 26px ${c}66`,
+                      }}
+                    />
+                  );
+                })}
+              </Motion.div>
+
+              {/* the lamp footage, screen-blended so its darkness melts into the void */}
+              <div className="absolute inset-[16px] overflow-hidden rounded-full">
+                <video
+                  className="h-full w-full object-cover mix-blend-screen motion-reduce:hidden"
+                  src={heroLoop}
+                  poster={lampStill}
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                />
+                <img
+                  src={lampStill}
+                  alt="A lit temple lamp"
+                  className="hidden h-full w-full object-cover motion-reduce:block"
+                />
+                {/* inner vignette folds the footage into the stage */}
+                <div
+                  className="absolute inset-0 rounded-full"
+                  style={{ boxShadow: "inset 0 0 70px 28px #06070D" }}
+                  aria-hidden="true"
+                />
+              </div>
             </div>
-            <p className="mt-5 text-center text-[0.62rem] tracking-[0.3em] text-goldhi/90 uppercase">
+
+            <p className="mt-6 text-center text-[0.62rem] tracking-[0.3em] text-goldhi/80 uppercase">
               The lamp is always lit
             </p>
-            {/* korvai selvage along the panel's bottom edge */}
-            <div className="korvai absolute inset-x-0 bottom-0 !h-[14px] !border-t-2 !border-b-0" />
-          </div>
+          </Motion.div>
         </Motion.div>
       </div>
 
@@ -178,7 +214,10 @@ const Hero = () => {
       >
         <div className="tala-pulse flex flex-col items-center gap-3">
           <span className="eyebrow !text-[0.6rem]">Begin</span>
-          <span className="block h-10 w-px bg-gradient-to-b from-kumkum to-transparent" />
+          <span
+            className="block h-10 w-px"
+            style={{ background: `linear-gradient(to bottom, ${SWARA_LIGHTS.ma}, transparent)` }}
+          />
         </div>
       </Motion.a>
     </section>

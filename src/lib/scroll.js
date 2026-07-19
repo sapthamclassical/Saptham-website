@@ -1,4 +1,8 @@
 import Lenis from "lenis";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 /**
  * Inertia scrolling — the single biggest "feel" difference between a good site
@@ -20,6 +24,9 @@ export function startLenis() {
     duration: 1.15,
     easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
   });
+  // GSAP's ScrollTrigger must hear Lenis's eased scroll, not the raw wheel,
+  // or pinned/scrubbed scenes stutter against the smoothed position.
+  lenis.on("scroll", ScrollTrigger.update);
   return lenis;
 }
 

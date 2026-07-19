@@ -17,24 +17,27 @@
 @plugin "daisyui";
 
 @theme {
-  --color-sanctum: #f7f2e6; /* unbleached silk */
-  --color-charcoal: #fdfbf3; /* raised silk (cards) */
-  --color-granite: #ddd3b9; /* woven border */
-  --color-basalt: #a79c82;
-  --color-gold: #a47e22; /* zari thread */
-  --color-goldhi: #c9a24b; /* zari catching light */
-  --color-goldlo: #77621c; /* zari in shadow */
-  --color-ivory: #241f15; /* INK — primary text */
-  --color-ash: #6f6650; /* secondary text */
-  --color-sand: #efe7d0; /* deep silk panels */
-  --color-kumkum: #8e1b1e; /* arakku — lac red */
-  --color-msblue: #1d2e63; /* MS Blue — the sabha's own colour */
-  --color-msdeep: #16244e; /* MS Blue in shadow */
-  --color-plum: #5e2e52;
-  --color-teal-swara: #0e5a63;
-  --color-emerald-swara: #14604e;
-  --color-ochre: #c57b26;
-  --color-alta: #d64027;
+  /* ── "Ragamalika" — a concert stage in the dark ──
+     Legacy token names kept (remapped) so shared components keep rendering;
+     the seven swara lights are the new system's soul. */
+  --color-sanctum: #0b0806; /* stage void (blue-black) */
+  --color-charcoal: #17110a; /* raised panel */
+  --color-granite: #33261a; /* panel borders */
+  --color-basalt: #6e5d49;
+  --color-gold: #e8b84d; /* zari, bright for dark */
+  --color-goldhi: #ffd98a;
+  --color-goldlo: #a97f2a;
+  --color-ivory: #f2efea; /* primary text */
+  --color-ash: #a3907a; /* secondary text */
+  --color-sand: #1d150c;
+  --color-kumkum: #d95970; /* pa — crimson light */
+  --color-msblue: #201409; /* deep indigo panels (legacy name) */
+  --color-msdeep: #120c07;
+  --color-plum: #a375d9; /* da — violet light */
+  --color-teal-swara: #4fb6a6; /* ma — peacock light */
+  --color-emerald-swara: #7cc98f; /* ga — emerald light */
+  --color-ochre: #f2b458; /* sa — amber light */
+  --color-alta: #e8734f; /* ri — vermilion light */
 
   --font-display: "Fraunces", "Georgia", serif;
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
@@ -52,7 +55,7 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 ::selection {
-  background: color-mix(in srgb, var(--color-msblue) 22%, transparent);
+  background: color-mix(in srgb, var(--color-plum) 30%, transparent);
   color: var(--color-ivory);
 }
 ::-webkit-scrollbar {
@@ -77,7 +80,7 @@ body {
   font-size: 0.72rem;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: var(--color-kumkum);
+  color: var(--color-gold);
   font-weight: 600;
 }
 /* on blue fields the eyebrow turns to zari */
@@ -101,7 +104,10 @@ body {
 /* Italic accent word inside ink display type — the lac-red thread */
 .accent-ital {
   font-style: italic;
-  color: var(--color-kumkum);
+  background: linear-gradient(100deg, var(--color-ochre), var(--color-kumkum) 55%, var(--color-plum));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
 /* Thin zari hairline */
@@ -117,23 +123,12 @@ body {
   );
 }
 
-/* ── THE SIGNATURE · korvai temple-tooth border ────────────────────────────
-   The contrast border of a Kanchipuram silk: a strip of arakku red carrying
-   a row of zari triangles ("temple teeth"), edged by MS Blue selvages.
-   Drawn entirely with gradients — no images, scales to any width.          */
+/* ── Section divider — a strip of stage light ─────────────────────────── */
 .korvai {
-  height: 26px;
-  background-color: var(--color-kumkum);
-  background-image: conic-gradient(
-    from 240deg at 50% 78%,
-    transparent 0deg 60deg,
-    var(--color-goldhi) 60deg 120deg,
-    transparent 120deg 360deg
-  );
-  background-size: 26px 100%;
-  background-repeat: repeat-x;
-  border-top: 3px solid var(--color-msblue);
-  border-bottom: 3px solid var(--color-msblue);
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--color-teal-swara), var(--color-plum), var(--color-kumkum), transparent);
+  filter: drop-shadow(0 0 8px rgba(176, 107, 255, 0.5));
+  border: 0;
 }
 .korvai--flip {
   transform: scaleY(-1);
@@ -153,7 +148,7 @@ body {
   background-size: 26px 26px;
 }
 
-/* Primary CTA — arakku field, zari border, silk text; presses like a stamp */
+/* Primary CTA — light made solid: gradient border, glow on hover */
 .btn-brass {
   position: relative;
   display: inline-flex;
@@ -165,33 +160,30 @@ body {
   letter-spacing: 0.18em;
   text-transform: uppercase;
   font-weight: 600;
-  color: #f7f2e6;
-  background: var(--color-kumkum);
-  border: 1px solid color-mix(in srgb, var(--color-goldhi) 65%, transparent);
-  box-shadow: 0 2px 0 var(--color-msdeep);
+  color: var(--color-sanctum);
+  background: linear-gradient(100deg, var(--color-goldhi), var(--color-gold));
+  border: 1px solid transparent;
+  box-shadow: 0 0 24px rgba(232, 184, 77, 0.25);
   transition:
     transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
-    box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1),
-    background-color 0.35s;
+    box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .btn-brass:hover {
-  background: #a02226;
   transform: translateY(-2px);
-  box-shadow: 0 5px 0 var(--color-msdeep);
+  box-shadow: 0 0 44px rgba(232, 184, 77, 0.45);
 }
 .btn-brass:active {
   transform: translateY(0);
-  box-shadow: 0 1px 0 var(--color-msdeep);
 }
 .btn-brass--ghost {
   background: transparent;
-  color: var(--color-msblue);
-  border: 1px solid color-mix(in srgb, var(--color-msblue) 55%, transparent);
-  box-shadow: 0 2px 0 color-mix(in srgb, var(--color-msblue) 35%, transparent);
+  color: var(--color-ivory);
+  border: 1px solid var(--color-granite);
+  box-shadow: none;
 }
 .btn-brass--ghost:hover {
-  background: color-mix(in srgb, var(--color-msblue) 8%, transparent);
-  color: var(--color-msdeep);
+  border-color: var(--color-plum);
+  box-shadow: 0 0 30px rgba(176, 107, 255, 0.25);
 }
 
 /* Underline that draws itself on hover / active */
@@ -221,7 +213,7 @@ body {
   inset: 0;
   z-index: 90;
   pointer-events: none;
-  opacity: 0.05;
+  opacity: 0.08;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
@@ -314,7 +306,7 @@ html.has-ember select {
 /* ── The processional (marquee) — stroke-only MS Blue on silk ──────────────── */
 .marquee-word {
   color: transparent;
-  -webkit-text-stroke: 1px color-mix(in srgb, var(--color-msblue) 55%, transparent);
+  -webkit-text-stroke: 1px color-mix(in srgb, var(--color-ash) 45%, transparent);
   letter-spacing: 0.04em;
 }
 .marquee-track {
@@ -358,7 +350,7 @@ html.has-ember select {
 
 /* Keyboard users must be able to see where they are. */
 :focus-visible {
-  outline: 2px solid var(--color-msblue);
+  outline: 2px solid var(--color-gold);
   outline-offset: 3px;
   border-radius: 2px;
 }
@@ -368,4 +360,42 @@ img,
 video {
   max-width: 100%;
   height: auto;
+}
+
+/* ── Stage utilities (Ragamalika) ─────────────────────────────────────────── */
+/* aurora orb — a soft coloured stage light; animate via Motion transforms */
+.orb {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(70px);
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+/* sweeping light beam */
+.beam {
+  position: absolute;
+  width: 30vmax;
+  height: 140vmax;
+  left: 50%;
+  top: -20vmax;
+  transform-origin: top center;
+  background: linear-gradient(
+    to bottom,
+    color-mix(in srgb, var(--beam-c, #ffd98a) 14%, transparent),
+    transparent 70%
+  );
+  clip-path: polygon(46% 0, 54% 0, 100% 100%, 0 100%);
+  pointer-events: none;
+  mix-blend-mode: screen;
+  will-change: transform, opacity;
+}
+/* glowing card border via gradient padding-box trick */
+.glow-border {
+  border: 1px solid transparent;
+  background:
+    linear-gradient(var(--color-charcoal), var(--color-charcoal)) padding-box,
+    linear-gradient(130deg, var(--gb-a, #38c8e8), transparent 40%, transparent 60%, var(--gb-b, #b06bff)) border-box;
+}
+.text-glow {
+  text-shadow: 0 0 30px color-mix(in srgb, currentColor 55%, transparent);
 }

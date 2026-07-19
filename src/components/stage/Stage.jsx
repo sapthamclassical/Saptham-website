@@ -1,0 +1,255 @@
+import { useEffect, useRef } from "react";
+import { motion as Motion, useReducedMotion, useScroll, useTransform } from "motion/react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
+
+/**
+ * RAGAMALIKA STAGE PRIMITIVES
+ *
+ * The layered-graphics toolkit for the concert-stage design. One Atmosphere
+ * instance contributes 10–15 independent animated layers (orbs, beams,
+ * particles, vignette, grain interplay); compositions stack these to reach the
+ * 70+ layer budget per page without 70 hand-written tweens.
+ *
+ * Rules baked in: transform/opacity only, reduced-motion always answered,
+ * canvas pauses when offscreen or the tab hides.
+ */
+
+/* The seven swara lights */
+/* Warmed per the team's note: cinematic but cultural — haldi, sindoor,
+   mehndi, softened peacock, rose, soft violet, champa gold. */
+export const SWARA_LIGHTS = {
+  sa: "#F2B458",
+  ri: "#E8734F",
+  ga: "#7CC98F",
+  ma: "#4FB6A6",
+  pa: "#D95970",
+  da: "#A375D9",
+  ni: "#F2CE6B",
+};
+
+/* ── ParticleField — canvas dust/embers, one layer, hundreds of sprites ──── */
+export const ParticleField = ({ color = "#E8B84D", count = 70, speed = 0.35, className = "" }) => {
+  const ref = useRef(null);
+  const still = useReducedMotion();
+
+  useEffect(() => {
+    if (still) return;
+    const canvas = ref.current;
+    const ctx = canvas.getContext("2d");
+    let raf = 0;
+    let running = false;
+    let w = 0;
+    let h = 0;
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+    const resize = () => {
+      const r = canvas.getBoundingClientRect();
+      w = r.width;
+      h = r.height;
+      canvas.width = w * dpr;
+      canvas.height = h * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    };
+    resize();
+
+    const P = Array.from({ length: count }, () => ({
+      x: Math.random() * w,
+      y: Math.random() * h,
+      r: 0.6 + Math.random() * 1.8,
+      vx: (Math.random() - 0.5) * speed,
+      vy: -(0.15 + Math.random() * speed),
+      a: 0.15 + Math.random() * 0.5,
+      tw: Math.random() * Math.PI * 2,
+    }));
+
+    const tick = () => {
+      ctx.clearRect(0, 0, w, h);
+      ctx.fillStyle = color;
+      for (const p of P) {
+        p.x += p.vx;
+        p.y += p.vy;
+        p.tw += 0.03;
+        if (p.y < -4) {
+          p.y = h + 4;
+          p.x = Math.random() * w;
+        }
+        if (p.x < -4) p.x = w + 4;
+        if (p.x > w + 4) p.x = -4;
+        ctx.globalAlpha = p.a * (0.6 + 0.4 * Math.sin(p.tw));
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      ctx.globalAlpha = 1;
+      raf = requestAnimationFrame(tick);
+    };
+
+    const start = () => {
+      if (!running) {
+        running = true;
+        raf = requestAnimationFrame(tick);
+      }
+    };
+    const stop = () => {
+      running = false;
+      cancelAnimationFrame(raf);
+    };
+
+    // burn zero CPU when offscreen or tab hidden
+    const io = new IntersectionObserver(([e]) => (e.isIntersecting ? start() : stop()));
+    io.observe(canvas);
+    const onVis = () => (document.hidden ? stop() : start());
+    document.addEventListener("visibilitychange", onVis);
+    window.addEventListener("resize", resize);
+    return () => {
+      stop();
+      io.disconnect();
+      document.removeEventListener("visibilitychange", onVis);
+      window.removeEventListener("resize", resize);
+    };
+  }, [color, count, speed, still]);
+
+  if (still) return null;
+  return <canvas ref={ref} className={`pointer-events-none absolute inset-0 h-full w-full ${className}`} aria-hidden="true" />;
+};
+
+/* ── Orb — one drifting aurora light ─────────────────────────────────────── */
+export const Orb = ({ color, size = 420, x = "10%", y = "20%", drift = 40, dur = 14, opacity = 0.32, delay = 0 }) => {
+  const still = useReducedMotion();
+  return (
+    <Motion.div
+      className="orb"
+      style={{
+        width: size,
+        height: size,
+        left: x,
+        top: y,
+        background: `radial-gradient(circle, ${color}, transparent 70%)`,
+        opacity,
+      }}
+      animate={
+        still
+          ? undefined
+          : { x: [0, drift, -drift * 0.6, 0], y: [0, -drift * 0.7, drift * 0.5, 0], scale: [1, 1.12, 0.94, 1] }
+      }
+      transition={{ duration: dur, delay, repeat: Infinity, ease: "easeInOut" }}
+      aria-hidden="true"
+    />
+  );
+};
+
+/* ── Beam — a sweeping spotlight cone ────────────────────────────────────── */
+export const Beam = ({ color = "#FFD98A", angle = 16, dur = 11, delay = 0, opacity = 1 }) => {
+  const still = useReducedMotion();
+  return (
+    <Motion.div
+      className="beam"
+      style={{ "--beam-c": color, opacity, marginLeft: "-15vmax" }}
+      animate={still ? undefined : { rotate: [-angle, angle, -angle] }}
+      transition={{ duration: dur, delay, repeat: Infinity, ease: "easeInOut" }}
+      aria-hidden="true"
+    />
+  );
+};
+
+/* ── Atmosphere — a full lighting rig in one drop-in layer stack ─────────── */
+/**
+ * layers: 2 orbs per colour + up to 2 beams + particles + vignette + dot grid.
+ * With 3 colours ≈ 11 animated/graphic layers from one component.
+ */
+export const Atmosphere = ({ colors = ["#B06BFF", "#38C8E8"], beams = 1, particles = 60, dense = false, className = "" }) => (
+  <div className={`pointer-events-none absolute inset-0 overflow-hidden ${className}`} aria-hidden="true">
+    {colors.map((c, i) => (
+      <Orb key={`a${i}`} color={c} x={`${8 + i * 34}%`} y={`${12 + ((i * 29) % 50)}%`} size={dense ? 520 : 380} dur={12 + i * 3} delay={i * 1.4} />
+    ))}
+    {colors.map((c, i) => (
+      <Orb key={`b${i}`} color={c} x={`${62 - i * 26}%`} y={`${58 - ((i * 17) % 40)}%`} size={dense ? 360 : 260} dur={16 + i * 2} delay={i * 2.1} opacity={0.22} />
+    ))}
+    {Array.from({ length: beams }, (_, i) => (
+      <Beam key={`beam${i}`} color={colors[i % colors.length]} angle={12 + i * 7} dur={10 + i * 4} delay={i * 1.8} opacity={0.8 - i * 0.25} />
+    ))}
+    <ParticleField color={colors[0]} count={particles} />
+    <div className="kolam-dots absolute inset-0 opacity-[0.14]" />
+    <div className="absolute inset-0" style={{ boxShadow: "inset 0 0 180px 60px #0B0806" }} />
+  </div>
+);
+
+/* ── CharReveal — per-character text physics ─────────────────────────────── */
+export const CharReveal = ({ text, className = "", charClassName = "", as = "span", delay = 0, beat = 0.028, y = 46 }) => {
+  const Tag = as;
+  const still = useReducedMotion();
+  if (still) {
+    return (
+      <Tag className={className}>
+        <span className={charClassName}>{text}</span>
+      </Tag>
+    );
+  }
+  return (
+    <Tag className={className} aria-label={text}>
+      {String(text)
+        .split("")
+        .map((ch, i) => (
+          <span key={i} className="inline-block overflow-hidden align-bottom" aria-hidden="true">
+            <Motion.span
+              className={`inline-block ${charClassName}`}
+              initial={{ y, opacity: 0, rotateX: 60 }}
+              whileInView={{ y: 0, opacity: 1, rotateX: 0 }}
+              viewport={{ once: true, margin: "-10%" }}
+              transition={{ duration: 0.7, delay: delay + i * beat, ease: [0.16, 1, 0.3, 1] }}
+            >
+              {ch === " " ? " " : ch}
+            </Motion.span>
+          </span>
+        ))}
+    </Tag>
+  );
+};
+
+/* ── ScrollScrub — GSAP-pinned scene with scrubbed progress ──────────────── */
+/**
+ * Pins its child for `lengthVh` of scroll and calls gsap with a scrubbed
+ * timeline you build in `build(tl, el)`. Cleans up on unmount.
+ */
+export const useScrollScrub = (build, lengthVh = 160) => {
+  const ref = useRef(null);
+  const still = useReducedMotion();
+  useEffect(() => {
+    if (still || !ref.current) return;
+    const el = ref.current;
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: el,
+        start: "top top",
+        end: `+=${lengthVh}%`,
+        scrub: 0.6,
+        pin: true,
+        anticipatePin: 1,
+      },
+    });
+    build(tl, el);
+    return () => {
+      tl.scrollTrigger?.kill();
+      tl.kill();
+    };
+  }, [build, lengthVh, still]);
+  return ref;
+};
+
+/* ── ScrollFloat — Motion-based scroll parallax for any child ────────────── */
+export const ScrollFloat = ({ children, depth = 60, className = "" }) => {
+  const ref = useRef(null);
+  const still = useReducedMotion();
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
+  const yy = useTransform(scrollYProgress, [0, 1], [depth, -depth]);
+  return (
+    <div ref={ref} className={className}>
+      <Motion.div style={still ? undefined : { y: yy, willChange: "transform" }}>{children}</Motion.div>
+    </div>
+  );
+};
+
+export { gsap, ScrollTrigger };
