@@ -399,3 +399,24 @@ video {
 .text-glow {
   text-shadow: 0 0 30px color-mix(in srgb, currentColor 55%, transparent);
 }
+
+/* ── The official logo, glowing like lit zari ─────────────────────────────── */
+.logo-glow {
+  filter: drop-shadow(0 0 10px rgba(232, 184, 77, 0.35));
+  animation: logo-breathe 4.5s ease-in-out infinite;
+  user-select: none;
+}
+@keyframes logo-breathe {
+  0%,
+  100% {
+    filter: drop-shadow(0 0 8px rgba(232, 184, 77, 0.28));
+  }
+  50% {
+    filter: drop-shadow(0 0 20px rgba(232, 184, 77, 0.55));
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .logo-glow {
+    animation: none;
+  }
+}

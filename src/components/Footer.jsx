@@ -2,8 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Atmosphere, SWARA_LIGHTS } from "./stage/Stage";
 import { Reveal } from "./motion/Motion";
-import SapthamMark from "./brand/SapthamMark";
-import officialLogo from "../assets/logo.png";
+import officialGold from "../assets/logo-gold.png";
 import AdminGate, { useSecretKnock } from "./AdminGate";
 
 const LINKS = [
@@ -40,19 +39,25 @@ const Footer = () => {
           <div className="grid gap-12 md:grid-cols-3">
             {/* Brand + blessing */}
             <div>
-              <span className="flex items-center gap-3">
-                <SapthamMark size={44} title="" />
-                <span className="font-display text-3xl tracking-[0.12em] text-ivory">
-                  SAPTHAM
-                </span>
-              </span>
+
               <p className="mt-4 max-w-xs text-sm leading-relaxed text-ash">
                 The classical music &amp; dance club of the College of Engineering
                 Guindy, Anna University.
               </p>
-              {/* the official crest, mounted on ivory so its ink reads */}
-              <div className="mt-6 inline-block rounded-md bg-ivory/95 p-4 shadow-[0_10px_36px_rgba(0,0,0,0.45)]">
-                <img src={officialLogo} alt="Official Saptham logo" className="h-16 w-auto" loading="lazy" />
+              {/* the official logo, rewoven in zari for the dark stage */}
+              <div className="relative mt-6 inline-block">
+                <div
+                  className="tala-pulse absolute -inset-6 rounded-full opacity-20 blur-2xl"
+                  style={{ background: "radial-gradient(circle, #E8B84D, transparent 70%)" }}
+                  aria-hidden="true"
+                />
+                <img
+                  src={officialGold}
+                  alt="Official Saptham logo"
+                  className="logo-glow relative h-20 w-auto"
+                  loading="lazy"
+                  draggable="false"
+                />
               </div>
             </div>
 

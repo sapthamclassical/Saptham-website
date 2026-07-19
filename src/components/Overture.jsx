@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { AnimatePresence, motion as Motion, useReducedMotion } from "motion/react";
 import { EASE, EASE_IN } from "../lib/motion";
 import { lockScroll } from "../lib/scroll";
+import officialGold from "../assets/logo-gold.png";
 import { markOvertureSeen, shouldPlayOverture } from "../lib/intro";
 
 /**
@@ -85,14 +86,15 @@ const Overture = () => {
                 />
               ))}
             </div>
-            <Motion.p
-              className="font-display text-lg font-medium tracking-[0.5em] text-goldhi"
-              initial={{ opacity: 0, letterSpacing: "0.8em" }}
-              animate={{ opacity: 1, letterSpacing: "0.5em" }}
+            <Motion.img
+              src={officialGold}
+              alt=""
+              className="logo-glow h-16 w-auto md:h-20"
+              draggable="false"
+              initial={{ opacity: 0, scale: 0.9, y: 8 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
               transition={{ duration: 1.1, delay: 1.15, ease: EASE }}
-            >
-              SAPTHAM
-            </Motion.p>
+            />
           </Motion.div>
         </Motion.div>
       )}

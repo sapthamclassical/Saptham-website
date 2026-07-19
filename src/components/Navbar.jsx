@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { AnimatePresence, motion as Motion, useReducedMotion } from "motion/react";
-import SapthamMark from "./brand/SapthamMark";
+import officialGold from "../assets/logo-gold.png";
 import { SWARA_LIGHTS } from "./stage/Stage";
 import { EASE } from "../lib/motion";
 
@@ -56,14 +56,17 @@ const Navbar = () => {
         <Link to="/" className="group flex items-center gap-2.5" aria-label="Saptham — home">
           <Motion.span
             className="flex"
-            whileHover={still ? undefined : { rotate: -4, scale: 1.06 }}
+            whileHover={still ? undefined : { scale: 1.05 }}
             transition={{ type: "spring", stiffness: 300, damping: 18 }}
           >
-            <SapthamMark size={34} title="" />
+            {/* the official logo, in zari gold — the site's vibe, verbatim */}
+            <img
+              src={officialGold}
+              alt=""
+              className="logo-glow h-9 w-auto sm:h-10"
+              draggable="false"
+            />
           </Motion.span>
-          <span className="font-display text-xl font-medium tracking-[0.14em] text-ivory sm:text-2xl">
-            SAPTHAM
-          </span>
         </Link>
 
         {/* Desktop links — each glows in its own swara when active */}
