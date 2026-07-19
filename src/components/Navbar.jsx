@@ -63,7 +63,7 @@ const Navbar = () => {
             <img
               src={officialGold}
               alt=""
-              className="logo-glow h-9 w-auto sm:h-10"
+              className="logo-glow h-12 w-auto sm:h-14"
               draggable="false"
             />
           </Motion.span>

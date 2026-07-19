@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import heroLoop from "../assets/brand/hero-loop.mp4";
 import lampStill from "../assets/brand/lamp.jpg";
 import SapthamMark from "./brand/SapthamMark";
+import officialGold from "../assets/logo-gold.png";
 import Magnetic from "./motion/Magnetic";
 import { Atmosphere, CharReveal, SWARA_LIGHTS } from "./stage/Stage";
 import { introDelay } from "../lib/intro";
@@ -61,11 +62,21 @@ const Hero = () => {
       <div className="relative z-10 mx-auto grid w-full max-w-7xl items-center gap-14 px-6 py-16 lg:grid-cols-[1.1fr_0.9fr] lg:gap-20 lg:px-8">
         {/* ── The words ── */}
         <Motion.div style={still ? undefined : { y: wordsY, opacity: fade }}>
+          {/* the name itself — the official logo opens the page */}
+          <Motion.img
+            src={officialGold}
+            alt="Saptham"
+            className="logo-glow mb-7 h-24 w-auto md:h-32"
+            draggable="false"
+            initial={still ? false : { opacity: 0, y: 18, scale: 0.96 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ duration: 1.2, delay: HOLD + 0.15, ease: EASE }}
+          />
           <Motion.p
             className="eyebrow"
             initial={still ? false : { opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 1, delay: HOLD + 0.2 }}
+            transition={{ duration: 1, delay: HOLD + 0.3 }}
           >
             Classical Music &amp; Dance · CEG, Anna University
           </Motion.p>
