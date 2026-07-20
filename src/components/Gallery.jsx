@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion as Motion, useReducedMotion } from "motion/react";
 import { Reveal } from "./motion/Motion";
-import { CharReveal, Orb, SWARA_LIGHTS } from "./stage/Stage";
+import { Orb, SWARA_LIGHTS } from "./stage/Stage";
 import { galleryData, galleryCategories } from "../lib/gallery";
 
 const EASE = [0.16, 1, 0.3, 1];
@@ -104,31 +104,7 @@ const Gallery = () => {
 
   return (
     <div className="mx-auto max-w-7xl px-4 pb-10 sm:px-6 lg:px-8">
-      {/* Page invocation — per-character rise under the rig */}
-      <header className="pt-16 pb-12 text-center md:pt-24">
-        <Reveal y={12}>
-          <p className="eyebrow mb-5">Moments &amp; Memories</p>
-        </Reveal>
-        <CharReveal
-          as="h1"
-          text="Gallery"
-          beat={0.055}
-          className="font-display text-5xl leading-[1.05] md:text-7xl"
-          charClassName="gold-text"
-        />
-        <Reveal delay={0.35}>
-          <p className="mx-auto mt-5 max-w-xl text-ash">
-            Moments held in stage light — from the practice hall to the proscenium.
-          </p>
-        </Reveal>
-        <Motion.div
-          className="korvai mx-auto mt-8 max-w-xs"
-          initial={still ? false : { scaleX: 0 }}
-          whileInView={{ scaleX: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 1, ease: EASE, delay: 0.4 }}
-        />
-      </header>
+      {/* The invocation lives in GalleryPage (route shell) — no double header. */}
 
       {/* Swara chips — each production wears its own light */}
       <Reveal className="mb-12 flex flex-wrap justify-center gap-3">

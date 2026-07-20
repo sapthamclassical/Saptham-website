@@ -1,4 +1,4 @@
-import { Atmosphere, CharReveal, ScrollFloat, SWARA_LIGHTS } from "../components/stage/Stage";
+import { Atmosphere, CharReveal, MandalaRing, SoundWave, ScrollFloat, SWARA_LIGHTS } from "../components/stage/Stage";
 import { Reveal, StaggerGroup } from "../components/motion/Motion";
 import PersonCard from "../components/shared/PersonCard";
 import KolamDivider from "../components/shared/KolamDivider";
@@ -20,6 +20,7 @@ const AlumniPage = () => {
     <div className="relative pt-24">
       {/* ── Overture — violet wash, the colour of memory ─────────────────── */}
       <section className="relative overflow-hidden">
+        <MandalaRing color={DA} size={540} opacity={0.15} className="left-1/2 top-2 -translate-x-1/2" />
         <Atmosphere colors={[DA, SWARA_LIGHTS.pa, SWARA_LIGHTS.ma]} beams={2} particles={60} dense />
         <div className="relative mx-auto max-w-7xl px-4 pt-16 pb-10 text-center sm:px-6 md:pt-24 lg:px-8">
           <Reveal y={12}>
@@ -43,7 +44,8 @@ const AlumniPage = () => {
       <section className="relative pb-8">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <ScrollFloat depth={20}>
-            <StaggerGroup
+            <SoundWave colors={[DA, SWARA_LIGHTS.pa]} height={64} amplitude={12} className="relative mb-4" />
+          <StaggerGroup
               beat={0.06}
               className="mt-10 grid grid-cols-2 gap-4 sm:gap-6 md:grid-cols-3 lg:grid-cols-4 xl:gap-8"
             >

@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { motion as Motion, useReducedMotion } from "motion/react";
-import { Atmosphere, CharReveal, SWARA_LIGHTS } from "../components/stage/Stage";
+import { Atmosphere, CharReveal, MandalaRing, SoundWave, KolamKnot, SWARA_LIGHTS } from "../components/stage/Stage";
 import { Reveal } from "../components/motion/Motion";
 import { useAdmin, signOutAdmin } from "../lib/adminAuth";
 import {
@@ -181,6 +181,7 @@ const CalendarPage = () => {
     <div className="relative pt-24">
       <section className="relative overflow-hidden pb-10">
         <Atmosphere colors={[SWARA_LIGHTS.ni, SWARA_LIGHTS.pa, SWARA_LIGHTS.ma]} beams={2} particles={70} dense />
+        <MandalaRing color={SWARA_LIGHTS.ni} size={520} opacity={0.16} className="left-1/2 top-4 -translate-x-1/2" />
         <div className="relative mx-auto max-w-5xl px-6 pt-14 text-center md:pt-20">
           <Reveal y={12}>
             <p className="eyebrow">The Season</p>
@@ -211,8 +212,13 @@ const CalendarPage = () => {
         )}
       </section>
 
+      {/* the page's drone — a living waveform between head and garland */}
+      <SoundWave colors={[SWARA_LIGHTS.ni, SWARA_LIGHTS.pa, SWARA_LIGHTS.ma]} height={90} amplitude={16} className="relative" />
+
       {/* ── the garland ── */}
       <section className="relative pb-32">
+        <KolamKnot color={SWARA_LIGHTS.ni} size={170} className="left-4 top-6 opacity-60 md:left-10" />
+        <KolamKnot color={SWARA_LIGHTS.da} size={150} className="right-4 bottom-10 opacity-50 md:right-10" delay={0.4} />
         <div className="relative mx-auto max-w-4xl px-6">
           {/* the thread */}
           <Motion.div

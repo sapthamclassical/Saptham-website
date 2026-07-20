@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Atmosphere, CharReveal, ScrollFloat, SWARA_LIGHTS } from "../components/stage/Stage";
+import { Atmosphere, CharReveal, MandalaRing, SoundWave, ScrollFloat, SWARA_LIGHTS } from "../components/stage/Stage";
 import { Reveal, StaggerGroup } from "../components/motion/Motion";
 import PersonCard from "../components/shared/PersonCard";
 import KolamDivider from "../components/shared/KolamDivider";
@@ -26,6 +26,7 @@ const OfficeBearersPage = () => {
           particles={70}
           dense
         />
+        <MandalaRing color={SWARA_LIGHTS.sa} size={560} opacity={0.14} className="left-1/2 top-0 -translate-x-1/2" />
         <div className="relative mx-auto max-w-7xl px-4 pt-16 pb-10 text-center sm:px-6 md:pt-24 lg:px-8">
           <Reveal y={12}>
             <p className="eyebrow">The Custodians · {year}</p>
@@ -42,6 +43,8 @@ const OfficeBearersPage = () => {
           </Reveal>
         </div>
       </section>
+
+      <SoundWave colors={[SWARA_LIGHTS.sa, SWARA_LIGHTS.ma]} height={70} amplitude={13} className="relative" />
 
       {/* ── The roster ───────────────────────────────────────────────────── */}
       <section className="relative pb-8">

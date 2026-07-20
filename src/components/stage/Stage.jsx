@@ -252,4 +252,153 @@ export const ScrollFloat = ({ children, depth = 60, className = "" }) => {
   );
 };
 
+
+/* ── MandalaRing — rotating sacred geometry, pure SVG transforms ─────────── */
+/**
+ * Three concentric rings — dashed orbit, petal ring, tick ring — turning at
+ * different speeds and directions. Reads as intricate; costs three rotate
+ * transforms. Drop behind headlines or in section corners.
+ */
+export const MandalaRing = ({ color = "#E8B84D", size = 360, className = "", opacity = 0.5 }) => {
+  const still = useReducedMotion();
+  const spin = (dur, dir = 1) =>
+    still ? undefined : { rotate: 360 * dir };
+  const trans = (dur) => ({ duration: dur, repeat: Infinity, ease: "linear" });
+  return (
+    <div
+      className={`pointer-events-none absolute ${className}`}
+      style={{ width: size, height: size, opacity }}
+      aria-hidden="true"
+    >
+      {/* outer dashed orbit */}
+      <Motion.svg viewBox="0 0 200 200" className="absolute inset-0" animate={spin(60)} transition={trans(60)}>
+        <circle cx="100" cy="100" r="96" fill="none" stroke={color} strokeWidth="0.6" strokeDasharray="1 7" />
+        <circle cx="100" cy="100" r="88" fill="none" stroke={color} strokeWidth="0.35" strokeDasharray="14 6" opacity="0.7" />
+      </Motion.svg>
+      {/* petal ring, counter-rotating */}
+      <Motion.svg viewBox="0 0 200 200" className="absolute inset-0" animate={spin(90, -1)} transition={trans(90)}>
+        {Array.from({ length: 16 }, (_, i) => (
+          <path
+            key={i}
+            d="M100 22 C 106 34, 106 44, 100 54 C 94 44, 94 34, 100 22 Z"
+            fill="none"
+            stroke={color}
+            strokeWidth="0.6"
+            opacity="0.8"
+            transform={`rotate(${i * 22.5} 100 100)`}
+          />
+        ))}
+      </Motion.svg>
+      {/* inner tick ring */}
+      <Motion.svg viewBox="0 0 200 200" className="absolute inset-0" animate={spin(40)} transition={trans(40)}>
+        {Array.from({ length: 28 }, (_, i) => (
+          <line
+            key={i}
+            x1="100" y1="62" x2="100" y2="68"
+            stroke={color} strokeWidth="0.7" opacity="0.75"
+            transform={`rotate(${(i * 360) / 28} 100 100)`}
+          />
+        ))}
+        <circle cx="100" cy="100" r="56" fill="none" stroke={color} strokeWidth="0.3" opacity="0.6" />
+      </Motion.svg>
+    </div>
+  );
+};
+
+/* ── SoundWave — a living raga ribbon on canvas ──────────────────────────── */
+/**
+ * Three superimposed harmonics drifting out of phase — the sound of the page,
+ * drawn. Same lifecycle discipline as ParticleField (pauses offscreen/hidden).
+ */
+export const SoundWave = ({ colors = ["#E8B84D"], height = 120, amplitude = 22, className = "" }) => {
+  const ref = useRef(null);
+  const still = useReducedMotion();
+
+  useEffect(() => {
+    if (still) return;
+    const canvas = ref.current;
+    const ctx = canvas.getContext("2d");
+    let raf = 0, running = false, w = 0, h = 0, t = 0;
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const resize = () => {
+      const r = canvas.getBoundingClientRect();
+      w = r.width; h = r.height;
+      canvas.width = w * dpr; canvas.height = h * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    };
+    resize();
+    const tick = () => {
+      t += 0.012;
+      ctx.clearRect(0, 0, w, h);
+      colors.forEach((c, k) => {
+        ctx.beginPath();
+        for (let x = 0; x <= w; x += 4) {
+          const y =
+            h / 2 +
+            Math.sin(x * 0.008 + t * (1 + k * 0.35)) * amplitude * 0.6 +
+            Math.sin(x * 0.021 - t * 1.4 + k) * amplitude * 0.3 +
+            Math.sin(x * 0.004 + t * 0.6 + k * 2) * amplitude * 0.4;
+          x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+        }
+        ctx.strokeStyle = c;
+        ctx.globalAlpha = 0.55 - k * 0.12;
+        ctx.lineWidth = 1.4;
+        ctx.stroke();
+      });
+      ctx.globalAlpha = 1;
+      raf = requestAnimationFrame(tick);
+    };
+    const start = () => { if (!running) { running = true; raf = requestAnimationFrame(tick); } };
+    const stop = () => { running = false; cancelAnimationFrame(raf); };
+    const io = new IntersectionObserver(([e]) => (e.isIntersecting ? start() : stop()));
+    io.observe(canvas);
+    const onVis = () => (document.hidden ? stop() : start());
+    document.addEventListener("visibilitychange", onVis);
+    window.addEventListener("resize", resize);
+    return () => {
+      stop(); io.disconnect();
+      document.removeEventListener("visibilitychange", onVis);
+      window.removeEventListener("resize", resize);
+    };
+  }, [colors, amplitude, still]);
+
+  if (still) return null;
+  return (
+    <canvas
+      ref={ref}
+      className={`pointer-events-none w-full ${className}`}
+      style={{ height }}
+      aria-hidden="true"
+    />
+  );
+};
+
+/* ── KolamKnot — a kolam that draws itself, then breathes ────────────────── */
+export const KolamKnot = ({ color = "#E8B84D", size = 220, className = "", delay = 0 }) => {
+  const still = useReducedMotion();
+  return (
+    <div className={`pointer-events-none absolute ${className}`} style={{ width: size, height: size }} aria-hidden="true">
+      <svg viewBox="0 0 100 100" className="h-full w-full">
+        {[30, 50, 70].map((cx) =>
+          [30, 50, 70].map((cy) => (
+            <circle key={`${cx}-${cy}`} cx={cx} cy={cy} r="0.9" fill={color} opacity="0.55" />
+          )),
+        )}
+        <Motion.path
+          d="M30 10 C 55 10, 45 30, 70 30 S 90 55, 70 70 S 45 90, 30 70 S 10 45, 30 30 S 55 50, 50 50
+             C 45 50, 45 45, 50 45 S 55 50, 50 50"
+          fill="none"
+          stroke={color}
+          strokeWidth="0.9"
+          strokeLinecap="round"
+          initial={still ? false : { pathLength: 0, opacity: 0 }}
+          whileInView={{ pathLength: 1, opacity: 0.8 }}
+          viewport={{ once: true, margin: "-15%" }}
+          transition={{ duration: 2.6, delay, ease: "easeInOut" }}
+        />
+      </svg>
+    </div>
+  );
+};
+
 export { gsap, ScrollTrigger };
