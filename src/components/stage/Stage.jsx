@@ -1,9 +1,32 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion as Motion, useReducedMotion, useScroll, useTransform } from "motion/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
+
+/**
+ * Phone-grade GPU detector.
+ *
+ * The full lighting rig (multiple 70px-blur orbs + several particle canvases +
+ * screen-blended beams) is beautiful on a laptop and a slideshow on a mid-range
+ * Android. Below 768px we cut the layer budget hard so the motion stays at
+ * 60fps — a smooth quieter stage beats a lavish stuttering one. Updates on
+ * resize/orientation so a rotated tablet re-tiers correctly.
+ */
+export const useIsMobile = (breakpoint = 768) => {
+  const [mobile, setMobile] = useState(
+    typeof window !== "undefined" ? window.innerWidth < breakpoint : false,
+  );
+  useEffect(() => {
+    const mq = window.matchMedia(`(max-width: ${breakpoint - 1}px)`);
+    const on = () => setMobile(mq.matches);
+    on();
+    mq.addEventListener("change", on);
+    return () => mq.removeEventListener("change", on);
+  }, [breakpoint]);
+  return mobile;
+};
 
 /**
  * RAGAMALIKA STAGE PRIMITIVES
@@ -160,22 +183,31 @@ export const Beam = ({ color = "#FFD98A", angle = 16, dur = 11, delay = 0, opaci
  * layers: 2 orbs per colour + up to 2 beams + particles + vignette + dot grid.
  * With 3 colours ≈ 11 animated/graphic layers from one component.
  */
-export const Atmosphere = ({ colors = ["#B06BFF", "#38C8E8"], beams = 1, particles = 60, dense = false, className = "" }) => (
-  <div className={`pointer-events-none absolute inset-0 overflow-hidden ${className}`} aria-hidden="true">
-    {colors.map((c, i) => (
-      <Orb key={`a${i}`} color={c} x={`${8 + i * 34}%`} y={`${12 + ((i * 29) % 50)}%`} size={dense ? 520 : 380} dur={12 + i * 3} delay={i * 1.4} />
-    ))}
-    {colors.map((c, i) => (
-      <Orb key={`b${i}`} color={c} x={`${62 - i * 26}%`} y={`${58 - ((i * 17) % 40)}%`} size={dense ? 360 : 260} dur={16 + i * 2} delay={i * 2.1} opacity={0.22} />
-    ))}
-    {Array.from({ length: beams }, (_, i) => (
-      <Beam key={`beam${i}`} color={colors[i % colors.length]} angle={12 + i * 7} dur={10 + i * 4} delay={i * 1.8} opacity={0.8 - i * 0.25} />
-    ))}
-    <ParticleField color={colors[0]} count={particles} />
-    <div className="kolam-dots absolute inset-0 opacity-[0.14]" />
-    <div className="absolute inset-0" style={{ boxShadow: "inset 0 0 180px 60px #0B0806" }} />
-  </div>
-);
+export const Atmosphere = ({ colors = ["#B06BFF", "#38C8E8"], beams = 1, particles = 60, dense = false, className = "" }) => {
+  const mobile = useIsMobile();
+  // On phones: one orb layer instead of two, no sweeping beams (their blend +
+  // giant blur is the worst offender), and ~40% of the particle count.
+  const orbSets = mobile ? colors.slice(0, 2) : colors;
+  const beamCount = mobile ? 0 : beams;
+  const dust = mobile ? Math.round(particles * 0.4) : particles;
+  return (
+    <div className={`pointer-events-none absolute inset-0 overflow-hidden ${className}`} aria-hidden="true">
+      {orbSets.map((c, i) => (
+        <Orb key={`a${i}`} color={c} x={`${8 + i * 34}%`} y={`${12 + ((i * 29) % 50)}%`} size={dense ? 520 : 380} dur={12 + i * 3} delay={i * 1.4} />
+      ))}
+      {!mobile &&
+        colors.map((c, i) => (
+          <Orb key={`b${i}`} color={c} x={`${62 - i * 26}%`} y={`${58 - ((i * 17) % 40)}%`} size={dense ? 360 : 260} dur={16 + i * 2} delay={i * 2.1} opacity={0.22} />
+        ))}
+      {Array.from({ length: beamCount }, (_, i) => (
+        <Beam key={`beam${i}`} color={colors[i % colors.length]} angle={12 + i * 7} dur={10 + i * 4} delay={i * 1.8} opacity={0.8 - i * 0.25} />
+      ))}
+      <ParticleField color={colors[0]} count={dust} />
+      <div className="kolam-dots absolute inset-0 opacity-[0.14]" />
+      <div className="absolute inset-0" style={{ boxShadow: "inset 0 0 180px 60px #0B0806" }} />
+    </div>
+  );
+};
 
 /* ── CharReveal — per-character text physics ─────────────────────────────── */
 export const CharReveal = ({ text, className = "", charClassName = "", as = "span", delay = 0, beat = 0.028, y = 46 }) => {

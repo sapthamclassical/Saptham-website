@@ -63,7 +63,7 @@ const Hero = () => {
         <Motion.div style={still ? undefined : { y: wordsY, opacity: fade }}>
           {/* the name, set plainly in the display face — the logo stays in the chrome */}
           <Motion.p
-            className="font-display gold-text mb-5 text-3xl font-medium tracking-[0.32em] uppercase md:text-4xl"
+            className="font-display gold-text zari-shimmer mb-5 text-3xl font-medium tracking-[0.32em] uppercase md:text-4xl"
             initial={still ? false : { opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.1, delay: HOLD + 0.15, ease: EASE }}

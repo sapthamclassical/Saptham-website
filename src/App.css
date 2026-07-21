@@ -88,26 +88,40 @@ body {
   color: var(--color-goldhi);
 }
 
-/* Zari behaving as woven thread — 3-stop gradient text, dark enough for silk */
+/* Zari behaving as woven thread — 3-stop gradient text.
+   The solid `color` is a REAL fallback, not decoration: some older Android
+   WebViews don't support `background-clip: text`, and without this the text
+   would render transparent (invisible) — which looked like a blank/white page
+   on the deployed site. `@supports` upgrades to the gradient only where it works. */
 .gold-text {
-  background: linear-gradient(
-    170deg,
-    var(--color-goldhi) 0%,
-    var(--color-gold) 45%,
-    var(--color-goldlo) 100%
-  );
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  color: var(--color-gold);
+}
+@supports (-webkit-background-clip: text) or (background-clip: text) {
+  .gold-text {
+    background: linear-gradient(
+      170deg,
+      var(--color-goldhi) 0%,
+      var(--color-gold) 45%,
+      var(--color-goldlo) 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
 }
 
 /* Italic accent word inside ink display type — the lac-red thread */
 .accent-ital {
   font-style: italic;
-  background: linear-gradient(100deg, var(--color-ochre), var(--color-kumkum) 55%, var(--color-plum));
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  color: var(--color-kumkum);
+}
+@supports (-webkit-background-clip: text) or (background-clip: text) {
+  .accent-ital {
+    background: linear-gradient(100deg, var(--color-ochre), var(--color-kumkum) 55%, var(--color-plum));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
 }
 
 /* Thin zari hairline */
@@ -422,6 +436,61 @@ html.has-ember select {
 }
 @media (prefers-reduced-motion: reduce) {
   .logo-glow {
+    animation: none;
+  }
+}
+
+/* ── Mobile GPU relief ─────────────────────────────────────────────────────
+   Big-radius blur is the single most expensive thing a phone GPU paints each
+   frame. Halving it (plus the JS-side layer cuts in Atmosphere) is what keeps
+   the stage at 60fps on a mid-range Android instead of a slideshow.          */
+@media (max-width: 767px) {
+  .orb {
+    filter: blur(45px);
+  }
+  .beam {
+    width: 46vmax;
+  }
+  /* backdrop-blur panels are costly stacked over the rig; soften them */
+  .backdrop-blur-sm,
+  .backdrop-blur-md,
+  .backdrop-blur-lg {
+    backdrop-filter: blur(6px);
+  }
+}
+
+/* ── Zari shimmer — a highlight travels the gold like light on real thread ──
+   A second, brighter band rides over the base gradient and sweeps across on a
+   slow loop. Pure background-position animation — GPU-cheap on any device.    */
+@supports (-webkit-background-clip: text) or (background-clip: text) {
+  .zari-shimmer {
+    background-image: linear-gradient(
+      100deg,
+      var(--color-gold) 0%,
+      var(--color-goldhi) 20%,
+      #fff6df 32%,
+      var(--color-goldhi) 44%,
+      var(--color-gold) 60%,
+      var(--color-goldlo) 100%
+    );
+    background-size: 250% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: zari-sweep 6.5s ease-in-out infinite;
+  }
+}
+@keyframes zari-sweep {
+  0%,
+  100% {
+    background-position: 130% 0;
+  }
+  50% {
+    background-position: -30% 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .zari-shimmer {
     animation: none;
   }
 }
