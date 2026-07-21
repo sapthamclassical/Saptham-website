@@ -1,20 +1,118 @@
 {
-  "year": "2025 – 2026",
+  "year": "2026 – 2027",
   "note": "Future secretaries: edit this file + drop portraits named 'Full Name.jpg' into src/assets/people/. Nothing else to change.",
   "members": [
-    { "name": "Dhanya V", "role": "President", "department": "", "image": "", "bio": "", "social": {} },
-    { "name": "Anujan", "role": "President", "department": "", "image": "", "bio": "", "social": {} },
-    { "name": "Ratish S", "role": "Secretary", "department": "", "image": "", "bio": "", "social": {} },
-    { "name": "Vanshika", "role": "Secretary", "department": "", "image": "", "bio": "", "social": {} },
-    { "name": "Manasa", "role": "Head of Music", "department": "", "image": "", "bio": "", "social": {} },
-    { "name": "Tejaswini", "role": "Head of Music", "department": "", "image": "", "bio": "", "social": {} },
-    { "name": "Yuvati", "role": "Head of Dance", "department": "", "image": "", "bio": "", "social": {} },
-    { "name": "Pritika", "role": "Head of Dance", "department": "", "image": "", "bio": "", "social": {} },
-    { "name": "Aadhithyan", "role": "Head of Design & Editing", "department": "", "image": "", "bio": "", "social": {} },
-    { "name": "Naveen", "role": "Head of Design & Editing", "department": "", "image": "", "bio": "", "social": {} },
-    { "name": "Varshhaa Pari", "role": "Head of Content & Social Media", "department": "", "image": "", "bio": "", "social": {} },
-    { "name": "Sahana", "role": "Head of Content & Social Media", "department": "", "image": "", "bio": "", "social": {} },
-    { "name": "Harini Palaniyappan", "role": "Head of Logistics", "department": "", "image": "", "bio": "", "social": {} },
-    { "name": "Harini", "role": "Head of Logistics", "department": "", "image": "", "bio": "", "social": {} }
+    {
+      "name": "Dhanya V",
+      "role": "President",
+      "department": "",
+      "image": "",
+      "bio": "",
+      "social": {}
+    },
+    {
+      "name": "Anujan",
+      "role": "President",
+      "department": "",
+      "image": "",
+      "bio": "",
+      "social": {}
+    },
+    {
+      "name": "Ratish S",
+      "role": "Secretary",
+      "department": "",
+      "image": "",
+      "bio": "",
+      "social": {}
+    },
+    {
+      "name": "Vanshika",
+      "role": "Secretary",
+      "department": "",
+      "image": "",
+      "bio": "",
+      "social": {}
+    },
+    {
+      "name": "Manasa",
+      "role": "Head of Music",
+      "department": "",
+      "image": "",
+      "bio": "",
+      "social": {}
+    },
+    {
+      "name": "Tejaswini",
+      "role": "Head of Music",
+      "department": "",
+      "image": "",
+      "bio": "",
+      "social": {}
+    },
+    {
+      "name": "Yuvati",
+      "role": "Head of Dance",
+      "department": "",
+      "image": "",
+      "bio": "",
+      "social": {}
+    },
+    {
+      "name": "Pritika",
+      "role": "Head of Dance",
+      "department": "",
+      "image": "",
+      "bio": "",
+      "social": {}
+    },
+    {
+      "name": "Aadhithyan",
+      "role": "Head of Design & Editing",
+      "department": "",
+      "image": "",
+      "bio": "",
+      "social": {}
+    },
+    {
+      "name": "Naveen",
+      "role": "Head of Design & Editing",
+      "department": "",
+      "image": "",
+      "bio": "",
+      "social": {}
+    },
+    {
+      "name": "Varshhaa Pari",
+      "role": "Head of Content & Social Media",
+      "department": "",
+      "image": "",
+      "bio": "",
+      "social": {}
+    },
+    {
+      "name": "Sahana",
+      "role": "Head of Content & Social Media",
+      "department": "",
+      "image": "",
+      "bio": "",
+      "social": {}
+    },
+    {
+      "name": "Harini Palaniyappan",
+      "role": "Head of Logistics",
+      "department": "",
+      "image": "",
+      "bio": "",
+      "social": {}
+    },
+    {
+      "name": "Harini",
+      "role": "Head of Logistics",
+      "department": "",
+      "image": "",
+      "bio": "",
+      "social": {}
+    }
   ]
 }
