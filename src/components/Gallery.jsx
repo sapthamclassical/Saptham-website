@@ -154,7 +154,7 @@ const Gallery = () => {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: still ? 0 : -10 }}
           transition={{ duration: 0.5, ease: EASE }}
-          className="columns-2 gap-4 md:columns-3 lg:columns-4"
+          className="columns-1 gap-4 sm:columns-2 md:columns-3 lg:columns-4"
         >
           {images.map((img, idx) => (
             <PlateTile

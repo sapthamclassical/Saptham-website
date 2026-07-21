@@ -140,9 +140,32 @@ body {
 /* ── Section divider — a strip of stage light ─────────────────────────── */
 .korvai {
   height: 2px;
-  background: linear-gradient(90deg, transparent, var(--color-teal-swara), var(--color-plum), var(--color-kumkum), transparent);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--color-teal-swara),
+    var(--color-plum),
+    var(--color-goldhi),
+    var(--color-kumkum),
+    transparent
+  );
+  background-size: 220% 100%;
   filter: drop-shadow(0 0 8px rgba(176, 107, 255, 0.5));
   border: 0;
+  animation: korvai-flow 7s linear infinite;
+}
+@keyframes korvai-flow {
+  from {
+    background-position: 0% 0;
+  }
+  to {
+    background-position: 220% 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .korvai {
+    animation: none;
+  }
 }
 .korvai--flip {
   transform: scaleY(-1);

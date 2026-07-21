@@ -86,10 +86,11 @@ const Testimonials = () => {
           sub="Those who carried the lamp before us, on what Saptham meant — and means."
         />
 
-        <div className="mt-16 grid items-center gap-10 md:grid-cols-[minmax(0,340px)_1fr] md:gap-16">
+        <div className="mt-16 grid grid-cols-1 items-center gap-10 md:grid-cols-[minmax(0,340px)_1fr] md:gap-16">
           <AnimatePresence mode="wait">
             <Motion.div
               key={`p-${index}`}
+              className="min-w-0"
               initial={still ? false : { opacity: 0, x: -24 }}
               animate={{ opacity: 1, x: 0 }}
               exit={still ? undefined : { opacity: 0, x: 24 }}
@@ -99,10 +100,10 @@ const Testimonials = () => {
             </Motion.div>
           </AnimatePresence>
 
-          <div className="relative">
+          <div className="relative min-w-0 pt-8 md:pt-0">
             {/* the quote mark burns in this voice's swara light */}
             <span
-              className="font-display text-glow pointer-events-none absolute -top-10 -left-2 text-8xl opacity-60 transition-colors duration-700 select-none"
+              className="font-display text-glow pointer-events-none absolute -top-6 left-0 text-6xl opacity-60 transition-colors duration-700 select-none md:-top-10 md:-left-2 md:text-8xl"
               style={{ color: accent }}
               aria-hidden="true"
             >
@@ -116,7 +117,7 @@ const Testimonials = () => {
                 exit={still ? undefined : { opacity: 0, y: -14 }}
                 transition={{ duration: 0.7, ease: EASE }}
               >
-                <p className="font-display text-xl leading-relaxed font-light text-ivory/90 italic md:text-2xl">
+                <p className="font-display text-lg leading-relaxed font-light text-ivory/90 italic sm:text-xl md:text-2xl">
                   {active.quote}
                 </p>
                 <footer className="mt-8">

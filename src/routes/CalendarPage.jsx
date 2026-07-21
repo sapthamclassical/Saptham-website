@@ -38,37 +38,39 @@ const Bead = ({ ev, i, isAdmin, onEdit, onDelete }) => {
   const c = ev.accent || LIGHTS[i % LIGHTS.length];
   const { day } = fmtDay(ev.date);
   const left = i % 2 === 0;
+  // Mobile: one left-threaded column (the alternating timeline is unreadable at
+  // ~130px per side). Desktop (md+): the alternating center-thread garland.
   return (
     <Motion.li
-      className={`relative flex w-full ${left ? "justify-start" : "justify-end"}`}
-      initial={{ opacity: 0, x: left ? -34 : 34 }}
+      className={`relative flex w-full justify-end pl-12 md:pl-0 ${left ? "md:justify-start" : "md:justify-end"}`}
+      initial={{ opacity: 0, x: left ? -20 : 20 }}
       whileInView={{ opacity: 1, x: 0 }}
       viewport={{ once: true, margin: "-12%" }}
       transition={{ duration: 0.8, ease: EASE }}
     >
-      {/* the bead on the thread */}
+      {/* the bead on the thread — left rail on mobile, centre on desktop */}
       <span
-        className="absolute left-1/2 top-8 z-10 h-4 w-4 -translate-x-1/2 rounded-full"
+        className="absolute left-4 top-8 z-10 h-4 w-4 -translate-x-1/2 rounded-full md:left-1/2"
         style={{ background: c, boxShadow: `0 0 14px ${c}, 0 0 34px ${c}55` }}
         aria-hidden="true"
       />
       <span
-        className="tala-pulse absolute left-1/2 top-8 z-0 h-10 w-10 -translate-x-1/2 -translate-y-3 rounded-full opacity-30 blur-md"
+        className="tala-pulse absolute left-4 top-8 z-0 h-10 w-10 -translate-x-1/2 -translate-y-3 rounded-full opacity-30 blur-md md:left-1/2"
         style={{ background: c }}
         aria-hidden="true"
       />
 
-      <div className={`w-[calc(50%-2.5rem)] ${left ? "pr-2 text-right" : "pl-2 text-left"}`}>
+      <div className={`w-full text-left md:w-[calc(50%-2.5rem)] ${left ? "md:pr-2 md:text-right" : "md:pl-2 md:text-left"}`}>
         <div
-          className="glow-border group relative inline-block w-full max-w-md bg-charcoal/80 p-6 backdrop-blur-sm"
+          className="glow-border group relative inline-block w-full max-w-md bg-charcoal/80 p-5 backdrop-blur-sm md:p-6"
           style={{ "--gb-a": c, "--gb-b": "transparent" }}
         >
-          <div className={`flex items-baseline gap-4 ${left ? "flex-row-reverse" : ""}`}>
-            <span className="font-display text-5xl leading-none" style={{ color: c }}>
+          <div className={`flex items-baseline gap-4 ${left ? "md:flex-row-reverse" : ""}`}>
+            <span className="font-display text-4xl leading-none md:text-5xl" style={{ color: c }}>
               {String(day).padStart(2, "0")}
             </span>
-            <div className={left ? "text-right" : ""}>
-              <h3 className="font-display text-xl text-ivory">{ev.title}</h3>
+            <div className={left ? "md:text-right" : ""}>
+              <h3 className="font-display text-lg text-ivory md:text-xl">{ev.title}</h3>
               {ev.venue && <p className="mt-1 text-xs tracking-wide text-ash">{ev.venue}</p>}
               {ev.timeNote && (
                 <p className="mt-0.5 text-[0.68rem] tracking-[0.18em] uppercase" style={{ color: c }}>
@@ -77,12 +79,12 @@ const Bead = ({ ev, i, isAdmin, onEdit, onDelete }) => {
               )}
             </div>
           </div>
-          {ev.details && <p className={`mt-3 text-sm leading-relaxed text-ash ${left ? "text-right" : ""}`}>{ev.details}</p>}
+          {ev.details && <p className={`mt-3 text-sm leading-relaxed text-ash ${left ? "md:text-right" : ""}`}>{ev.details}</p>}
           {!ev.isPublished && (
             <p className="mt-2 text-[0.62rem] tracking-[0.2em] text-kumkum uppercase">draft — hidden from visitors</p>
           )}
           {isAdmin && (
-            <div className={`mt-4 flex gap-3 text-[0.66rem] tracking-[0.14em] uppercase ${left ? "justify-end" : ""}`}>
+            <div className={`mt-4 flex gap-3 text-[0.66rem] tracking-[0.14em] uppercase ${left ? "md:justify-end" : ""}`}>
               <button onClick={() => onEdit(ev)} className="text-gold hover:text-goldhi">Edit</button>
               <button onClick={() => onDelete(ev)} className="text-kumkum/80 hover:text-kumkum">Remove</button>
               <button
@@ -222,7 +224,7 @@ const CalendarPage = () => {
         <div className="relative mx-auto max-w-4xl px-6">
           {/* the thread */}
           <Motion.div
-            className="absolute inset-y-0 left-1/2 w-px -translate-x-1/2"
+            className="absolute inset-y-0 left-4 w-px -translate-x-1/2 md:left-1/2"
             style={{
               background: "linear-gradient(to bottom, transparent, #E8B84D66 8%, #E8B84D66 92%, transparent)",
               transformOrigin: "top",
