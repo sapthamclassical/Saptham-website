@@ -87,18 +87,32 @@ const Testimonials = () => {
         />
 
         <div className="mt-16 grid grid-cols-1 items-center gap-10 md:grid-cols-[minmax(0,340px)_1fr] md:gap-16">
-          <AnimatePresence mode="wait">
-            <Motion.div
-              key={`p-${index}`}
-              className="min-w-0"
-              initial={still ? false : { opacity: 0, x: -24 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={still ? undefined : { opacity: 0, x: 24 }}
-              transition={{ duration: 0.7, ease: EASE }}
-            >
-              <Portrait person={active} accent={accent} />
-            </Motion.div>
-          </AnimatePresence>
+          {/* draggable portrait — swipe left/right advances the voices */}
+          <Motion.div
+            className="min-w-0 touch-pan-y"
+            drag={still ? false : "x"}
+            dragConstraints={{ left: 0, right: 0 }}
+            dragElastic={0.16}
+            onDragEnd={(_e, info) => {
+              if (info.offset.x < -55) next();
+              else if (info.offset.x > 55) prev();
+            }}
+          >
+            <AnimatePresence mode="wait">
+              <Motion.div
+                key={`p-${index}`}
+                initial={still ? false : { opacity: 0, x: -24 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={still ? undefined : { opacity: 0, x: 24 }}
+                transition={{ duration: 0.7, ease: EASE }}
+              >
+                <Portrait person={active} accent={accent} />
+              </Motion.div>
+            </AnimatePresence>
+            <p className="mt-4 text-center text-[0.58rem] tracking-[0.28em] text-ash/55 uppercase md:hidden">
+              &lsaquo; swipe &rsaquo;
+            </p>
+          </Motion.div>
 
           <div className="relative min-w-0 pt-8 md:pt-0">
             {/* the quote mark burns in this voice's swara light */}

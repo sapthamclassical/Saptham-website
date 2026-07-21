@@ -188,9 +188,9 @@ const CalendarPage = () => {
           <Reveal y={12}>
             <p className="eyebrow">The Season</p>
           </Reveal>
-          <h1 className="font-display mt-5 text-5xl leading-[1.03] font-medium tracking-tight text-ivory sm:text-6xl md:text-7xl">
-            <CharReveal text="Upcoming " charClassName="text-glow" />
-            <CharReveal text="performances" charClassName="accent-ital" delay={0.25} />
+          <h1 className="font-display mt-5 text-4xl leading-[1.05] font-medium tracking-tight text-ivory sm:text-6xl md:text-7xl">
+            <CharReveal text="Upcoming" className="inline-block whitespace-nowrap" charClassName="text-glow" />{" "}
+            <CharReveal text="performances" className="inline-block whitespace-nowrap" charClassName="accent-ital" delay={0.25} />
           </h1>
           <Reveal delay={0.4}>
             <p className="mx-auto mt-6 max-w-xl leading-relaxed text-ash">

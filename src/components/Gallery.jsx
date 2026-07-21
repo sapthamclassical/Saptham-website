@@ -43,11 +43,10 @@ const RATIOS = [
 const PlateTile = ({ src, idx, cat, accent, onOpen, still }) => (
   <Motion.div
     className="mb-4 break-inside-avoid"
-    initial={still ? false : { clipPath: "inset(100% 0% 0% 0%)", scale: 1.06 }}
-    whileInView={{ clipPath: "inset(0% 0% 0% 0%)", scale: 1 }}
-    viewport={{ once: true, margin: "-6%" }}
-    transition={{ duration: 1.05, ease: EASE, delay: (idx % 4) * 0.09 }}
-    style={{ willChange: still ? undefined : "clip-path, transform" }}
+    initial={still ? false : { opacity: 0, y: 26, scale: 1.04 }}
+    animate={still ? undefined : { opacity: 1, y: 0, scale: 1 }}
+    transition={{ duration: 0.75, ease: EASE, delay: (idx % 6) * 0.07 }}
+    style={{ willChange: still ? undefined : "transform, opacity" }}
   >
     <button
       onClick={onOpen}
