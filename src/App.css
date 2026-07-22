@@ -517,3 +517,52 @@ html.has-ember select {
     animation: none;
   }
 }
+
+/* ── Sapta Swara equalizer — pure CSS so it can never depend on the JS bundle.
+   Motion-driven loops can be dropped by an over-eager production build; a CSS
+   keyframe cannot. Each bar scales its height on its own tempo/delay.        */
+@keyframes swara-eq {
+  0%,
+  100% {
+    transform: scaleY(1);
+  }
+  20% {
+    transform: scaleY(0.5);
+  }
+  45% {
+    transform: scaleY(0.88);
+  }
+  65% {
+    transform: scaleY(0.56);
+  }
+  82% {
+    transform: scaleY(0.78);
+  }
+}
+.swara-eq-bar {
+  transform-origin: bottom;
+  animation-name: swara-eq;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  will-change: transform;
+}
+@keyframes swara-pool {
+  0%,
+  100% {
+    opacity: 0.22;
+    transform: scale(0.8);
+  }
+  50% {
+    opacity: 0.55;
+    transform: scale(1.15);
+  }
+}
+.swara-pool {
+  animation: swara-pool 2.6s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .swara-eq-bar,
+  .swara-pool {
+    animation: none;
+  }
+}

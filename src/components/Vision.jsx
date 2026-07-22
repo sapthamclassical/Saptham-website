@@ -1,9 +1,7 @@
-import { motion as Motion, useReducedMotion } from "motion/react";
 import SectionHeading from "./shared/SectionHeading";
 import SapthamMark from "./brand/SapthamMark";
 import { Reveal, StaggerGroup, StaggerItem, HoverLift, Parallax } from "./motion/Motion";
 import { Atmosphere, ScrollFloat, SWARA_LIGHTS } from "./stage/Stage";
-import { EASE, VIEWPORT } from "../lib/motion";
 
 /**
  * Scene 02 · The chord — the seven swaras as a live equalizer.
@@ -47,54 +45,51 @@ const PILLARS = [
   },
 ];
 
-/** One note of the chord. Entrance + endless breathe, transforms only. */
-const SwaraBar = ({ swara, index }) => {
-  const still = useReducedMotion();
-  return (
-    <div className="flex flex-1 flex-col items-center gap-3">
-      <span className="font-tamil text-sm" style={{ color: swara.c }}>
-        {swara.tamil}
-      </span>
-      <div className="relative flex h-44 w-full items-end justify-center md:h-56">
-        <Motion.div
-          className="relative w-2.5 rounded-full md:w-3"
-          style={{
-            height: `${swara.h * 100}%`,
-            transformOrigin: "bottom",
-            background: `linear-gradient(to top, ${swara.c}55, ${swara.c})`,
-            boxShadow: `0 0 16px ${swara.c}88, 0 0 40px ${swara.c}44`,
-          }}
-          initial={still ? false : { scaleY: 0 }}
-          whileInView={{ scaleY: 1 }}
-          viewport={VIEWPORT}
-          transition={{ duration: 1.1, delay: 0.15 + index * 0.09, ease: EASE }}
-        >
-          {/* the live layer — each note breathing on its own tala */}
-          {!still && (
-            <Motion.div
-              className="absolute inset-0 rounded-full"
-              style={{
-                transformOrigin: "bottom",
-                background: `linear-gradient(to top, transparent, ${swara.c})`,
-              }}
-              animate={{ scaleY: [1, 0.72, 1.06, 1], opacity: [0.9, 0.45, 1, 0.9] }}
-              transition={{
-                duration: 2.4 + index * 0.35,
-                delay: index * 0.4,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-              aria-hidden="true"
-            />
-          )}
-        </Motion.div>
+/**
+ * One note of the chord — a live equalizer bar.
+ *
+ * Driven by a PURE CSS keyframe (`.swara-eq-bar`), deliberately NOT Motion:
+ * CSS animations survive every production build, whereas a mis-configured
+ * bundle can drop Motion's declarative loops (which is exactly what killed the
+ * equalizer on the deployed site). Each bar bounces its height on its own
+ * tempo + delay; a light-pool pulses at its base. Static under reduced motion.
+ */
+const SwaraBar = ({ swara, index }) => (
+  <div className="flex flex-1 flex-col items-center gap-3">
+    <span className="font-tamil text-sm" style={{ color: swara.c }}>
+      {swara.tamil}
+    </span>
+    <div className="relative flex h-44 w-full items-end justify-center md:h-56">
+      {/* pool of light pulsing at the base */}
+      <span
+        className="swara-pool absolute bottom-0 h-5 w-7 rounded-full blur-md"
+        style={{ background: swara.c, animationDelay: `${index * 0.15}s` }}
+        aria-hidden="true"
+      />
+      {/* the bar — CSS equalizer bounce, immune to the JS bundle */}
+      <div
+        className="swara-eq-bar relative w-2.5 rounded-full md:w-3"
+        style={{
+          height: `${swara.h * 100}%`,
+          background: `linear-gradient(to top, ${swara.c}44, ${swara.c})`,
+          boxShadow: `0 0 14px ${swara.c}99, 0 0 34px ${swara.c}44`,
+          animationDuration: `${2.4 + (index % 4) * 0.5}s`,
+          animationDelay: `${index * 0.14}s`,
+        }}
+      >
+        {/* brighter tip */}
+        <span
+          className="absolute inset-x-0 top-0 h-2 rounded-full"
+          style={{ background: "#fff", opacity: 0.85 }}
+          aria-hidden="true"
+        />
       </div>
-      <span className="text-[0.7rem] tracking-[0.24em] uppercase" style={{ color: swara.c }}>
-        {swara.latin}
-      </span>
     </div>
-  );
-};
+    <span className="text-[0.7rem] tracking-[0.24em] uppercase" style={{ color: swara.c }}>
+      {swara.latin}
+    </span>
+  </div>
+);
 
 const Vision = () => (
   <section id="vision" className="relative overflow-hidden py-24 md:py-32">
