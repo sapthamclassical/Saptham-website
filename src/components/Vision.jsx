@@ -46,50 +46,51 @@ const PILLARS = [
 ];
 
 /**
- * One note of the chord — a live equalizer bar.
+ * One swara — a resonating veena string.
  *
- * Driven by a PURE CSS keyframe (`.swara-eq-bar`), deliberately NOT Motion:
- * CSS animations survive every production build, whereas a mis-configured
- * bundle can drop Motion's declarative loops (which is exactly what killed the
- * equalizer on the deployed site). Each bar bounces its height on its own
- * tempo + delay; a light-pool pulses at its base. Static under reduced motion.
+ * Pure CSS (a mis-built bundle can drop Motion loops; a keyframe cannot). Each
+ * string is plucked in sequence via a staggered delay, so a run travels up the
+ * course; a bright node rides the string where it's plucked. The cadence is
+ * shared across strings (same duration) so the seven read as one instrument.
  */
-const SwaraBar = ({ swara, index }) => (
-  <div className="flex flex-1 flex-col items-center gap-3">
-    <span className="font-tamil text-sm" style={{ color: swara.c }}>
-      {swara.tamil}
-    </span>
-    <div className="relative flex h-44 w-full items-end justify-center md:h-56">
-      {/* pool of light pulsing at the base */}
-      <span
-        className="swara-pool absolute bottom-0 h-5 w-7 rounded-full blur-md"
-        style={{ background: swara.c, animationDelay: `${index * 0.15}s` }}
-        aria-hidden="true"
-      />
-      {/* the bar — CSS equalizer bounce, immune to the JS bundle */}
-      <div
-        className="swara-eq-bar relative w-2.5 rounded-full md:w-3"
-        style={{
-          height: `${swara.h * 100}%`,
-          background: `linear-gradient(to top, ${swara.c}44, ${swara.c})`,
-          boxShadow: `0 0 14px ${swara.c}99, 0 0 34px ${swara.c}44`,
-          animationDuration: `${3.6 + (index % 4) * 0.6}s`,
-          animationDelay: `${index * 0.14}s`,
-        }}
-      >
-        {/* brighter tip */}
+const STRING_DUR = 5.6; // slow, resonant
+
+const SwaraString = ({ swara, index }) => {
+  const anim = {
+    animationDuration: `${STRING_DUR}s`,
+    animationDelay: `${index * (STRING_DUR / 7)}s`,
+  };
+  return (
+    <div className="flex flex-1 flex-col items-center gap-4">
+      <span className="font-tamil text-sm" style={{ color: swara.c }}>
+        {swara.tamil}
+      </span>
+
+      <div className="relative flex h-40 w-full items-stretch justify-center md:h-52">
+        {/* the string of light */}
+        <div
+          className="veena-string"
+          style={{
+            background: `linear-gradient(to bottom, transparent, ${swara.c} 14%, ${swara.c} 86%, transparent)`,
+            boxShadow: `0 0 7px ${swara.c}, 0 0 16px ${swara.c}55`,
+            ...anim,
+          }}
+          aria-hidden="true"
+        />
+        {/* the resonance node */}
         <span
-          className="absolute inset-x-0 top-0 h-2 rounded-full"
-          style={{ background: "#fff", opacity: 0.85 }}
+          className="veena-node"
+          style={{ background: "#fff", boxShadow: `0 0 7px ${swara.c}, 0 0 15px ${swara.c}`, ...anim }}
           aria-hidden="true"
         />
       </div>
+
+      <span className="text-[0.7rem] tracking-[0.24em] uppercase" style={{ color: swara.c }}>
+        {swara.latin}
+      </span>
     </div>
-    <span className="text-[0.7rem] tracking-[0.24em] uppercase" style={{ color: swara.c }}>
-      {swara.latin}
-    </span>
-  </div>
-);
+  );
+};
 
 const Vision = () => (
   <section id="vision" className="relative overflow-hidden py-24 md:py-32">
@@ -112,9 +113,17 @@ const Vision = () => (
                 className="glow-border relative px-6 py-10 shadow-[0_24px_60px_rgba(6,7,13,0.6)] md:px-10"
                 style={{ "--gb-a": SWARA_LIGHTS.ga, "--gb-b": SWARA_LIGHTS.ma }}
               >
-                <div className="relative flex items-end gap-2 md:gap-3">
+                <div className="relative flex items-stretch gap-2 md:gap-3">
+                  {/* the veena bridge — the strings resonate over it */}
+                  <div
+                    className="pointer-events-none absolute inset-x-0 top-1/2 h-px -translate-y-1/2"
+                    style={{
+                      background: `linear-gradient(90deg, transparent, ${SWARA_LIGHTS.ga}55, ${SWARA_LIGHTS.ma}55, transparent)`,
+                    }}
+                    aria-hidden="true"
+                  />
                   {SWARAS.map((s, i) => (
-                    <SwaraBar key={s.latin} swara={s} index={i} />
+                    <SwaraString key={s.latin} swara={s} index={i} />
                   ))}
                 </div>
                 <div
