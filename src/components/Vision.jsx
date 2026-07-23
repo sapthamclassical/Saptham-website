@@ -55,42 +55,35 @@ const PILLARS = [
  */
 const STRING_DUR = 5.6; // slow, resonant
 
-const SwaraString = ({ swara, index }) => {
-  const anim = {
-    animationDuration: `${STRING_DUR}s`,
-    animationDelay: `${index * (STRING_DUR / 7)}s`,
-  };
-  return (
-    <div className="flex flex-1 flex-col items-center gap-4">
-      <span className="font-tamil text-sm" style={{ color: swara.c }}>
-        {swara.tamil}
-      </span>
+/**
+ * The swara colour and the string's tempo/stagger travel as CSS variables, so
+ * the two states — an always-on ripple on touch devices, and a rest-dim /
+ * glow-on-hover "strum" on pointer devices — both live in App.css (see the
+ * `@media (hover: hover)` block).
+ */
+const SwaraString = ({ swara, index }) => (
+  <div
+    className="veena-col group flex flex-1 flex-col items-center gap-4"
+    style={{
+      "--swara": swara.c,
+      "--sdur": `${STRING_DUR}s`,
+      "--sdelay": `${index * (STRING_DUR / 7)}s`,
+    }}
+  >
+    <span className="font-tamil text-sm" style={{ color: swara.c }}>
+      {swara.tamil}
+    </span>
 
-      <div className="relative flex h-40 w-full items-stretch justify-center md:h-52">
-        {/* the string of light */}
-        <div
-          className="veena-string"
-          style={{
-            background: `linear-gradient(to bottom, transparent, ${swara.c} 14%, ${swara.c} 86%, transparent)`,
-            boxShadow: `0 0 7px ${swara.c}, 0 0 16px ${swara.c}55`,
-            ...anim,
-          }}
-          aria-hidden="true"
-        />
-        {/* the resonance node */}
-        <span
-          className="veena-node"
-          style={{ background: "#fff", boxShadow: `0 0 7px ${swara.c}, 0 0 15px ${swara.c}`, ...anim }}
-          aria-hidden="true"
-        />
-      </div>
-
-      <span className="text-[0.7rem] tracking-[0.24em] uppercase" style={{ color: swara.c }}>
-        {swara.latin}
-      </span>
+    <div className="relative flex h-40 w-full items-stretch justify-center md:h-52">
+      <div className="veena-string" aria-hidden="true" />
+      <span className="veena-node" aria-hidden="true" />
     </div>
-  );
-};
+
+    <span className="text-[0.7rem] tracking-[0.24em] uppercase" style={{ color: swara.c }}>
+      {swara.latin}
+    </span>
+  </div>
+);
 
 const Vision = () => (
   <section id="vision" className="relative overflow-hidden py-24 md:py-32">

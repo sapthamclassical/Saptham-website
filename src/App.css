@@ -528,7 +528,13 @@ html.has-ember select {
   height: 100%;
   border-radius: 2px;
   transform-origin: center;
+  background: linear-gradient(to bottom, transparent, var(--swara) 14%, var(--swara) 86%, transparent);
+  box-shadow:
+    0 0 7px var(--swara),
+    0 0 16px color-mix(in srgb, var(--swara) 34%, transparent);
   animation-name: string-pluck;
+  animation-duration: var(--sdur, 5.6s);
+  animation-delay: var(--sdelay, 0s);
   animation-timing-function: ease-in-out;
   animation-iteration-count: infinite;
   will-change: transform, filter;
@@ -570,10 +576,45 @@ html.has-ember select {
   height: 6px;
   border-radius: 9999px;
   margin-left: -3px;
+  background: #fff;
+  box-shadow:
+    0 0 7px var(--swara),
+    0 0 15px var(--swara);
   animation-name: node-ride;
+  animation-duration: var(--sdur, 5.6s);
+  animation-delay: var(--sdelay, 0s);
   animation-timing-function: ease-in-out;
   animation-iteration-count: infinite;
   will-change: transform, opacity;
+}
+
+/* ── Pointer devices: the strings rest dim and glow only where the cursor
+   passes — you strum them. Touch devices keep the always-on ripple above,
+   since they have no hover. ────────────────────────────────────────────── */
+@media (hover: hover) and (pointer: fine) {
+  .veena-string {
+    animation: none;
+    opacity: 0.2;
+    box-shadow: none;
+    transition:
+      opacity 0.45s ease,
+      box-shadow 0.45s ease;
+  }
+  .veena-node {
+    animation: none;
+    opacity: 0;
+  }
+  .veena-col:hover .veena-string {
+    opacity: 1;
+    box-shadow:
+      0 0 9px var(--swara),
+      0 0 22px color-mix(in srgb, var(--swara) 50%, transparent);
+    /* a quick, responsive pluck the moment the cursor touches the string */
+    animation: string-pluck 1.8s ease-in-out infinite;
+  }
+  .veena-col:hover .veena-node {
+    animation: node-ride 1.8s ease-in-out infinite;
+  }
 }
 @keyframes node-ride {
   0%,
