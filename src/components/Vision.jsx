@@ -73,7 +73,7 @@ const SwaraBar = ({ swara, index }) => (
           height: `${swara.h * 100}%`,
           background: `linear-gradient(to top, ${swara.c}44, ${swara.c})`,
           boxShadow: `0 0 14px ${swara.c}99, 0 0 34px ${swara.c}44`,
-          animationDuration: `${2.4 + (index % 4) * 0.5}s`,
+          animationDuration: `${3.6 + (index % 4) * 0.6}s`,
           animationDelay: `${index * 0.14}s`,
         }}
       >
