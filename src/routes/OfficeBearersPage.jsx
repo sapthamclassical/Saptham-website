@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import { Atmosphere, CharReveal, MandalaRing, SoundWave, ScrollFloat, SWARA_LIGHTS } from "../components/stage/Stage";
 import { Reveal, StaggerGroup } from "../components/motion/Motion";
 import PersonCard from "../components/shared/PersonCard";

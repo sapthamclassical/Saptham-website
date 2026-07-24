@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { motion as Motion, useReducedMotion, useScroll, useTransform } from "motion/react";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import heroLoop from "../assets/brand/hero-loop.mp4";
 import lampStill from "../assets/brand/lamp.jpg";
 import SapthamMark from "./brand/SapthamMark";

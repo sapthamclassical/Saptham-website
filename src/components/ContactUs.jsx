@@ -107,7 +107,7 @@ const InfoCard = ({ color, Icon, label, knotDelay = 0, children }) => (
 /** Scene 13 · Shanta — reach the sabha. Formspree submission preserved as-is. */
 const ContactUs = () => {
   const still = useReducedMotion();
-  const [formData, setFormData] = useState({ name: "", email: "", message: "" });
+  const [formData, setFormData] = useState({ name: "", email: "", message: "", _gotcha: "" });
   const [isLoading, setIsLoading] = useState(false);
   const [status, setStatus] = useState(null); // 'success' | 'error'
 
@@ -128,7 +128,7 @@ const ContactUs = () => {
       });
       if (response.ok) {
         setStatus("success");
-        setFormData({ name: "", email: "", message: "" });
+        setFormData({ name: "", email: "", message: "", _gotcha: "" });
       } else {
         setStatus("error");
       }
@@ -275,6 +275,16 @@ const ContactUs = () => {
               >
                 <div className="gold-hairline absolute top-0 right-8 left-8 opacity-70" />
                 <div className="space-y-6">
+                  <input
+                    type="text"
+                    name="_gotcha"
+                    value={formData._gotcha}
+                    onChange={handleChange}
+                    autoComplete="off"
+                    tabIndex={-1}
+                    aria-hidden="true"
+                    className="absolute -left-[10000px] h-px w-px opacity-0"
+                  />
                   <SwaraField
                     id="c-name"
                     label="Your Name"
@@ -284,6 +294,7 @@ const ContactUs = () => {
                     value={formData.name}
                     onChange={handleChange}
                     placeholder="Enter your name"
+                    maxLength={120}
                     required
                   />
                   <SwaraField
@@ -295,6 +306,7 @@ const ContactUs = () => {
                     value={formData.email}
                     onChange={handleChange}
                     placeholder="Enter your email"
+                    maxLength={254}
                     required
                   />
                   <SwaraField
@@ -306,6 +318,7 @@ const ContactUs = () => {
                     name="message"
                     value={formData.message}
                     onChange={handleChange}
+                    maxLength={5000}
                     placeholder="Write your message…"
                     required
                   />

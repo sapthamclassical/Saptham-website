@@ -1,3 +1,26 @@
+# ── Security headers (apply to every route) ───────────────────────────────
+# Defence-in-depth for a static SPA whose real authorization lives in Supabase
+# RLS. The built HTML has no inline scripts, so 'self' is enough for script-src
+# and injected inline/remote scripts are blocked. connect-src is deliberately
+# limited to the services used by the application.
+#
+# Every allow-list entry maps to something the app actually loads:
+#   supabase.co         — REST, Auth, Storage (https) and Realtime (wss)
+#   formspree.io        — the contact form POST
+#   fonts.googleapis    — the Google Fonts stylesheet <link>
+#   fonts.gstatic       — the font files
+#   www.google.com      — the Maps embed <iframe> on /contact
+#   data:               — inline SVG/image assets
+/*
+  Content-Security-Policy: default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: https://*.supabase.co; media-src 'self' https://*.supabase.co; connect-src 'self' https://*.supabase.co wss://*.supabase.co https://formspree.io/f/mojwgvjb; frame-src https://www.google.com; worker-src 'self'; manifest-src 'self'; upgrade-insecure-requests
+  Strict-Transport-Security: max-age=31536000
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=(), browsing-topics=()
+  Cross-Origin-Opener-Policy: same-origin
+
+# ── Caching ────────────────────────────────────────────────────────────────
 # index.html must never be cached hard, or returning visitors get a stale build
 # (this is what served the old light-theme "white" page on mobile after a deploy).
 /

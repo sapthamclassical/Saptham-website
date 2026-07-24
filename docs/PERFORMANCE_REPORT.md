@@ -1,5 +1,8 @@
 # PERFORMANCE_REPORT.md — Saptham Website
 
+> Historical performance snapshot. The image findings remain useful, but its
+> dependency inventory predates the 2026-07 security cleanup.
+
 **Headline:** The JS/CSS footprint is fine; **images are the entire performance story.**
 ~21 MB of unoptimized images (one 6.3 MB JPG) will wreck LCP and mobile data usage until
 compressed. Fixing images is the single highest-leverage performance action.

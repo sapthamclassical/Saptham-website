@@ -12,10 +12,37 @@ import { supabase, isSupabaseConfigured } from "./supabase";
  */
 const ADMIN_EMAIL = "admin@saptham.club";
 
+async function getAdminMembership() {
+  if (!supabase) return { allowed: false, verificationFailed: true };
+  try {
+    const { data, error } = await supabase.rpc("is_admin");
+    if (error) return { allowed: false, verificationFailed: true };
+    return { allowed: data === true, verificationFailed: false };
+  } catch {
+    return { allowed: false, verificationFailed: true };
+  }
+}
+
 export async function signInAdmin(password) {
   if (!isSupabaseConfigured || !supabase) return { ok: false, error: "Backend not configured" };
   const { error } = await supabase.auth.signInWithPassword({ email: ADMIN_EMAIL, password });
   if (error) return { ok: false, error: "That is not the key." };
+
+  const membership = await getAdminMembership();
+  if (!membership.allowed) {
+    try {
+      await supabase.auth.signOut({ scope: "local" });
+    } catch {
+      // Fail closed even if clearing the local session reports a network error.
+    }
+    return {
+      ok: false,
+      error: membership.verificationFailed
+        ? "Admin access could not be verified. Please try again."
+        : "This account is not allowed into the green room.",
+    };
+  }
+
   return { ok: true, error: null };
 }
 
@@ -29,11 +56,42 @@ export function useAdmin() {
 
   useEffect(() => {
     if (!supabase) return;
-    supabase.auth.getSession().then(({ data }) => setIsAdmin(Boolean(data.session)));
-    const { data: sub } = supabase.auth.onAuthStateChange((_e, session) => {
-      setIsAdmin(Boolean(session));
+
+    let active = true;
+    let checkId = 0;
+    let authTimer;
+    const refreshAdminState = async (session) => {
+      const currentCheck = ++checkId;
+      const membership = session
+        ? await getAdminMembership()
+        : { allowed: false, verificationFailed: false };
+      const next = Boolean(session) && membership.allowed;
+      if (active && currentCheck === checkId) setIsAdmin(next);
+    };
+
+    supabase.auth.getSession().then(({ data }) => {
+      if (!active) return;
+      void refreshAdminState(data.session);
     });
-    return () => sub.subscription.unsubscribe();
+    const { data: sub } = supabase.auth.onAuthStateChange((_e, session) => {
+      window.clearTimeout(authTimer);
+      if (!session) {
+        checkId += 1;
+        setIsAdmin(false);
+        return;
+      }
+      // Supabase holds an internal auth lock while invoking this callback.
+      // Defer API work until the callback has returned to avoid a deadlock.
+      authTimer = window.setTimeout(() => {
+        void refreshAdminState(session);
+      }, 0);
+    });
+    return () => {
+      active = false;
+      checkId += 1;
+      window.clearTimeout(authTimer);
+      sub.subscription.unsubscribe();
+    };
   }, []);
 
   return isAdmin;

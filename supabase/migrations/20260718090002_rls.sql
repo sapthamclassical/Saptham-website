@@ -58,7 +58,19 @@ create policy admin_all on public.events
 -- ─── event_gallery ──────────────────────────────────────────────────────────
 drop policy if exists public_read_published on public.event_gallery;
 create policy public_read_published on public.event_gallery
-  for select to anon, authenticated using (is_published = true);
+  for select to anon, authenticated
+  using (
+    is_published = true
+    and (
+      event_id is null
+      or exists (
+        select 1
+        from public.events e
+        where e.id = event_gallery.event_id
+          and e.is_published = true
+      )
+    )
+  );
 
 drop policy if exists admin_all on public.event_gallery;
 create policy admin_all on public.event_gallery
@@ -67,7 +79,19 @@ create policy admin_all on public.event_gallery
 -- ─── performances ───────────────────────────────────────────────────────────
 drop policy if exists public_read_published on public.performances;
 create policy public_read_published on public.performances
-  for select to anon, authenticated using (is_published = true);
+  for select to anon, authenticated
+  using (
+    is_published = true
+    and (
+      event_id is null
+      or exists (
+        select 1
+        from public.events e
+        where e.id = performances.event_id
+          and e.is_published = true
+      )
+    )
+  );
 
 drop policy if exists admin_all on public.performances;
 create policy admin_all on public.performances
@@ -106,12 +130,25 @@ create policy admin_all on public.announcements
   for all to authenticated using (public.is_admin()) with check (public.is_admin());
 
 -- ─── contact_messages: write-only inbox ─────────────────────────────────────
--- Anyone may submit; nobody but an admin may read. The absence of a SELECT
+-- Anonymous visitors may submit; nobody but an admin may read. The absence of a SELECT
 -- policy for anon is what makes the table unreadable from the browser.
 drop policy if exists anyone_can_submit on public.contact_messages;
 create policy anyone_can_submit on public.contact_messages
-  for insert to anon, authenticated
-  with check (status = 'new' and admin_notes is null);
+  for insert to anon
+  with check (
+    status = 'new'
+    and admin_notes is null
+    and source = 'website'
+    and char_length(btrim(name)) between 1 and 120
+    and char_length(email) between 3 and 254
+    and email ~* '^[^[:space:]@]+@[^[:space:]@]+[.][^[:space:]@]+$'
+    and (subject is null or char_length(subject) <= 200)
+    and char_length(btrim(message)) between 1 and 5000
+  );
+
+drop policy if exists admin_insert_messages on public.contact_messages;
+create policy admin_insert_messages on public.contact_messages
+  for insert to authenticated with check (public.is_admin());
 
 drop policy if exists admin_read_messages on public.contact_messages;
 create policy admin_read_messages on public.contact_messages

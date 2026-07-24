@@ -44,11 +44,16 @@ exception when duplicate_object then null; end $$;
 -- ─── Helpers ────────────────────────────────────────────────────────────────
 
 create or replace function public.set_updated_at()
-returns trigger language plpgsql as $$
+returns trigger
+language plpgsql
+set search_path = ''
+as $$
 begin
   new.updated_at = now();
   return new;
 end $$;
+
+revoke all privileges on function public.set_updated_at() from public;
 
 -- Admin registry. RLS needs an admin predicate. `user_id` holds an auth.users
 -- id but carries no FK: adding one requires REFERENCES on the auth schema,
@@ -65,11 +70,12 @@ returns boolean
 language sql
 stable
 security definer
-set search_path = public
+set search_path = ''
 as $$
   select exists (select 1 from public.admin_users a where a.user_id = auth.uid());
 $$;
 
+revoke all privileges on function public.is_admin() from public;
 grant execute on function public.is_admin() to anon, authenticated;
 
 -- ─── office_bearers ─────────────────────────────────────────────────────────
@@ -287,3 +293,18 @@ create trigger set_updated_at before update on public.contact_messages
 drop trigger if exists set_updated_at on public.settings;
 create trigger set_updated_at before update on public.settings
   for each row execute function public.set_updated_at();
+
+-- Enable RLS before this migration commits. Policies arrive in the next
+-- migration, so a clean deployment is deny-by-default during that interval.
+alter table public.admin_users       enable row level security;
+alter table public.office_bearers    enable row level security;
+alter table public.alumni            enable row level security;
+alter table public.events            enable row level security;
+alter table public.event_gallery     enable row level security;
+alter table public.performances      enable row level security;
+alter table public.achievements      enable row level security;
+alter table public.announcements     enable row level security;
+alter table public.sponsors          enable row level security;
+alter table public.contact_messages  enable row level security;
+alter table public.media_assets      enable row level security;
+alter table public.settings          enable row level security;

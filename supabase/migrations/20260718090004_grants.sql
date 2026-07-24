@@ -1,43 +1,95 @@
 -- ============================================================================
--- STEP 5 — ROLE GRANTS
+-- Saptham CMS — STEP 3 · Explicit API role grants
 -- ============================================================================
--- RLS answers "which rows may this role see?" — but Postgres checks table-level
--- privileges FIRST. Without a GRANT, PostgREST fails with 42501 "permission
--- denied for table ..." and never reaches the policies at all.
+-- RLS decides which rows an operation may reach. These grants independently
+-- decide which operations PostgREST may attempt at all.
 --
--- The Supabase posture, which this follows: grants are deliberately permissive,
--- and RLS does the real enforcement. That is safe here only because every table
--- has RLS enabled with explicit policies (see 20260718090002_rls.sql).
---
--- Idempotent — safe to re-run.
+-- New tables receive NO API privilege by default. Add each future table here
+-- only after its RLS policies have been reviewed.
+-- Idempotent.
 -- ============================================================================
 
+revoke create on schema public from public, anon, authenticated;
 grant usage on schema public to anon, authenticated;
 
--- Read: RLS then narrows this to published rows only.
-grant select on all tables in schema public to anon, authenticated;
+-- Remove Supabase's broad defaults for the application tables, then restore
+-- only the operations the browser application actually uses.
+revoke all privileges on table
+  public.admin_users,
+  public.office_bearers,
+  public.alumni,
+  public.events,
+  public.event_gallery,
+  public.performances,
+  public.achievements,
+  public.announcements,
+  public.sponsors,
+  public.contact_messages,
+  public.media_assets,
+  public.settings
+from anon, authenticated;
 
--- Write: only admins get past the is_admin() policies, but the privilege must
--- exist for the policy to even be evaluated.
-grant insert, update, delete on all tables in schema public to authenticated;
+grant select on table
+  public.office_bearers,
+  public.alumni,
+  public.events,
+  public.event_gallery,
+  public.performances,
+  public.achievements,
+  public.announcements,
+  public.sponsors,
+  public.media_assets,
+  public.settings
+to anon;
 
--- The public contact form posts as anon.
-grant insert on public.contact_messages to anon;
+-- Authenticated users still pass through RLS; only admin_users members can see
+-- private rows or modify content.
+grant select on table
+  public.admin_users,
+  public.office_bearers,
+  public.alumni,
+  public.events,
+  public.event_gallery,
+  public.performances,
+  public.achievements,
+  public.announcements,
+  public.sponsors,
+  public.contact_messages,
+  public.media_assets,
+  public.settings
+to authenticated;
 
--- Defence in depth: anon has no business reading anyone's messages. The RLS
--- policy already restricts SELECT to admins; this removes the privilege too, so
--- a future policy mistake cannot expose them.
-revoke select on public.contact_messages from anon;
+grant insert, update, delete on table
+  public.admin_users,
+  public.office_bearers,
+  public.alumni,
+  public.events,
+  public.event_gallery,
+  public.performances,
+  public.achievements,
+  public.announcements,
+  public.sponsors,
+  public.contact_messages,
+  public.media_assets,
+  public.settings
+to authenticated;
 
--- Same reasoning for the admin roster.
-revoke select on public.admin_users from anon;
+-- The optional Supabase contact repository may submit only user-controlled
+-- fields. IDs, status, admin notes, and timestamps remain server-controlled.
+grant insert (name, email, subject, message, source)
+  on table public.contact_messages to anon;
 
-grant usage, select on all sequences in schema public to anon, authenticated;
+-- UUID keys do not use public sequences.
+revoke all privileges on all sequences in schema public from anon, authenticated;
 
--- Anything created later inherits the same posture.
+-- Objects created later are private until explicitly reviewed and granted.
 alter default privileges in schema public
-  grant select on tables to anon, authenticated;
+  revoke all privileges on tables from public, anon, authenticated;
 alter default privileges in schema public
-  grant insert, update, delete on tables to authenticated;
-alter default privileges in schema public
-  grant usage, select on sequences to anon, authenticated;
+  revoke all privileges on sequences from public, anon, authenticated;
+alter default privileges
+  revoke execute on functions from public, anon, authenticated;
+
+-- Only the authorization predicate is callable through the public API.
+revoke all privileges on function public.is_admin() from public, anon, authenticated;
+grant execute on function public.is_admin() to anon, authenticated;

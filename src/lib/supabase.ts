@@ -17,8 +17,9 @@ export const supabase: SupabaseClient<Database> | null = isSupabaseConfigured
       auth: {
         persistSession: true,
         autoRefreshToken: true,
-        // SPA: tokens arrive in the URL hash after an OAuth/magic-link redirect.
-        detectSessionInUrl: true,
+        // The app authenticates only via password (the hidden admin door) — there
+        // is no OAuth/magic-link redirect, so don't parse tokens out of the URL.
+        detectSessionInUrl: false,
       },
       global: { headers: { "x-application-name": "saptham-web" } },
     })

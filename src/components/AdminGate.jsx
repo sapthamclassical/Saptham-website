@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 import { AnimatePresence, motion as Motion } from "motion/react";
 import { signInAdmin } from "../lib/adminAuth";
 import { EASE } from "../lib/motion";
@@ -30,12 +30,26 @@ const AdminGate = ({ open, onClose }) => {
   const [busy, setBusy] = useState(false);
   const navigate = useNavigate();
 
+  const close = () => {
+    if (busy) return;
+    setPassword("");
+    setError("");
+    onClose();
+  };
+
   const submit = async (e) => {
     e.preventDefault();
     if (!password || busy) return;
     setBusy(true);
-    const { ok, error: err } = await signInAdmin(password);
-    setBusy(false);
+    let ok = false;
+    let err = "Admin sign-in could not be completed. Please try again.";
+    try {
+      ({ ok, error: err } = await signInAdmin(password));
+    } catch {
+      // Keep the error generic; authentication details are not useful here.
+    } finally {
+      setBusy(false);
+    }
     if (ok) {
       setPassword("");
       setError("");
@@ -54,7 +68,7 @@ const AdminGate = ({ open, onClose }) => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          onClick={onClose}
+          onClick={close}
         >
           <Motion.form
             onSubmit={submit}
@@ -71,7 +85,10 @@ const AdminGate = ({ open, onClose }) => {
               type="password"
               autoFocus
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(e) => {
+                setPassword(e.target.value);
+                setError("");
+              }}
               placeholder="passphrase"
               aria-label="Admin passphrase"
               className="mt-5 w-full border border-granite bg-sanctum/70 px-4 py-3 text-sm text-ivory outline-none placeholder:text-basalt focus:border-gold"

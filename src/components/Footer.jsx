@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import { Atmosphere, SWARA_LIGHTS } from "./stage/Stage";
 import { Reveal } from "./motion/Motion";
 import officialGold from "../assets/logo-gold.png";

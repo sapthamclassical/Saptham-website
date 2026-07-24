@@ -136,7 +136,9 @@ Key files:
 - `supabase/migrations/20260718090003_storage.sql` - public storage buckets and
   storage policies.
 - `supabase/migrations/20260719100001_calendar_admin.sql` - calendar table and
-  admin auth bootstrap.
+  policies (credentials and membership are deliberately out of band).
+- `supabase/migrations/20260724090001_least_privilege_grants.sql` - forward
+  security hardening for existing databases.
 - `supabase/seed/0001_seed.sql` - generated seed data.
 - `supabase/apply_all.sql` - generated SQL bundle.
 
@@ -149,7 +151,8 @@ The admin surface is intentionally hidden from normal navigation.
 
 - `Footer.jsx` attaches a secret click gesture to the footer copyright mark.
 - `AdminGate.jsx` opens a password modal.
-- `adminAuth.js` signs in to Supabase using the fixed admin email.
+- `adminAuth.js` signs in with the fixed admin email and verifies
+  `public.is_admin()`; a session alone is not treated as admin.
 - Calendar writes in `CalendarPage.jsx` are allowed only when RLS sees an
   authenticated admin user.
 
@@ -171,7 +174,9 @@ Database commands:
 ```bash
 npm run db:seed
 npm run db:bundle
+npm run db:bundle:check
 npm run db:migrate
+npm run db:migrate:seed
 npm run db:verify
 ```
 

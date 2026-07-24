@@ -1,5 +1,8 @@
 # IMPROVEMENT_ROADMAP.md — Saptham Website
 
+> Historical roadmap. Several dependency, deployment, routing, and backend
+> items are complete; current security actions live in `docs/SECURITY_REPORT.md`.
+
 Ordered by effort. Items marked **[BLOCKER]** must be done before a real production deploy.
 
 ## Quick wins (≈1 hour each)

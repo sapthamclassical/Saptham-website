@@ -11,11 +11,12 @@ change directories.
 
 ## Prerequisites
 
-- Node.js 20 or newer.
+- Node.js 22.22.0 or newer (the minimum is pinned by `.node-version`).
 - npm.
 - Git.
 - A Supabase project, only if you want live CMS data.
-- Supabase database password, only if you want to run migrations from the CLI.
+- Supabase database connection details and CA certificate, only if you want to
+  verify or run migrations from the CLI.
 - Optional pipeline tools for asset generation:
   - ffmpeg
   - Blender
@@ -56,11 +57,16 @@ VITE_SUPABASE_PUBLISHABLE_KEY=sb_publishable_xxxxxxxxxxxxxxxxxxxx
 These values are browser-safe publishable credentials. Do not place the
 Supabase `service_role` key in this repository or in any `VITE_*` variable.
 
-For database migration scripts, also add this to `.env`:
+For database tooling, provide either `SUPABASE_DB_URL` or all explicit
+connection components, plus the project database CA certificate path:
 
 ```env
-SUPABASE_DB_PASSWORD=your_database_password
+SUPABASE_DB_URL=postgresql://user:password@host:5432/postgres
+SUPABASE_DB_CA_CERT=C:\secure\supabase-ca.pem
 ```
+
+Do not use a generic `DATABASE_URL`. The runner refuses implicit project
+defaults and unverified TLS.
 
 ## 3. Start The Website Locally
 
@@ -121,7 +127,13 @@ To apply migrations from the CLI:
 npm run db:migrate
 ```
 
-To verify the database catalog only:
+This excludes seed upserts. To deliberately reapply generated content too:
+
+```bash
+npm run db:migrate:seed
+```
+
+To run read-only schema, RLS, privilege, row-count, and Storage verification:
 
 ```bash
 npm run db:verify
@@ -137,6 +149,12 @@ To regenerate the combined SQL bundle:
 
 ```bash
 npm run db:bundle
+```
+
+To verify that the bundle is current without rewriting it:
+
+```bash
+npm run db:bundle:check
 ```
 
 If applying manually from the Supabase SQL Editor, run the migration files one

@@ -1,118 +1,100 @@
 # Saptham — Supabase backend
 
-Content lives in Postgres, images in Storage; the React app reads it through a
-typed repository layer with an offline JSON fallback.
+The Vite SPA uses Supabase Auth, PostgREST, Realtime, and public Storage. The
+publishable browser key is expected to be public; authorization is enforced by
+Postgres grants and RLS.
 
-```
-supabase/
-  migrations/
-    20260718090001_schema.sql   STEP 1 — tables, enums, triggers, is_admin()
-    20260718090002_rls.sql      STEP 2 — RLS + policies on every table
-    20260718090004_grants.sql   STEP 3 — role GRANTs (without these, RLS is unreachable)
-    20260718090003_storage.sql  STEP 5 — the 7 buckets + object policies  (run LAST)
-  seed/
-    0001_seed.sql               STEP 4 — GENERATED from src/data/*.json
-  apply_all.sql                 all five, in order (schema → RLS → grants → seed → storage)
-```
+## Migration order
 
-## Applying it
+The canonical source is `supabase/migrations/*.sql`:
 
-```bash
-npm run db:migrate    # applies each file in its OWN transaction, then verifies
-npm run db:verify     # re-run the catalog verification only
-```
+1. `20260718090001_schema.sql` — tables, triggers, and `is_admin()`
+2. `20260718090002_rls.sql` — RLS policies
+3. `20260718090004_grants.sql` — explicit API privileges
+4. `20260719100001_calendar_admin.sql` — calendar table and policies
+5. `20260724090001_least_privilege_grants.sql` — forward hardening
+6. `20260718090003_storage.sql` — buckets and object policies (runner moves this
+   timestamped migration last because managed Storage ownership can reject it)
 
-Needs `SUPABASE_DB_PASSWORD` in `.env` (git-ignored). Paste the password raw —
-the runner percent-encodes it, so `@ # / ?` are safe.
+`supabase/apply_all.sql` is a generated fresh-project/bootstrap artifact. It
+also includes seed upserts, so do not use it as a routine live migration.
 
-Each file runs in a separate transaction, so a failure is isolated and every
-earlier success stays committed. On failure the runner prints the **verbatim**
-PostgreSQL error — code, detail, hint, and the offending source line — and stops.
-Every file is idempotent, so re-running is always safe.
+## Secure runner
 
-Prefer the dashboard? Paste the files in the numbered order above, one at a time
-(**SQL Editor → New query → Run**). Don't paste `apply_all.sql` there: the SQL
-Editor wraps a script in a single transaction, so one bad statement rolls back
-everything and leaves you with zero tables.
-
-## Two things that will bite you
-
-**1. RLS is not enough — you also need GRANTs.** Policies decide *which rows* a
-role may see, but Postgres checks table-level privileges first. With RLS
-configured but no `GRANT`, every request fails with:
-
-```
-42501  permission denied for table office_bearers
-```
-
-That is *not* a policy problem, and no amount of policy editing fixes it. That's
-what `20260718090004_grants.sql` is for.
-
-**2. PostgREST caches the schema.** Right after creating tables, the API can
-still answer:
-
-```
-PGRST205  Could not find the table 'public.office_bearers' in the schema cache
-```
-
-The tables exist; the API just hasn't noticed. Force a refresh:
-
-```sql
-notify pgrst, 'reload schema';
-```
-
-> **If the storage step errors, you are still fine.** `storage.objects` is owned
-> by `supabase_storage_admin` and some projects refuse policy changes from the
-> SQL Editor. Everything before it is already committed and the website works.
-> Buckets marked `public` are world-readable without any policy, which is all the
-> site needs to *display* images; the write policies only matter for uploading
-> from the browser and can be added in Dashboard → Storage → Policies.
-
-Regenerate after editing content or migrations:
+Copy `.env.example` to `.env` and provide an explicit database URL, or the
+explicit host/user/password components. Also download the project database CA
+certificate from Supabase and set `SUPABASE_DB_CA_CERT` to its local path. The
+runner refuses unverified TLS, generic `DATABASE_URL`, implicit project
+defaults, unknown flags, and invocations without an explicit mode. Verification
+also rejects unreviewed public/storage policies and buckets.
 
 ```bash
-npm run db:seed     # rebuild seed from src/data/*.json
-npm run db:bundle   # rebuild apply_all.sql
+npm run db:verify          # read-only catalog/security verification
+npm run db:migrate         # migrations only; no content seed
+npm run db:migrate:seed    # explicit migration + seed upserts
 ```
 
-## Becoming an admin
+Each migration uses its own transaction and the run holds a Postgres advisory
+lock. A failure stops the run and prints safe server diagnostics/position
+without echoing SQL source text or row-bearing error detail. The scripts are
+idempotent, but there is no migration ledger yet; reruns execute every file.
 
-RLS is deny-by-default: the public can read published content and submit contact
-messages; everything else needs an admin. Admins are rows in `admin_users`:
+Regenerate/check local artifacts:
 
-1. Authentication → Users → Add user (or sign up in the app).
-2. SQL Editor:
+```bash
+npm run db:seed
+npm run db:bundle
+npm run db:bundle:check
+```
+
+## One-time administrator setup
+
+No credential, password verifier, `auth.users` row, or admin membership is
+created by migrations.
+
+1. In Supabase Dashboard → Authentication → Users, create the fixed application
+   identity `admin@saptham.club` with a unique randomly generated password.
+2. Because an earlier public Git revision contained a bcrypt verifier, rotate
+   that identity's password before relying on this deployment.
+3. In SQL Editor, grant the existing identity membership:
 
 ```sql
 insert into public.admin_users (user_id, email, note)
-select id, email, 'secretary 2025-26' from auth.users where email = 'you@example.com'
-on conflict (user_id) do nothing;
+select id, email, 'site admin'
+from auth.users
+where email = 'admin@saptham.club'
+on conflict (user_id) do update
+set email = excluded.email;
 ```
 
-## Security model
+The browser intentionally asks only for the password. It signs in with the
+fixed email internally and then calls `public.is_admin()`; a valid Supabase
+session without an `admin_users` row is rejected.
 
-| Table | anon (public site) | admin |
+## API security model
+
+| Resource | Anonymous | Authenticated admin |
 |---|---|---|
-| `office_bearers`, `alumni`, `events`, `event_gallery`, `performances`, `achievements`, `sponsors` | SELECT where `is_published = true` | full |
-| `announcements` | SELECT where published **and** inside `starts_at`…`ends_at` | full |
-| `contact_messages` | **INSERT only** — cannot read anyone's messages | full |
-| `media_assets` | SELECT (files are public anyway) | full |
-| `settings` | SELECT where `is_public = true` | full |
-| `admin_users` | none | full (users may read their own row) |
+| Published content and calendar | `SELECT` through RLS | full CRUD through RLS |
+| `contact_messages` | column-limited `INSERT`; no read | full CRUD through RLS |
+| `admin_users` | no table access | self-read/admin management through RLS |
+| `is_admin()` | execute | execute |
+| Future tables/functions | no API privilege by default | no API privilege by default |
 
-RLS is `ENABLE`d, never `FORCE`d — forcing it would subject the table owner to
-the policies and break the seed and any service_role maintenance.
+`TRUNCATE`, `TRIGGER`, and `REFERENCES` are removed from both API roles. The
+roles also cannot create objects in `public`, and future functions do not
+inherit PostgreSQL's default `PUBLIC EXECUTE`. The anonymous contact policy
+bounds new public input without imposing constraints on unknown legacy inbox
+rows. Calendar fields are bounded in the admin UI; add database constraints
+only after inspecting existing live rows.
 
-`VITE_SUPABASE_PUBLISHABLE_KEY` is *designed* to ship in the browser bundle; it
-grants only what the policies above allow. **Never** put the `service_role` key
-in this repo or any `VITE_*` variable — it bypasses RLS entirely.
+Never place a `service_role`/secret key in this repository or in a `VITE_*`
+variable. It bypasses RLS.
 
-## Storage buckets
+## Storage
 
-`office-bearers` · `alumni` · `events` · `gallery` · `hero` · `assets` · `logos`
-
-All public-read, admin-write, with size caps and mime allow-lists.
-
-Store the **path** (e.g. `dhanya-v.jpg`) in the row's `image_path`; the app turns
-it into a public URL. Leave it `null` and the UI keeps the premium initials
-placeholder — no broken images, and never an AI-generated face.
+The seven configured buckets are public-read and admin-write. Public buckets
+cannot protect draft objects: an object URL remains readable even if its
+database row is unpublished. Changing bucket visibility or allowed MIME types
+can break existing assets, so review that separately in the Supabase Dashboard
+before tightening it.

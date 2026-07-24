@@ -1,5 +1,9 @@
 # COMPONENT_TREE.md — Saptham Website
 
+> Historical component snapshot. File/dependency inventory predates the
+> Supabase/security work; use `README.md` and `docs/ARCHITECTURE.md` for the
+> current runtime architecture.
+
 ## Runtime component tree
 
 ```

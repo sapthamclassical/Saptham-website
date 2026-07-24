@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, NavLink, useLocation } from "react-router-dom";
+import { Link, NavLink, useLocation } from "react-router";
 import { AnimatePresence, motion as Motion, useReducedMotion } from "motion/react";
 import officialGold from "../assets/logo-gold.png";
 import { SWARA_LIGHTS } from "./stage/Stage";

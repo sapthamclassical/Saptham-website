@@ -56,15 +56,19 @@ export async function createSeasonEvent(input: {
   accent?: string;
 }): Promise<{ error: string | null }> {
   if (!isSupabaseConfigured || !supabase) return { error: "Supabase not configured" };
-  const { error } = await supabase.from("calendar_events").insert({
-    title: input.title,
-    happens_on: input.date,
-    venue: input.venue ?? null,
-    details: input.details ?? null,
-    time_note: input.timeNote ?? null,
-    accent: input.accent ?? null,
-  });
-  return { error: error?.message ?? null };
+  const { data, error } = await supabase
+    .from("calendar_events")
+    .insert({
+      title: input.title,
+      happens_on: input.date,
+      venue: input.venue ?? null,
+      details: input.details ?? null,
+      time_note: input.timeNote ?? null,
+      accent: input.accent ?? null,
+    })
+    .select("id");
+  if (error) return { error: error.message };
+  return { error: data?.length === 1 ? null : "The calendar event was not created." };
 }
 
 export async function updateSeasonEvent(
@@ -72,7 +76,7 @@ export async function updateSeasonEvent(
   patch: Partial<{ title: string; date: string; venue: string; details: string; timeNote: string; accent: string; isPublished: boolean }>,
 ): Promise<{ error: string | null }> {
   if (!isSupabaseConfigured || !supabase) return { error: "Supabase not configured" };
-  const { error } = await supabase
+  const { data, error } = await supabase
     .from("calendar_events")
     .update({
       ...(patch.title !== undefined && { title: patch.title }),
@@ -83,12 +87,19 @@ export async function updateSeasonEvent(
       ...(patch.accent !== undefined && { accent: patch.accent }),
       ...(patch.isPublished !== undefined && { is_published: patch.isPublished }),
     })
-    .eq("id", id);
-  return { error: error?.message ?? null };
+    .eq("id", id)
+    .select("id");
+  if (error) return { error: error.message };
+  return { error: data?.length === 1 ? null : "The calendar event was not updated." };
 }
 
 export async function deleteSeasonEvent(id: string): Promise<{ error: string | null }> {
   if (!isSupabaseConfigured || !supabase) return { error: "Supabase not configured" };
-  const { error } = await supabase.from("calendar_events").delete().eq("id", id);
-  return { error: error?.message ?? null };
+  const { data, error } = await supabase
+    .from("calendar_events")
+    .delete()
+    .eq("id", id)
+    .select("id");
+  if (error) return { error: error.message };
+  return { error: data?.length === 1 ? null : "The calendar event was not deleted." };
 }

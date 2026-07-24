@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "description": "Saptham AI Creative Production Engine — provider-agnostic asset pipeline (implements docs/pipeline canon).",
-  "engines": { "node": ">=20" },
+  "engines": { "node": "^20.19.0 || >=22.12.0" },
   "scripts": {
     "canon:load": "tsx pipeline/canon/validate.ts",
     "ingest": "tsx pipeline/cli/ingest.ts",
@@ -41,6 +41,6 @@
     "tsx": "^4.19.1",
     "typescript": "^5.6.2",
     "typescript-eslint": "^8.8.0",
-    "vitest": "^2.1.1"
+    "vitest": "^4.1.10"
   }
 }

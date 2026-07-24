@@ -1,72 +1,95 @@
-# SECURITY_REPORT.md — Saptham Website
+# Saptham security report
 
-**Overall risk: LOW.** This is a static, read-only brochure SPA with no backend, no auth,
-no database, and no user data at rest. The attack surface is small. No hard secrets are
-exposed. Findings below are mostly hardening opportunities.
+Audit date: 2026-07-24
+Scope: website, Git history, dependencies, Supabase SQL/tooling, forms, and
+Cloudflare Pages configuration.
 
-## Summary table
-| Severity | Finding |
-|----------|---------|
-| Low | Formspree form ID is public & spammable (no anti-bot) |
-| Low | Footer external links missing `rel="noopener noreferrer"` (`target` also absent) |
-| Low | No SEO/security meta; no CSP header (host-level) |
-| Info | No `.env`, no API keys, no tokens committed — clean |
-| Info | Google Maps embed is keyless — nothing to leak |
-| Info | Dependencies modern; run `npm audit` in CI to stay current |
+## Architecture
 
-## 1. Exposed secrets / API keys
-**None found.** No `.env` file, no hardcoded credentials, tokens, or private keys in the
-repo or the built bundle. The only "identifiers" present are:
-- **Formspree form ID `mojwgvjb`** — a *public* endpoint ID (by design). Not a secret, but
-  see #2.
-- **Google Maps embed URL** — keyless embed; no secret.
-- **Public contact info** (club emails/phones) — intentionally public.
+Saptham is a static Vite/React SPA on Cloudflare Pages. The browser talks
+directly to Supabase Auth/PostgREST/Realtime/Storage with a publishable key and
+to Formspree for the active contact form. Supabase grants and RLS—not the hidden
+admin UI—are the authorization boundary.
 
-## 2. Contact form abuse (Low)
-`POST https://formspree.io/f/mojwgvjb` is callable by anyone who reads the bundle. There is
-**no honeypot, no CAPTCHA, and no client rate limiting**, so the form is spammable.
-- **Mitigation:** enable Formspree's built-in reCAPTCHA/honeypot, or add a hidden
-  honeypot field, and rely on Formspree's server-side spam filtering & quotas.
+## Fixed in the current worktree
 
-## 3. Cross-site scripting (XSS) — LOW
-- **No `dangerouslySetInnerHTML`** anywhere. React escapes interpolated content by default.
-- All rendered content is **static, developer-authored** literals — no user-generated HTML
-  is rendered back. Contact form input is sent to Formspree, never echoed into the DOM.
-- **Verdict:** no practical XSS vector in current code.
+- Removed the committed admin bcrypt verifier and all executable credential/
+  `auth.users` bootstrapping from SQL.
+- Replaced broad current/future Postgres API grants with an explicit
+  table/operation matrix; denied API-role schema creation; and made future
+  functions private with a verified global default-ACL override.
+- Enabled RLS before the schema migration can commit.
+- Secured `is_admin()` and trigger function search paths and execution grants.
+- Required the UI to verify `is_admin()` after authentication.
+- Made calendar writes require exactly one returned row so RLS-hidden writes
+  cannot be reported as successful after authorization is lost.
+- Repaired child-content publication policies and bounded anonymous contact
+  input without constraining unknown legacy inbox rows.
+- Made the migration runner require an explicit target/mode, verified TLS,
+  an advisory lock, explicit opt-in before seed upserts, strict policy/bucket
+  allowlists, and redacted database error detail that may contain row values.
+- Added CSP and Cloudflare security headers; reduced unused CSP sources.
+- Added Formspree's supported honeypot and client-side field bounds.
+- Removed unused packages, upgraded React Router past the current advisory, and
+  pinned its Node 22.22.0 minimum.
+- Disabled URL-session parsing because this app has no OAuth, magic-link, or
+  recovery redirect flow.
 
-## 4. CSRF — Not applicable
-No authenticated session, no cookies, no state-changing same-origin endpoints. The form
-posts cross-origin to Formspree, which handles its own request validation.
+## Critical manual action
 
-## 5. Injection (SQL/command/template) — Not applicable
-No backend, no database, no server-side query construction.
+Git commit `a1fee98d1d7a326793642d6363f5e0355998a496` in this public repository
+contained the administrator's bcrypt verifier. Removing it from the current
+tree does not remove it from public history, and it permits offline password
+guessing.
 
-## 6. Insecure external links (Low)
-- `ContactUs.jsx` social links correctly use `target="_blank" rel="noopener noreferrer"`.
-- **`Footer.jsx` social links use neither `target` nor `rel`** — add
-  `rel="noopener noreferrer"` (and `target="_blank"`) to prevent reverse-tabnabbing and
-  match the contact page behavior.
+Before relying on admin access, an authorized operator must:
 
-## 7. Authentication / authorization
-None exists and none is required for a public brochure site. If an admin/CMS area is added
-later (see roadmap), it must introduce proper auth — do **not** ship an unauthenticated
-edit surface.
+1. Rotate the Supabase password for `admin@saptham.club` to a unique,
+   randomly generated password.
+2. Confirm the corresponding `admin_users` membership.
+3. Decide whether to coordinate a Git history rewrite. That is disruptive and
+   was not performed by this audit.
 
-## 8. Dependency vulnerabilities
-- Stack is current (React 19.1, Vite 6.2, Tailwind 4.1, react-router 7.8). No known-critical
-  advisories were introduced by choice of versions.
-- **Action:** add `npm audit --production` (or Dependabot/Renovate) to CI and review
-  periodically. Remove unused deps (`swiper`, `@emailjs/browser`) to shrink surface.
+No plaintext database password, private key, service-role/secret Supabase key,
+JWT signing secret, or common cloud/API token was found in reachable or dangling
+Git blobs. `.env` was not found in Git history.
 
-## 9. Transport / headers (host-level)
-- Serve exclusively over **HTTPS** (Netlify/Vercel do this automatically).
-- Consider adding security headers at the host: `Content-Security-Policy` (allow self +
-  Formspree + Google Maps embed frame), `X-Content-Type-Options: nosniff`,
-  `Referrer-Policy: strict-origin-when-cross-origin`, `X-Frame-Options`/`frame-ancestors`.
+## Remaining decisions and risks
 
-## Recommended actions (priority order)
-1. Add `rel="noopener noreferrer"` (+`target="_blank"`) to Footer social links.
-2. Turn on Formspree spam protection (reCAPTCHA/honeypot).
-3. Add host security headers + enforce HTTPS.
-4. Add `npm audit` / Dependabot to CI; prune unused dependencies.
-5. If a CMS/admin is ever added, design authentication before exposing any write path.
+- Auth sessions persist in browser local storage. Switching to session-only
+  storage changes admin UX and requires a product decision.
+- The password-only shared administrator has no MFA or per-person audit
+  attribution. Supabase authorization is enforced, but identity assurance is
+  limited.
+- Public Storage buckets make object URLs public even when related database
+  rows are drafts. SVG is also allowed in two buckets. Bucket/MIME changes
+  require an asset compatibility review.
+- `performances.event_id` is nullable and uses `ON DELETE SET NULL`; a published
+  child of a deleted unpublished event can become a public standalone row.
+  Changing this requires a content-model/data decision.
+- Public content rows can expose every selected column (for example office
+  bearer contact fields and media metadata). A public-view design would reduce
+  that surface but changes API/types.
+- The active contact route is Formspree while a separate Supabase contact
+  repository remains anonymously writable without server-side rate limiting.
+  Pick one canonical inbox before adding CAPTCHA/Edge Function controls.
+- CSP permits any `*.supabase.co` project so previews can use a different
+  project. Pinning the production project origin is stronger but changes the
+  preview/staging setup.
+- Formspree reCAPTCHA and server-side spam settings must be enabled/verified in
+  the Formspree dashboard.
+- The migration runner intentionally has no database migration ledger yet; its
+  SQL is idempotent and replays every file.
+- The local `.env` Windows ACL should be reviewed because local machine users
+  may have broader access than necessary.
+
+## Live verification still required
+
+No live Supabase mutation, password rotation, Cloudflare deployment, Git
+history rewrite, commit, or push is part of this worktree audit. With authorized
+credentials, run `npm run db:verify`, review the output, apply migrations, and
+verify again. An anonymous browser smoke test confirmed that the local build can
+read the deployed calendar backend, but that does not verify the live catalog,
+RLS drift, admin writes, or Storage writes. The current Cloudflare deployment
+also predates the pending CSP headers. See `supabase/README.md` and
+`docs/DEPLOYMENT_GUIDE.md`.

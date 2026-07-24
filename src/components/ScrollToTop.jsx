@@ -1,5 +1,5 @@
 import { useEffect, useLayoutEffect } from "react";
-import { useLocation, useNavigationType } from "react-router-dom";
+import { useLocation, useNavigationType } from "react-router";
 import { scrollToTop, scrollToEl } from "../lib/scroll";
 
 /**
@@ -41,7 +41,13 @@ const ScrollToTop = () => {
     // An in-page anchor (/#office-bearers) is a deliberate request for a
     // position — honour it instead of overriding it.
     if (hash) {
-      const target = document.querySelector(hash);
+      let id = hash.slice(1);
+      try {
+        id = decodeURIComponent(id);
+      } catch {
+        // Keep the literal fragment when it contains malformed percent escapes.
+      }
+      const target = document.getElementById(id);
       if (target) {
         scrollToEl(target);
         return;

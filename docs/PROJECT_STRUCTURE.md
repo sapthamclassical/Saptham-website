@@ -1,5 +1,8 @@
 # PROJECT_STRUCTURE.md — Saptham Website
 
+> Historical tree snapshot. Use `README.md` and `docs/ARCHITECTURE.md` for the
+> current Supabase-enabled structure.
+
 ## Repository tree (source, excludes node_modules/dist/.git)
 
 ```

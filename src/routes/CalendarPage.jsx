@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { motion as Motion, useReducedMotion } from "motion/react";
 import { Atmosphere, CharReveal, MandalaRing, SoundWave, KolamKnot, SWARA_LIGHTS } from "../components/stage/Stage";
 import { Reveal } from "../components/motion/Motion";
@@ -105,6 +105,7 @@ const Bead = ({ ev, i, isAdmin, onEdit, onDelete }) => {
 const blank = { title: "", date: "", venue: "", timeNote: "", details: "" };
 const Editor = ({ initial, onSave, onCancel }) => {
   const [f, setF] = useState(initial ?? blank);
+  const [busy, setBusy] = useState(false);
   const set = (k) => (e) => setF({ ...f, [k]: e.target.value });
   const input = "w-full border border-granite bg-sanctum/70 px-3 py-2.5 text-sm text-ivory outline-none placeholder:text-basalt focus:border-gold";
   return (
@@ -113,22 +114,31 @@ const Editor = ({ initial, onSave, onCancel }) => {
       style={{ "--gb-a": "#F2B458", "--gb-b": "#4FB6A6" }}
       initial={{ opacity: 0, y: 14 }}
       animate={{ opacity: 1, y: 0 }}
-      onSubmit={(e) => {
+      onSubmit={async (e) => {
         e.preventDefault();
-        if (f.title && f.date) onSave(f);
+        if (!f.title || !f.date || busy) return;
+        setBusy(true);
+        try {
+          const saved = await onSave(f);
+          if (!saved) setBusy(false);
+        } catch {
+          setBusy(false);
+        }
       }}
     >
       <p className="eyebrow">{f.id ? "Edit performance" : "Add a performance"}</p>
-      <input className={input} placeholder="Title *" value={f.title} onChange={set("title")} />
+      <input className={input} placeholder="Title *" value={f.title} onChange={set("title")} maxLength={160} required />
       <div className="flex gap-3">
-        <input className={input} type="date" value={f.date} onChange={set("date")} aria-label="Date" />
-        <input className={input} placeholder="Time (e.g. 6:30 PM)" value={f.timeNote} onChange={set("timeNote")} />
+        <input className={input} type="date" value={f.date} onChange={set("date")} aria-label="Date" required />
+        <input className={input} placeholder="Time (e.g. 6:30 PM)" value={f.timeNote} onChange={set("timeNote")} maxLength={80} />
       </div>
-      <input className={input} placeholder="Venue" value={f.venue} onChange={set("venue")} />
-      <textarea className={input} rows={3} placeholder="Details" value={f.details} onChange={set("details")} />
+      <input className={input} placeholder="Venue" value={f.venue} onChange={set("venue")} maxLength={200} />
+      <textarea className={input} rows={3} placeholder="Details" value={f.details} onChange={set("details")} maxLength={2000} />
       <div className="flex gap-3 pt-1">
-        <button type="submit" className="btn-brass flex-1 justify-center">Save</button>
-        <button type="button" onClick={onCancel} className="btn-brass btn-brass--ghost">Cancel</button>
+        <button type="submit" disabled={busy} className="btn-brass flex-1 justify-center">
+          {busy ? "Saving…" : "Save"}
+        </button>
+        <button type="button" onClick={onCancel} disabled={busy} className="btn-brass btn-brass--ghost">Cancel</button>
       </div>
     </Motion.form>
   );
@@ -141,38 +151,80 @@ const CalendarPage = () => {
   const [events, setEvents] = useState([]);
   const [editing, setEditing] = useState(null); // null | "new" | SeasonEvent
   const [loading, setLoading] = useState(true);
+  const [writeError, setWriteError] = useState("");
+  const [loadError, setLoadError] = useState("");
+  const loadId = useRef(0);
 
-  const load = useCallback(() => {
-    getSeasonEvents().then(({ data }) => {
+  const load = useCallback(async () => {
+    const currentLoad = ++loadId.current;
+    const { data, error } = await getSeasonEvents();
+    if (currentLoad === loadId.current) {
       setEvents(data);
+      setLoadError(error ? "The season could not be refreshed. Please try again shortly." : "");
       setLoading(false);
-    });
+    }
   }, []);
-  useEffect(load, [load]);
+  useEffect(() => {
+    void load();
+  }, [load, isAdmin]);
+  useEffect(() => {
+    if (!isAdmin) {
+      setEditing(null);
+      setWriteError("");
+    }
+  }, [isAdmin]);
 
   const save = async (f) => {
-    if (f.id) await updateSeasonEvent(f.id, { title: f.title, date: f.date, venue: f.venue, timeNote: f.timeNote, details: f.details });
-    else await createSeasonEvent(f);
+    setWriteError("");
+    try {
+      const { error } = f.id
+        ? await updateSeasonEvent(f.id, { title: f.title, date: f.date, venue: f.venue, timeNote: f.timeNote, details: f.details })
+        : await createSeasonEvent(f);
+      if (error) throw new Error("write failed");
+    } catch {
+      setWriteError("The performance could not be saved. Check your admin session and try again.");
+      return false;
+    }
     setEditing(null);
     load();
+    return true;
   };
   const onEdit = async (ev) => {
     if (ev.__togglePublish) {
-      await updateSeasonEvent(ev.id, { isPublished: !ev.isPublished });
+      setWriteError("");
+      try {
+        const { error } = await updateSeasonEvent(ev.id, { isPublished: !ev.isPublished });
+        if (error) throw new Error("write failed");
+      } catch {
+        setWriteError("The publishing status could not be changed. Check your admin session and try again.");
+        return;
+      }
       load();
       return;
     }
+    setWriteError("");
     setEditing(ev);
   };
   const onDelete = async (ev) => {
     if (window.confirm(`Remove "${ev.title}" from the season?`)) {
-      await deleteSeasonEvent(ev.id);
+      setWriteError("");
+      try {
+        const { error } = await deleteSeasonEvent(ev.id);
+        if (error) throw new Error("write failed");
+      } catch {
+        setWriteError("The performance could not be removed. Check your admin session and try again.");
+        return;
+      }
       load();
     }
   };
 
+  // Never retain a privileged rendering path after logout, even while the
+  // anonymous refetch is still in flight.
+  const visibleEvents = isAdmin ? events : events.filter((ev) => ev.isPublished);
+
   /* group by month key, keep date order */
-  const groups = events.reduce((acc, ev) => {
+  const groups = visibleEvents.reduce((acc, ev) => {
     const { month, year } = fmtDay(ev.date);
     const key = `${month} ${year}`;
     (acc[acc.length - 1]?.key === key ? acc[acc.length - 1].items : acc[acc.push({ key, items: [] }) - 1].items).push(ev);
@@ -201,15 +253,38 @@ const CalendarPage = () => {
           {isAdmin && (
             <Reveal delay={0.5}>
               <div className="mt-8 flex items-center justify-center gap-4">
-                <button onClick={() => setEditing("new")} className="btn-brass">Add a performance</button>
+                <button
+                  onClick={() => {
+                    setWriteError("");
+                    setEditing("new");
+                  }}
+                  className="btn-brass"
+                >
+                  Add a performance
+                </button>
                 <button onClick={() => signOutAdmin()} className="btn-brass btn-brass--ghost">Leave green room</button>
               </div>
             </Reveal>
           )}
+          {writeError && (
+            <p role="alert" className="mx-auto mt-5 max-w-lg text-sm text-kumkum">
+              {writeError}
+            </p>
+          )}
+          {loadError && (
+            <p role="status" className="mx-auto mt-5 max-w-lg text-sm text-kumkum">
+              {loadError}
+            </p>
+          )}
         </div>
-        {editing && (
+        {isAdmin && editing && (
           <div className="relative px-6">
-            <Editor initial={editing === "new" ? null : editing} onSave={save} onCancel={() => setEditing(null)} />
+            <Editor
+              key={editing === "new" ? "new" : editing.id}
+              initial={editing === "new" ? null : editing}
+              onSave={save}
+              onCancel={() => setEditing(null)}
+            />
           </div>
         )}
       </section>

@@ -1,4 +1,7 @@
 # SAPTHAM — PRODUCTION AUDIT
+
+> Historical creative-production audit. Any website dependency inventory in
+> this document predates the 2026-07 security cleanup.
 ### Cross-document review, gap analysis & optimized pipeline · v1.0
 **Audits `DESIGN_BIBLE.md`, `ASSET_PRODUCTION_CHECKLIST.md`, `GENERATION_PIPELINE.md`, `GENERATION_PROMPTS.md`, `PROMPT_LIBRARY.md`, `MASTER_ASSET_INVENTORY.md`, `ASSET_PRODUCTION_ROADMAP.md`.**
 

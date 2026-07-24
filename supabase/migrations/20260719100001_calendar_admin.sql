@@ -1,8 +1,12 @@
 -- ============================================================================
 -- CALENDAR + ADMIN — team priorities 5-7
--- A calendar_events table the public reads and admins edit, plus one real
--- Supabase auth user so the password-only admin door is enforced by RLS,
--- not by client-side obscurity. Only the bcrypt hash lives here.
+-- A calendar_events table the public reads and admins edit. The admin's write
+-- authorization is enforced server-side by RLS is_admin().
+--
+-- SECURITY: the admin auth user and admin_users membership are created OUT OF
+-- BAND. A credential or verifier must never live in this public repository.
+-- An earlier revision committed a bcrypt verifier; removing it here does not
+-- remove Git history, so that password must be rotated separately.
 -- Idempotent — safe to re-run.
 -- ============================================================================
 
@@ -28,42 +32,16 @@ alter table public.calendar_events enable row level security;
 
 drop policy if exists public_read_published on public.calendar_events;
 create policy public_read_published on public.calendar_events
-  for select using (is_published = true or public.is_admin());
+  for select to anon, authenticated
+  using (is_published = true or public.is_admin());
 
 drop policy if exists admin_all on public.calendar_events;
 create policy admin_all on public.calendar_events
-  for all using (public.is_admin()) with check (public.is_admin());
+  for all to authenticated
+  using (public.is_admin()) with check (public.is_admin());
 
 grant select on public.calendar_events to anon, authenticated;
 grant insert, update, delete on public.calendar_events to authenticated;
 
--- ── the admin auth user (email fixed, password entered in the hidden door) ──
-do $$
-declare uid uuid := 'ad111000-0000-4000-8000-000000000001';
-begin
-  if not exists (select 1 from auth.users where email = 'admin@saptham.club') then
-    insert into auth.users (
-      instance_id, id, aud, role, email, encrypted_password, email_confirmed_at,
-      raw_app_meta_data, raw_user_meta_data, created_at, updated_at,
-      confirmation_token, recovery_token, email_change_token_new, email_change
-    ) values (
-      '00000000-0000-0000-0000-000000000000', uid, 'authenticated', 'authenticated',
-      'admin@saptham.club',
-      '$2a$06$V1PoaUvtCdRHQMmexH7el.WV9rR1.oBibG8gCQI/J3a8eZUfUsgO.',
-      now(), '{"provider":"email","providers":["email"]}', '{}', now(), now(),
-      '', '', '', ''
-    );
-    insert into auth.identities (
-      id, user_id, provider_id, identity_data, provider,
-      last_sign_in_at, created_at, updated_at
-    ) values (
-      gen_random_uuid(), uid, uid::text,
-      jsonb_build_object('sub', uid::text, 'email', 'admin@saptham.club', 'email_verified', true),
-      'email', now(), now(), now()
-    );
-  end if;
-
-  insert into public.admin_users (user_id, email, note)
-  select id, email, 'site admin (calendar)' from auth.users where email = 'admin@saptham.club'
-  on conflict (user_id) do nothing;
-end $$;
+-- No auth.users or admin_users rows are created here. See supabase/README.md for
+-- the reviewed, manual one-time membership step.

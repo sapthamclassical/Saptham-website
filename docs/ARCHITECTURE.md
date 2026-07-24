@@ -1,100 +1,75 @@
-# ARCHITECTURE.md — Saptham Website
+# Saptham architecture
 
-## 1. What this is
-A **single-page marketing/brochure website** for **Saptham**, the official classical
-dance & music club of Anna University (CEG). It is a **100% client-side React SPA**
-with **no backend, no database, and no authentication**. All content is hard-coded in
-component files; the only outbound integrations are a **Formspree** contact endpoint and
-a **Google Maps** embed iframe.
+## Runtime
 
-## 2. High-level architecture
+Saptham is a client-rendered React/Vite SPA deployed as static files on
+Cloudflare Pages. There is no custom server process. Dynamic content,
+authentication, authorization, and media storage are supplied by Supabase.
+Formspree handles the active contact form.
 
-```
-                          ┌──────────────────────────────┐
-   Browser                │        index.html            │
-   ───────                │  <div id="root"> + main.jsx  │
-                          └───────────────┬──────────────┘
-                                          │ createRoot().render()
-                          ┌───────────────▼──────────────┐
-                          │  <StrictMode>                 │
-                          │   <BrowserRouter>   (history) │
-                          │     <App/>                    │
-                          └───────────────┬──────────────┘
-                                          │
-        ┌─────────────────────────────────┼─────────────────────────────────┐
-        │ Navbar (persistent)             │                     Footer (persistent)
-        │                          <Routes> (client-side)
-        │      ┌───────────────┬───────────┴───────────┬────────────────┐
-        │      │ "/"           │ "/events"             │ "/gallery"     │ "/contact"
-        │  Hero+Vision+     ProductionEvents        Gallery          ContactUs
-        │  OfficeBearers+   + GeneralEvents         (+GalleryCarousel) (Formspree)
-        │  Testimonials         │                                          │
-        │                    EventCard (shared)                    Google Maps iframe
-        └───────────────────────────────────────────────────────────────────┘
+```text
+Cloudflare Pages
+  index.html + hashed assets
+          |
+          v
+React 19 / BrowserRouter
+  |-- route components
+  |-- content hooks + local fallbacks
+  |-- Supabase repositories
+  `-- hidden password-only admin entry
+          |
+          +--> Supabase Auth / PostgREST / Realtime / Storage
+          `--> Formspree (contact form)
 ```
 
-- **Rendering model:** CSR (client-side rendering). `index.html` ships an empty
-  `#root`; React mounts the whole tree in the browser. No SSR, no SSG, no hydration.
-- **Routing:** `react-router-dom` v7 `BrowserRouter` with 4 routes. The home route
-  composes four sections; the other three are dedicated pages. In-page navigation
-  (Vision, Office Bearers) uses `scrollIntoView` anchors, not routes.
-- **Styling:** Tailwind CSS **v4** (via `@tailwindcss/vite` plugin + `@import "tailwindcss"`
-  in `App.css`) plus **daisyUI v5** component classes. There is **no CSS-in-JS** and only
-  ~2 lines of custom CSS.
-- **Animation:** `motion` (Framer Motion v12) drives the alumni testimonials carousel.
+## Application layers
 
-## 3. Layers / responsibilities
+| Layer | Location | Responsibility |
+|---|---|---|
+| Bootstrap/shell | `src/main.jsx`, `src/App.jsx` | router, global layout, transitions |
+| Routes | `src/routes/` | page-level screens and lazy route chunks |
+| Components | `src/components/` | sections, stage effects, motion, shared UI |
+| Content hooks | `src/hooks/useContent.js` | synchronous fallback seed and async refresh |
+| Repositories | `src/data/repositories/` | typed Supabase queries and writes |
+| Browser backend client | `src/lib/supabase.ts` | publishable client/session configuration |
+| Database security | `supabase/migrations/` | schema, grants, RLS, functions, Storage |
+| Deployment policy | `public/_headers` | CSP, security headers, and cache rules |
 
-| Layer | Files | Responsibility |
-|-------|-------|----------------|
-| Bootstrap | `index.html`, `src/main.jsx` | Mount React, install router |
-| App shell | `src/App.jsx` | Layout (Navbar/main/Footer) + route table |
-| Pages | `Events.jsx`, `Gallery.jsx`, `ContactUs.jsx` | Route-level screens |
-| Home sections | `Hero`, `Vision`, `OfficeBearers`, `Testimonials` | Composed under `/` |
-| Reusable UI | `EventCard.jsx`, `GalleryCarousel.jsx`, `ui/animated-testimonials.jsx` | Shared presentational components |
-| Utility | `lib/utils.jsx` (`cn()`) | Tailwind class merge helper (currently unused by app code) |
-| Data | Inline arrays inside components | Officers, events, testimonials — no external data source |
-| Assets | `src/assets/**` | Logo, office-bearer photos, gallery images (imported by Vite) |
+## Data flow
 
-## 4. Data flow
-There is **no dynamic data flow**. Every piece of content is a JavaScript literal defined
-inside the component that renders it:
-- `OfficeBearers.jsx` → `officers[]`
-- `ProductionEvents.jsx` / `GeneralEvents.jsx` → `productionEvents[]` / `events[]`
-- `Testimonials.jsx` → `testimonials[]`
+Public content hooks render bundled JSON/assets immediately and then resolve
+Supabase data. Missing configuration, empty migrated tables, or network errors
+fall back without breaking first paint. The season calendar has no bundled
+event fallback and displays an explicit load failure for backend errors.
 
-The single runtime data path is the **contact form**:
+The active contact form posts to Formspree. An optional, currently unused
+Supabase contact repository is protected by column-level grants and a bounded
+anonymous insert policy.
 
-```
-ContactUs form (name,email,message)
-   → useState(formData)
-   → fetch POST https://formspree.io/f/mojwgvjb  (JSON)
-   → Formspree delivers email to club inbox
-   → setStatus('success'|'error')
-```
+## Authentication and authorization
 
-## 5. State management
-Local component state only, via `useState`/`useEffect`. No Redux, Zustand, Context, or
-React Query. State is confined to:
-- `Navbar`: `isOpen` (mobile menu), `scrolled` (scroll position).
-- `Gallery`: `active` category, `modalOpen`, `currentIndex`, `carouselOpen`.
-- `ContactUs`: `formData`, `isLoading`, `status`.
-- `AnimatedTestimonials`: `active` index.
+The admin modal asks only for a password; the client internally signs in as the
+fixed Supabase identity `admin@saptham.club`. A successful session is not enough:
+the client verifies `public.is_admin()`, and all writes are independently
+checked by RLS. Draft calendar rows are filtered immediately and refetched when
+admin status is lost.
 
-## 6. Key architectural characteristics
-- **Strengths:** tiny, understandable, fast to onboard, modern toolchain (Vite 6,
-  React 19), clean component separation, no server to operate.
-- **Weaknesses / risks (detail in SECURITY_REPORT & PERFORMANCE_REPORT):**
-  1. Events images referenced as raw `"/src/assets/..."` strings → **404 in production**.
-  2. Testimonial images reference `/images/testimonials/*.jpg` with **no `public/` folder** → 404 everywhere.
-  3. SPA deep-links (`/events`, `/gallery`, `/contact`) require host **rewrite rules**.
-  4. ~21 MB of **unoptimized images** bundled (single 6.3 MB JPG).
-  5. Content is hard-coded → every edit is a code change + redeploy (no CMS).
+The hidden gesture is discoverability only, never a security boundary.
 
-## 7. Technology decisions worth knowing
-- **Tailwind v4**: configured through the Vite plugin and CSS `@import`, **not** through
-  the legacy `tailwind.config.js` (which is vestigial CommonJS and effectively ignored).
-- **daisyUI v5**: supplies `btn`, `card`, `menu`, `carousel`, `input` classes.
-- **Two icon libraries** are installed (`lucide-react` + `@tabler/icons-react`) — redundant.
-- **Dead dependencies**: `swiper` and `@emailjs/browser` are installed but never imported
-  (the form uses Formspree via `fetch`).
+## Deployment behavior
+
+Cloudflare Pages performs automatic SPA fallback because there is no top-level
+`404.html`. `_headers` is copied into `dist` by Vite. The React Router 8 minimum,
+Node 22.22.0, is pinned in `.node-version`. Database migrations are an explicit
+operator step and are not part of the Pages build.
+
+## Known architectural trade-offs
+
+- Admin sessions persist in browser local storage.
+- The fixed shared admin identity has no per-person attribution or MFA.
+- Storage buckets are public-read, so draft object URLs are not private.
+- CSP allows `*.supabase.co` to preserve preview/staging compatibility.
+- Large image assets and the main JavaScript chunk remain performance work.
+
+See `docs/SECURITY_REPORT.md`, `docs/DEPLOYMENT_GUIDE.md`, and
+`supabase/README.md`.
