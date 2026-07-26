@@ -1,217 +1,335 @@
-# Saptham Website
+<p align="center">
+  <img src="public/brand/saptham-gold.svg" alt="Saptham" width="420" />
+</p>
 
-Premium website for Saptham, the classical music and dance club of CEG, Anna
-University. The project is a React/Vite single-page application with a
-cinematic visual system, route-level animations, Supabase-backed CMS data, and
-bundled fallbacks so the public site continues to render even when the backend
-is not configured.
+<h1 align="center">Saptham</h1>
 
-## Highlights
+<p align="center">
+  The official digital home of the Classical Music &amp; Dance Club of the
+  College of Engineering Guindy, Anna University.
+</p>
 
-- React 19 + Vite application with lazy-loaded routes.
-- Tailwind CSS v4 and DaisyUI styling, with a custom Saptham design system.
-- Motion-rich UI using Motion, GSAP ScrollTrigger, Lenis smooth scrolling, and
-  canvas-based ambient effects.
-- Supabase CMS integration for office bearers, alumni, calendar events, and
-  future content sections.
-- JSON and local asset fallbacks for reliable first paint and offline-friendly
-  development.
-- Hidden Supabase-authenticated admin flow for managing the season calendar.
-- Separate TypeScript creative asset pipeline under `saptham-pipeline/`.
+<p align="center">
+  <a href="https://saptham-website.pages.dev/"><strong>Visit the live website</strong></a>
+  &middot;
+  <a href="#getting-started">Local setup</a>
+  &middot;
+  <a href="#deployment">Deployment</a>
+  &middot;
+  <a href="#documentation">Documentation</a>
+</p>
 
-## Tech Stack
+<p align="center">
+  <img alt="React 19" src="https://img.shields.io/badge/React-19-61DAFB?logo=react&amp;logoColor=0B0806" />
+  <img alt="Vite 6" src="https://img.shields.io/badge/Vite-6-646CFF?logo=vite&amp;logoColor=white" />
+  <img alt="Supabase" src="https://img.shields.io/badge/Backend-Supabase-3FCF8E?logo=supabase&amp;logoColor=white" />
+  <img alt="Cloudflare Pages" src="https://img.shields.io/badge/Hosted_on-Cloudflare_Pages-F38020?logo=cloudflarepages&amp;logoColor=white" />
+  <img alt="Node 22.22+" src="https://img.shields.io/badge/Node.js-%E2%89%A522.22.0-339933?logo=nodedotjs&amp;logoColor=white" />
+</p>
 
-- React
-- Vite
-- React Router
-- Tailwind CSS
-- DaisyUI
-- Motion
-- GSAP
-- Lenis
-- Supabase
-- TypeScript for repository/backend types and pipeline tooling
+---
+
+## Overview
+
+Saptham is a production React single-page application that presents the club's
+Carnatic music, classical dance, performances, people, and lineage through a
+responsive, cinematic interface.
+
+The public experience is deployed on Cloudflare Pages. Supabase provides
+content, authentication, PostgREST APIs, and media storage, while bundled
+fallback data keeps the public website functional during local development or
+temporary backend unavailability.
+
+**Production:** [saptham-website.pages.dev](https://saptham-website.pages.dev/)
+
+## Experience
+
+- Cinematic, responsive homepage with motion, parallax, ambient stage effects,
+  and touch-playable Sapta Swara strings.
+- Dedicated pages for events, galleries, office bearers, alumni, contact
+  information, and the public season calendar.
+- Supabase-backed content repositories with typed database contracts and local
+  JSON fallbacks.
+- Restricted calendar management protected by Supabase Auth, database grants,
+  and Row Level Security.
+- Route-level code splitting, production-safe motion configuration, reduced
+  motion support, and keyboard-accessible interactions.
+- Branded favicons, social metadata, web manifest, and optimized production
+  assets.
+- Content Security Policy, HSTS, clickjacking protection, permissions policy,
+  and intentional cache rules delivered by Cloudflare Pages.
+
+## Routes
+
+| Route | Purpose |
+| --- | --- |
+| `/` | Homepage, club story, current team, and alumni voices |
+| `/events` | Productions, performances, and general events |
+| `/gallery` | Categorized performance and club photography |
+| `/office-bearers` | Current office bearers |
+| `/alumni` | Alumni roster and testimonials |
+| `/contact` | Contact form, social links, and location |
+| `/calendar` | Public season calendar and authorized management interface |
+
+## Technology
+
+| Layer | Technology |
+| --- | --- |
+| UI | React 19, React Router 8 |
+| Build | Vite 6 |
+| Styling | Tailwind CSS 4, DaisyUI, custom design system |
+| Motion | Motion, GSAP ScrollTrigger, Lenis |
+| Backend | Supabase Auth, PostgREST, PostgreSQL, Storage |
+| Contact delivery | Formspree |
+| Hosting | Cloudflare Pages |
+| Tooling | TypeScript, ESLint, npm |
 
 ## Architecture
 
-The website is a client-rendered SPA.
-
 ```text
-index.html
-  -> src/main.jsx
-    -> BrowserRouter
-      -> src/App.jsx
-        -> global shell
-        -> route pages
-        -> section components
-        -> data hooks
-        -> Supabase repositories with fallback data
+Cloudflare Pages
++-- React + Vite single-page application
+    +-- Route and section components
+    +-- Content hooks with an in-memory cache
+    +-- Typed repository layer
+    |   +-- Supabase content and Storage
+    |   `-- Bundled JSON and local asset fallbacks
+    +-- Supabase Auth + RLS-protected administration
+    `-- Formspree contact delivery
 ```
 
-`src/App.jsx` owns the global layout, route transitions, navigation shell,
-smooth scrolling, custom cursor, scroll progress, and page routing.
+Office-bearer and alumni content use a fallback-safe data flow:
 
-Routes are split by page:
+1. Components request content through `src/hooks/useContent.js`.
+2. Hooks initialize the interface from bundled data.
+3. Repository modules query Supabase when browser-safe project variables exist.
+4. Successful Supabase responses replace the fallback state.
+5. Missing configuration, empty migrated tables, or network failures leave
+   those public sections operational with bundled content.
 
-- `/` - home
-- `/events` - productions and festival performances
-- `/gallery` - category-based photo gallery
-- `/office-bearers` - current team roster
-- `/alumni` - alumni roster and testimonials
-- `/contact` - contact form and location
-- `/calendar` - public season calendar and admin editing surface
+The calendar intentionally has no bundled event fallback: it reports an empty
+or unavailable state when live calendar data cannot be reached.
+
+## Getting Started
+
+### Prerequisites
+
+- [Node.js](https://nodejs.org/) 22.22.0 or newer
+- npm
+- Git
+- A Supabase project only when working with live CMS data or administration
+
+The required Node version is recorded in `.node-version` and enforced through
+`package.json`.
+
+### Installation
+
+```bash
+git clone https://github.com/sapthamclassical/Saptham-website.git
+cd Saptham-website
+npm ci
+npm run dev
+```
+
+Vite will print the local address, normally `http://localhost:5173/`.
+
+Supabase configuration is optional for the public interface. Without it, the
+website uses its bundled content and assets.
+
+### Environment Variables
+
+Copy `.env.example` to `.env` when connecting a Supabase project:
+
+```bash
+# macOS or Linux
+cp .env.example .env
+
+# Windows Command Prompt
+copy .env.example .env
+```
+
+| Variable | Scope | Purpose |
+| --- | --- | --- |
+| `VITE_SUPABASE_URL` | Browser | Supabase project URL |
+| `VITE_SUPABASE_PUBLISHABLE_KEY` | Browser | Publishable key constrained by grants and RLS |
+| `SUPABASE_DB_URL` | Local database tooling | Explicit PostgreSQL connection URL |
+| `SUPABASE_DB_HOST` and related fields | Local database tooling | Alternative explicit connection components |
+| `SUPABASE_DB_CA_CERT` | Local database tooling | Path to the Supabase project CA certificate |
+
+Only variables prefixed with `VITE_` are embedded in the browser build. Never
+place a Supabase secret/service-role key, database password, or migration
+credential in a `VITE_*` variable.
+
+## Commands
+
+### Website
+
+| Command | Description |
+| --- | --- |
+| `npm run dev` | Start the Vite development server |
+| `npm run build` | Create the production bundle in `dist/` |
+| `npm run preview` | Preview the production bundle locally |
+| `npm run typecheck` | Run TypeScript checks |
+| `npm run lint` | Run ESLint |
+
+The root website package currently has no test script. Automated tests for the
+optional creative pipeline live in `saptham-pipeline/`.
+
+### Supabase
+
+| Command | Description |
+| --- | --- |
+| `npm run db:seed` | Regenerate seed SQL from local content |
+| `npm run db:bundle` | Regenerate `supabase/apply_all.sql` |
+| `npm run db:bundle:check` | Verify that the generated SQL bundle is current |
+| `npm run db:migrate` | Apply migrations without seed upserts |
+| `npm run db:migrate:seed` | Apply migrations and explicitly upsert seed data |
+| `npm run db:verify` | Run read-only schema, RLS, privilege, and Storage checks |
+
+Database commands require an explicit connection target and verified TLS. Read
+[`supabase/README.md`](supabase/README.md) before applying changes to a live
+project. Seed mode can overwrite CMS rows that share seeded identifiers, so use
+it only when that content update is intentional.
+
+## Supabase Backend
+
+The canonical database source is `supabase/migrations/`. It defines content
+tables, RLS policies, API grants, the season calendar, administrative
+membership, and Storage policies.
+
+The browser uses only the publishable key. Effective access is controlled by:
+
+- explicit PostgreSQL grants;
+- Row Level Security on public and Storage tables;
+- server-side administrator membership checks;
+- restricted function execution privileges; and
+- an authenticated Supabase session for privileged calendar writes.
+
+`supabase/apply_all.sql` is a generated bootstrap artifact and includes seed
+upserts. Use the individual migrations or the guarded migration runner for
+routine live changes.
+
+Recommended operator sequence:
+
+```bash
+npm run db:bundle:check
+npm run db:verify
+npm run db:migrate
+npm run db:verify
+```
+
+Administrator provisioning and credential operations are intentionally kept
+out of migrations. Follow the private operator process and the setup notes in
+[`supabase/README.md`](supabase/README.md); never commit credentials.
+
+## Deployment
+
+The production website is deployed with Cloudflare Pages:
+
+| Setting | Value |
+| --- | --- |
+| Production branch | `main` |
+| Root directory | Repository root |
+| Build command | `npm run build` |
+| Build output directory | `dist` |
+| Node.js version | `22.22.0` |
+| Public environment | `VITE_SUPABASE_URL`, `VITE_SUPABASE_PUBLISHABLE_KEY` |
+
+Import the GitHub repository into Cloudflare Pages and configure the settings
+above. With Git integration enabled, pushes to `main` create a new production
+deployment automatically.
+
+`public/_headers` is copied into the production output and defines the
+Content Security Policy, security headers, and cache behavior. HTML revalidates
+on every visit, while hashed assets are cached immutably.
+
+Cloudflare Pages serves this SPA's direct routes through its automatic fallback
+behavior. A direct visit or refresh on `/calendar`, for example, resolves to the
+application without a custom catch-all redirect.
+
+Before deploying:
+
+```bash
+npm ci
+npm run typecheck
+npm run lint
+npm run build
+npm run db:bundle:check
+npm audit
+```
+
+Then verify the homepage, direct route refreshes, Supabase reads, authorized
+calendar operations, contact delivery, and response security headers. See
+[`docs/DEPLOYMENT_GUIDE.md`](docs/DEPLOYMENT_GUIDE.md) for the full release and
+rollback procedure.
 
 ## Repository Structure
 
 ```text
 .
-|-- docs/                 Project, design, deployment, security, and pipeline docs
-|-- public/brand/         Favicons, web manifest assets, and public brand files
-|-- scripts/              Database and brand maintenance scripts
-|-- saptham-pipeline/     TypeScript creative production engine
-|-- src/
-|   |-- assets/           Gallery photos, portraits, logos, and hero media
-|   |-- components/       UI sections, shared components, motion, brand, stage effects
-|   |-- data/             JSON fallback data and Supabase repositories
-|   |-- hooks/            Content hooks and in-memory content cache
-|   |-- lib/              Supabase client, motion constants, scroll, gallery, people helpers
-|   `-- routes/           Route-level page components
-|-- supabase/             SQL migrations, RLS, grants, storage, seed, bundled SQL
-|-- package.json          Website scripts and dependencies
-|-- vite.config.js        Vite configuration and manual chunks
-`-- tsconfig.json         Type checking for TypeScript source files
++-- docs/                  Architecture, operations, design, and security docs
++-- public/                Brand assets, manifest, and Cloudflare headers
++-- scripts/               Seed, SQL bundle, migration, and brand tooling
++-- saptham-pipeline/      Optional TypeScript creative production engine
++-- src/
+|   +-- assets/            Photography, portraits, logos, and hero media
+|   +-- components/        Sections, shared UI, motion, brand, and stage effects
+|   +-- data/              Fallback content and Supabase repositories
+|   +-- hooks/             Content hooks and cache
+|   +-- lib/               Supabase, motion, scroll, gallery, and people utilities
+|   `-- routes/            Route-level page components
++-- supabase/              Migrations, seed data, generated SQL, and backend docs
++-- index.html             Metadata and application entry document
+`-- vite.config.js         Vite, React, Tailwind, and production build settings
 ```
-
-## Important Source Areas
-
-- `src/components/stage/Stage.jsx` contains the reusable cinematic primitives:
-  atmosphere layers, particles, beams, orbs, character reveals, mandala rings,
-  kolam knots, sound waves, and GSAP scroll helpers.
-- `src/components/motion/` contains shared animation wrappers such as reveal,
-  stagger, parallax, magnetic hover, and tilt cards.
-- `src/components/shared/PersonCard.jsx` renders office bearer and alumni cards.
-- `src/lib/gallery.js` auto-discovers gallery images at build time with
-  `import.meta.glob`.
-- `src/lib/people.js` auto-maps portraits by normalized person name.
-- `src/hooks/useContent.js` caches content requests and seeds UI state from
-  fallback JSON before Supabase resolves.
-- `src/data/repositories/` is the CMS data-access layer.
-- `src/lib/supabase.ts` creates the browser Supabase client when env vars exist.
-
-## Data Flow
-
-The app follows a Supabase-first, fallback-safe model:
-
-1. Components call hooks from `src/hooks/useContent.js`.
-2. Hooks seed initial UI state from local JSON or empty arrays.
-3. Hooks call repository functions in `src/data/repositories/`.
-4. Repositories query Supabase when `VITE_SUPABASE_URL` and
-   `VITE_SUPABASE_PUBLISHABLE_KEY` are configured.
-5. On missing env vars, network errors, empty migrated tables, or API errors,
-   repositories return local fallback data.
-6. UI components render the same shape regardless of source.
-
-Currently visible content uses:
-
-- `office_bearers` with `src/data/officeBearers.json` fallback.
-- `alumni` with `src/data/alumni.json` fallback.
-- `calendar_events` for the season calendar.
-- Local gallery files discovered from `src/assets/Gallery/`.
-- Static event constants for the public Events page.
-
-Repository support also exists for announcements, achievements, settings,
-events, event gallery, and contact messages.
-
-## Supabase Integration
-
-Supabase SQL lives in `supabase/`.
-
-Key files:
-
-- `supabase/migrations/20260718090001_schema.sql` - tables, enums, triggers,
-  and `public.is_admin()`.
-- `supabase/migrations/20260718090002_rls.sql` - row-level security policies.
-- `supabase/migrations/20260718090004_grants.sql` - table grants required by
-  PostgREST.
-- `supabase/migrations/20260718090003_storage.sql` - public storage buckets and
-  storage policies.
-- `supabase/migrations/20260719100001_calendar_admin.sql` - calendar table and
-  policies (credentials and membership are deliberately out of band).
-- `supabase/migrations/20260724090001_least_privilege_grants.sql` - forward
-  security hardening for existing databases.
-- `supabase/seed/0001_seed.sql` - generated seed data.
-- `supabase/apply_all.sql` - generated SQL bundle.
-
-The public anon key is safe in the browser because access is constrained by RLS.
-Never commit a service role key.
-
-## Admin Flow
-
-The admin surface is intentionally hidden from normal navigation.
-
-- `Footer.jsx` attaches a secret click gesture to the footer copyright mark.
-- `AdminGate.jsx` opens a password modal.
-- `adminAuth.js` signs in with the fixed admin email and verifies
-  `public.is_admin()`; a session alone is not treated as admin.
-- Calendar writes in `CalendarPage.jsx` are allowed only when RLS sees an
-  authenticated admin user.
-
-## Build And Quality
-
-Common commands:
-
-```bash
-npm install
-npm run dev
-npm run build
-npm run preview
-npm run lint
-npm run typecheck
-```
-
-Database commands:
-
-```bash
-npm run db:seed
-npm run db:bundle
-npm run db:bundle:check
-npm run db:migrate
-npm run db:migrate:seed
-npm run db:verify
-```
-
-The root project currently has no `test` script. The separate creative pipeline
-has its own test command inside `saptham-pipeline/`.
 
 ## Creative Pipeline
 
-`saptham-pipeline/` is a separate Node/TypeScript package for managing the
-asset-generation canon, prompt cards, providers, storage, review, indexing, and
-publishing workflow.
-
-Run it from its own directory:
+`saptham-pipeline/` is an independent TypeScript package for the club's
+provider-agnostic asset production workflow. It manages the creative canon,
+prompt cards, generation providers, versioned storage, review, indexing, and
+publishing.
 
 ```bash
 cd saptham-pipeline
-npm install
+npm ci
 npm run canon:load
 npm run typecheck
+npm run lint
 npm test
 ```
 
-Provider credentials are optional until generation commands are used. See
-`saptham-pipeline/.env.example` and `saptham-pipeline/README.md`.
+See [`saptham-pipeline/README.md`](saptham-pipeline/README.md) for provider
+configuration and operational commands.
 
 ## Documentation
 
-Useful docs:
+- [Complete local setup](HOW_TO_RUN.md)
+- [System architecture](docs/ARCHITECTURE.md)
+- [Deployment guide](docs/DEPLOYMENT_GUIDE.md)
+- [Maintainer guide](docs/MAINTAINER_GUIDE.md)
+- [Security report](docs/SECURITY_REPORT.md)
+- [Supabase operations](supabase/README.md)
+- [Creative pipeline](saptham-pipeline/README.md)
 
-- `docs/ARCHITECTURE.md`
-- `docs/COMPONENT_TREE.md`
-- `docs/DEPLOYMENT_GUIDE.md`
-- `docs/MAINTAINER_GUIDE.md`
-- `docs/SECURITY_REPORT.md`
-- `supabase/README.md`
-- `docs/pipeline/SYSTEM_ARCHITECTURE.md`
+## Maintenance Workflow
 
-For step-by-step local setup and full project operation, read `HOW_TO_RUN.md`.
+Keep changes focused, avoid committing generated secrets or local environment
+files, and validate production work before merging:
+
+```bash
+npm run typecheck
+npm run lint
+npm run build
+npm run db:bundle:check
+```
+
+For security-sensitive or database changes, review the relevant migration,
+verify the intended Supabase project before applying it, and document any
+required manual production action.
+
+---
+
+<p align="center">
+  Built by Saptham &middot; CEG, Anna University
+</p>
