@@ -4,8 +4,8 @@
  *
  *   node scripts/build-brand.mjs
  *
- * SVG always; PNG raster (favicon + PWA icons) only if `sharp` is installed —
- * it is an optional dependency so a plain `npm ci` never fails on it.
+ * SVG always; PNG raster assets when `sharp` is installed. Browser favicons
+ * are derived from the same official lockup imported by the navbar.
  */
 import { writeFileSync, mkdirSync, existsSync } from "node:fs";
 import { dirname, resolve } from "node:path";
@@ -24,6 +24,7 @@ import {
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const outDir = resolve(root, "public/brand");
+const officialLogo = resolve(root, "src/assets/logo-gold.png");
 mkdirSync(outDir, { recursive: true });
 
 const BLADES = fanBlades();
@@ -101,8 +102,6 @@ const TARGETS = [
   ["saptham-mono.svg", { variant: "mono" }],
   ["saptham-light.svg", { variant: "light" }],
   ["saptham-dark.svg", { variant: "dark" }],
-  // favicon drops the dancer + fan: at 16px they are mud
-  ["favicon.svg", { variant: "primary", detail: "simple" }],
   // PWA icon needs an opaque ground, and 10% inset for Android's maskable crop
   ["icon-maskable.svg", { variant: "primary", bg: INK, pad: 52 }],
   ["icon.svg", { variant: "primary", bg: INK, pad: 24 }],
@@ -126,17 +125,24 @@ try {
 
 if (sharp) {
   const raster = [
-    ["favicon-16.png", "favicon.svg", 16],
-    ["favicon-32.png", "favicon.svg", 32],
-    ["favicon-48.png", "favicon.svg", 48],
-    ["apple-touch-icon.png", "icon.svg", 180],
-    ["icon-192.png", "icon.svg", 192],
-    ["icon-512.png", "icon.svg", 512],
-    ["icon-maskable-512.png", "icon-maskable.svg", 512],
-    ["og-mark.png", "saptham-primary.svg", 600],
+    // Browser tabs use the exact official gold lockup shown in the navbar.
+    ["favicon-16.png", officialLogo, 16, true],
+    ["favicon-32.png", officialLogo, 32, true],
+    ["favicon-48.png", officialLogo, 48, true],
+    ["apple-touch-icon.png", resolve(outDir, "icon.svg"), 180],
+    ["icon-192.png", resolve(outDir, "icon.svg"), 192],
+    ["icon-512.png", resolve(outDir, "icon.svg"), 512],
+    ["icon-maskable-512.png", resolve(outDir, "icon-maskable.svg"), 512],
+    ["og-mark.png", resolve(outDir, "saptham-primary.svg"), 600],
   ];
-  for (const [out, src, px] of raster) {
-    await sharp(resolve(outDir, src), { density: 600 })
+  for (const [out, src, px, trim = false] of raster) {
+    let image = sharp(src, { density: 600 });
+    if (trim) {
+      image = image.trim({
+        background: { r: 0, g: 0, b: 0, alpha: 0 },
+      });
+    }
+    await image
       .resize(px, px, { fit: "contain", background: { r: 0, g: 0, b: 0, alpha: 0 } })
       .png({ compressionLevel: 9 })
       .toFile(resolve(outDir, out));

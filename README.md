@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="public/brand/saptham-gold.svg" alt="Saptham" width="420" />
+  <img src="src/assets/logo-gold.png" alt="Saptham" width="520" />
 </p>
 
 <h1 align="center">Saptham</h1>
