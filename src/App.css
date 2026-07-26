@@ -519,24 +519,31 @@ html.has-ember select {
 }
 
 /* ── Sapta Swara · the seven veena strings ─────────────────────────────────
-   The equalizer is now the club's own instrument: seven strings of light,
-   each swara plucked in sequence so a run travels up the course. Pure CSS
-   (a mis-built JS bundle can drop Motion loops; a keyframe cannot), and every
-   string keeps a faint idle shimmer so the chord is alive between plucks.    */
+   The equalizer is the club's own instrument. Strings rest quietly, respond
+   to hover on precise pointers, and perform a one-shot pluck wherever a touch
+   or pen crosses them. Vertical page scrolling remains native.               */
+.veena-instrument {
+  touch-action: pan-y pinch-zoom;
+}
+.veena-col {
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+.veena-col:focus-visible {
+  outline: 1px solid var(--swara);
+  outline-offset: 5px;
+}
 .veena-string {
   width: 2px;
   height: 100%;
   border-radius: 2px;
   transform-origin: center;
   background: linear-gradient(to bottom, transparent, var(--swara) 14%, var(--swara) 86%, transparent);
-  box-shadow:
-    0 0 7px var(--swara),
-    0 0 16px color-mix(in srgb, var(--swara) 34%, transparent);
-  animation-name: string-pluck;
-  animation-duration: var(--sdur, 5.6s);
-  animation-delay: var(--sdelay, 0s);
-  animation-timing-function: ease-in-out;
-  animation-iteration-count: infinite;
+  box-shadow: none;
+  opacity: 0.2;
+  transition:
+    opacity 0.45s ease,
+    box-shadow 0.45s ease;
   will-change: transform, filter;
 }
 @keyframes string-pluck {
@@ -580,30 +587,12 @@ html.has-ember select {
   box-shadow:
     0 0 7px var(--swara),
     0 0 15px var(--swara);
-  animation-name: node-ride;
-  animation-duration: var(--sdur, 5.6s);
-  animation-delay: var(--sdelay, 0s);
-  animation-timing-function: ease-in-out;
-  animation-iteration-count: infinite;
+  opacity: 0;
   will-change: transform, opacity;
 }
 
-/* ── Pointer devices: the strings rest dim and glow only where the cursor
-   passes — you strum them. Touch devices keep the always-on ripple above,
-   since they have no hover. ────────────────────────────────────────────── */
+/* Fine pointers keep the laptop hover-to-strum behavior. */
 @media (hover: hover) and (pointer: fine) {
-  .veena-string {
-    animation: none;
-    opacity: 0.2;
-    box-shadow: none;
-    transition:
-      opacity 0.45s ease,
-      box-shadow 0.45s ease;
-  }
-  .veena-node {
-    animation: none;
-    opacity: 0;
-  }
   .veena-col:hover .veena-string {
     opacity: 1;
     box-shadow:
@@ -614,6 +603,64 @@ html.has-ember select {
   }
   .veena-col:hover .veena-node {
     animation: node-ride 1.8s ease-in-out infinite;
+  }
+}
+
+/* Touch, pen and keyboard input restart this one-shot resonance. The node is
+   positioned at the actual contact point instead of running continuously. */
+.veena-col.is-plucked .veena-string {
+  animation: touch-string-pluck 0.9s cubic-bezier(0.2, 0.75, 0.25, 1) 1 both;
+  box-shadow:
+    0 0 9px var(--swara),
+    0 0 22px color-mix(in srgb, var(--swara) 50%, transparent);
+}
+.veena-col.is-plucked .veena-node {
+  top: var(--pluck-y, 50%);
+  animation: touch-node-pluck 0.9s ease-out 1 both;
+}
+@keyframes touch-string-pluck {
+  0% {
+    transform: scaleX(1);
+    filter: blur(0);
+    opacity: 0.22;
+  }
+  8% {
+    transform: scaleX(5.5);
+    filter: blur(1.2px);
+    opacity: 1;
+  }
+  28% {
+    transform: scaleX(2.7);
+    filter: blur(0.55px);
+    opacity: 0.82;
+  }
+  58% {
+    transform: scaleX(1.35);
+    filter: blur(0.15px);
+    opacity: 0.55;
+  }
+  100% {
+    transform: scaleX(1);
+    filter: blur(0);
+    opacity: 0.2;
+  }
+}
+@keyframes touch-node-pluck {
+  0% {
+    transform: translateY(-50%) scale(0.35);
+    opacity: 0;
+  }
+  10% {
+    transform: translateY(-50%) scale(1.55);
+    opacity: 1;
+  }
+  45% {
+    transform: translateY(-50%) scale(0.9);
+    opacity: 0.78;
+  }
+  100% {
+    transform: translateY(-50%) scale(0.2);
+    opacity: 0;
   }
 }
 @keyframes node-ride {
@@ -637,10 +684,21 @@ html.has-ember select {
 @media (prefers-reduced-motion: reduce) {
   .veena-string {
     animation: none;
-    opacity: 0.85;
+    opacity: 0.2;
+    box-shadow: none;
   }
   .veena-node {
     animation: none;
     opacity: 0;
+  }
+  .veena-col:hover .veena-string,
+  .veena-col.is-plucked .veena-string {
+    animation: none;
+    opacity: 1;
+    box-shadow: 0 0 12px color-mix(in srgb, var(--swara) 52%, transparent);
+  }
+  .veena-col.is-plucked .veena-node {
+    animation: none;
+    opacity: 1;
   }
 }
